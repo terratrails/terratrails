@@ -151,6 +151,63 @@ html[data-theme="light"] nav.on { background: rgba(255,255,255,.92); }
   .nav-links a:hover { color: var(--txt); }
 }
 
+/* ── Hamburger button (mobile only) ── */
+.ham-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--bor);
+  cursor: pointer; flex-shrink: 0;
+  transition: background .2s, border-color .2s;
+}
+.ham-btn:hover { background: var(--bg4); }
+@media(min-width:800px) { .ham-btn { display: none; } }
+.ham-btn .hb { display: block; width: 16px; }
+.ham-btn .hb-line {
+  display: block; height: 1.5px; background: var(--txt2);
+  border-radius: 2px; transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .18s;
+  transform-origin: center;
+}
+.ham-btn .hb-line + .hb-line { margin-top: 4.5px; }
+/* X state */
+body.menu-open .hb-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+body.menu-open .hb-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+body.menu-open .hb-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ── Mobile menu overlay ── */
+.mob-menu {
+  position: fixed; inset: 0; z-index: 190;
+  background: rgba(10,14,11,.86);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity .32s cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="light"] .mob-menu { background: rgba(255,255,255,.92); }
+body.menu-open .mob-menu { opacity: 1; pointer-events: auto; }
+
+.mob-menu-links { list-style: none; text-align: center; }
+.mob-menu-links li { border-bottom: 1px solid var(--bor); }
+.mob-menu-links li:first-child { border-top: 1px solid var(--bor); }
+.mob-menu-links a {
+  display: block; padding: 24px 48px;
+  font-size: 28px; font-weight: 700; letter-spacing: -.025em;
+  color: var(--txt); text-decoration: none;
+  transition: color .15s;
+}
+.mob-menu-links a:hover { color: var(--gbr); }
+.mob-menu-cta {
+  margin-top: 36px;
+  display: inline-block; background: var(--gbr); color: #fff;
+  border-radius: 100px; padding: 16px 40px;
+  font-size: 16px; font-weight: 500; text-decoration: none;
+  transition: background .15s;
+}
+.mob-menu-cta:hover { background: var(--ghi); }
+.mob-menu-close-hint {
+  margin-top: 28px; font-size: 12px; color: var(--txt3); letter-spacing: .08em;
+}
+
 .nav-right { display: flex; align-items: center; gap: 10px; }
 
 /* Theme toggle */
@@ -397,8 +454,9 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 .ph-card {
   background: var(--card); border: 1px solid var(--bor);
   border-radius: 28px; overflow: hidden;
-  transition: background .3s, border-color .3s;
+  transition: background .3s, border-color .3s, transform .24s cubic-bezier(.22,1,.36,1), box-shadow .24s;
 }
+.ph-card:hover { transform: translateY(-2px); box-shadow: 0 16px 44px var(--shadow); }
 .pc-row {
   display: flex; align-items: flex-start; gap: 14px;
   padding: 18px 22px; border-bottom: 1px solid var(--bor);
@@ -440,8 +498,9 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 .bento-card {
   background: var(--bg); border: 1px solid var(--bor);
   border-radius: 32px; overflow: hidden; padding: 24px;
-  transition: background .3s, border-color .3s;
+  transition: background .3s, border-color .3s, transform .24s cubic-bezier(.22,1,.36,1), box-shadow .24s cubic-bezier(.22,1,.36,1);
 }
+.bento-card:hover { transform: translateY(-3px); box-shadow: 0 20px 64px var(--shadow); }
 .bento-card.wide { grid-column: 1; }
 @media(min-width:640px) { .bento-card.wide { grid-column: 1 / 3; } }
 
@@ -540,7 +599,9 @@ html[data-theme="light"] .msi-btn { background: #1D1D1F; color: #fff; }
 .mgi-card {
   background: var(--bg3); border: 1px solid var(--bor);
   border-radius: 18px; padding: 18px 18px;
+  transition: background .3s, border-color .3s, transform .22s cubic-bezier(.22,1,.36,1);
 }
+.mgi-card:hover { transform: scale(1.013); }
 .mgi-h { font-size: 13px; font-weight: 600; color: var(--txt); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
 .mgi-h svg { color: var(--gbr); }
 .mgi-p { font-size: 12px; font-weight: 300; color: var(--txt2); line-height: 1.6; }
@@ -965,6 +1026,53 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
 }
 
 /* ══════════════════════════════════════════
+   APPLE WATCH BADGE
+══════════════════════════════════════════ */
+.watch-badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  border: 1px solid var(--bor2); border-radius: 100px;
+  padding: 7px 16px; font-size: 12px; font-weight: 400; color: var(--txt2);
+  position: relative; z-index: 1; margin-top: 16px;
+  opacity: 0; animation: fadeUp .9s .78s cubic-bezier(.22,1,.36,1) forwards;
+  transition: border-color .15s, color .15s;
+}
+.watch-badge:hover { border-color: var(--bor2); color: var(--txt); }
+.watch-badge svg { opacity: .55; }
+
+/* ══════════════════════════════════════════
+   LIVE ACTIVITY — iOS style notification
+══════════════════════════════════════════ */
+.live-activity-wrap { margin-top: 28px; }
+.live-activity {
+  background: rgba(17,22,17,.85);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(74,138,82,.24);
+  border-radius: 20px; padding: 14px 18px;
+  display: flex; align-items: center; gap: 13px;
+  transition: background .3s, border-color .3s;
+}
+html[data-theme="light"] .live-activity {
+  background: rgba(245,245,247,.92);
+  border-color: rgba(42,92,52,.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,.08);
+}
+.la-icon {
+  width: 34px; height: 34px; flex-shrink: 0; border-radius: 9px;
+  background: var(--grn-bg); border: 1px solid var(--grn-bor);
+  display: flex; align-items: center; justify-content: center;
+}
+.la-body { flex: 1; min-width: 0; }
+.la-app { font-size: 9.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gbr); margin-bottom: 3px; }
+.la-msg { font-size: 12.5px; font-weight: 400; color: var(--txt); line-height: 1.45; }
+.la-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; }
+.la-time { font-size: 10px; color: var(--txt3); white-space: nowrap; }
+.la-prog-wrap { width: 52px; }
+.la-prog-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.la-prog-label span { font-size: 9px; color: var(--txt3); }
+.la-prog-bar { height: 3px; background: var(--bor); border-radius: 2px; overflow: hidden; }
+.la-prog-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--grn), var(--gbr)); }
+
+/* ══════════════════════════════════════════
    KEYFRAMES
 ══════════════════════════════════════════ */
 @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
@@ -994,6 +1102,14 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-right">
+      <!-- Hamburger (mobile only) -->
+      <button class="ham-btn" id="hamBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span class="hb">
+          <span class="hb-line"></span>
+          <span class="hb-line"></span>
+          <span class="hb-line"></span>
+        </span>
+      </button>
       <!-- Theme Toggle -->
       <button class="theme-btn" id="themeBtn" aria-label="Basculer le thème" title="Changer de thème">
         <!-- Sun icon: shown in dark mode -->
@@ -1011,7 +1127,17 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
   </div>
 </nav>
 
-<!-- ══════ HERO ══════ -->
+<!-- ══════ MOBILE MENU OVERLAY ══════ -->
+<div class="mob-menu" id="mobMenu" role="dialog" aria-modal="true" aria-label="Menu principal">
+  <ul class="mob-menu-links">
+    <li><a href="#manifeste" class="mob-link">Manifeste</a></li>
+    <li><a href="#phases" class="mob-link">Le système</a></li>
+    <li><a href="#securite" class="mob-link">Sécurité</a></li>
+    <li><a href="#faq" class="mob-link">FAQ</a></li>
+  </ul>
+  <a href="#waitlist" class="mob-menu-cta mob-link">Accès bêta</a>
+  <p class="mob-menu-close-hint">Appuyer sur Échap ou toucher l'arrière-plan pour fermer</p>
+</div>
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-grain"></div>
@@ -1030,7 +1156,15 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
     C'est un système d'exécution outdoor qui supprime<br>toute planification manuelle.
   </p>
 
-  <!-- TYPEWRITER PROMPT BOX -->
+  <!-- APPLE WATCH BADGE -->
+  <div class="watch-badge">
+    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+      <rect x="2.5" y="4" width="9" height="8" rx="2.5"/>
+      <path d="M4.5 2.5h5M4.5 13.5h5"/>
+      <circle cx="7" cy="8" r="1.5" stroke-width="1"/>
+    </svg>
+    Disponible sur Apple Watch
+  </div>
   <div class="prompt-wrap">
     <div class="prompt-card">
       <div class="prompt-label">Votre intention</div>
@@ -1535,6 +1669,25 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
           </div>
           <div class="comp-note-p">Immobilité prolongée · Sortie de trace · Météo dangereuse · Perte réseau → protocole SOS déclenché automatiquement.</div>
         </div>
+        <!-- Live Activity iOS notification -->
+        <div class="live-activity-wrap r d2">
+          <div class="live-activity">
+            <div class="la-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v3M8 12v3M1 8h3M12 8h3"/></svg>
+            </div>
+            <div class="la-body">
+              <div class="la-app">Terratrails</div>
+              <div class="la-msg">Prochain point d'eau dans 800 m. Rythme nominal.</div>
+            </div>
+            <div class="la-right">
+              <span class="la-time">il y a 2 min</span>
+              <div class="la-prog-wrap">
+                <div class="la-prog-label"><span>Trajet</span><span>64%</span></div>
+                <div class="la-prog-bar"><div class="la-prog-fill" style="width:64%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="r d1">
         <div class="live-card">
@@ -1631,9 +1784,9 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
         <div class="logo-text"><span style="font-size:10px">TERRA</span><span style="font-size:10px">TRAILS</span></div>
       </a>
       <div class="foot-ig">
-        <a href="https://www.instagram.com/terratrails.app/" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          @terratrails.app
+          @terratrails.fr
         </a>
       </div>
       <ul class="foot-links">
@@ -1860,6 +2013,57 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
 
   btn.addEventListener('click', submit);
   emailIn.addEventListener('keydown', function(e) { if (e.key === 'Enter') submit(); });
+})();
+
+/* ════════════════════════════════════════════
+   MOBILE HAMBURGER MENU
+════════════════════════════════════════════ */
+(function initMobMenu() {
+  var hamBtn  = document.getElementById('hamBtn');
+  var mobMenu = document.getElementById('mobMenu');
+  if (!hamBtn || !mobMenu) return;
+
+  function openMenu() {
+    document.body.classList.add('menu-open');
+    hamBtn.setAttribute('aria-expanded', 'true');
+    mobMenu.removeAttribute('aria-hidden');
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeMenu() {
+    document.body.classList.remove('menu-open');
+    hamBtn.setAttribute('aria-expanded', 'false');
+    mobMenu.setAttribute('aria-hidden', 'true');
+    document.removeEventListener('keydown', onKey);
+  }
+
+  function onKey(e) { if (e.key === 'Escape') closeMenu(); }
+
+  hamBtn.addEventListener('click', function() {
+    document.body.classList.contains('menu-open') ? closeMenu() : openMenu();
+  });
+
+  /* Close on overlay click (outside the link list) */
+  mobMenu.addEventListener('click', function(e) {
+    if (e.target === mobMenu) closeMenu();
+  });
+
+  /* Close when a link is tapped */
+  mobMenu.querySelectorAll('.mob-link').forEach(function(el) {
+    el.addEventListener('click', closeMenu);
+  });
+
+  /* Lock body scroll when open */
+  var origOverflow = '';
+  var observer = new MutationObserver(function() {
+    if (document.body.classList.contains('menu-open')) {
+      origOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = origOverflow;
+    }
+  });
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 })();
 </script>
 </body>
