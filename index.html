@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terratrails — Décrire. Générer. Partir.</title>
 <meta name="description" content="Terratrails n'est pas une application de randonnée. C'est un système d'exécution outdoor qui supprime toute planification manuelle.">
-<link rel="icon" type="image/svg+xml" href="__FAV__">
-<link rel="apple-touch-icon" href="__FAV__">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22.37' fill='%230A0E0B'/%3E%3Cline x1='50' y1='59.5' x2='50' y2='79' stroke='%23264848' stroke-width='1.3' stroke-linecap='round'/%3E%3Cpolyline points='29.5,59.5 50,29.5 70.5,59.5' stroke='%23E8E8E4' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='79' r='4.32' fill='%23345A3A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
@@ -852,6 +851,120 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
 .foot-links a:hover { color: var(--txt); }
 
 /* ══════════════════════════════════════════
+   HERO MOCK INTERFACE
+══════════════════════════════════════════ */
+.hero-mock-wrap {
+  margin-top: 72px; z-index: 1; position: relative;
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+.hero-mock {
+  display: grid; grid-template-columns: 1fr;
+  gap: 16px; align-items: start;
+  opacity: 0; animation: fadeUp 1s .82s cubic-bezier(.22,1,.36,1) forwards;
+}
+@media(min-width:700px) { .hero-mock { grid-template-columns: 1fr 1fr; gap: 20px; } }
+
+/* Phone frame */
+.hm-phone {
+  background: var(--bg2); border: 1px solid var(--bor2);
+  border-radius: 36px; overflow: hidden;
+  box-shadow: 0 32px 80px var(--shadow), 0 0 0 1px rgba(74,138,82,.06);
+}
+.hm-ph-inner { padding: 16px 16px 20px; }
+.hm-status-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 10px; }
+
+.hm-app-header {
+  display: flex; align-items: center; gap: 9px;
+  padding: 6px 8px 12px;
+}
+.hm-notif-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--gbr);
+  animation: glw 2.2s ease-in-out infinite; margin-left: auto;
+}
+
+.hm-map {
+  position: relative; height: 120px;
+  background: linear-gradient(160deg, #0D130E 0%, #0A0F0A 100%);
+  border-radius: 20px; overflow: hidden;
+}
+.hm-map-topo { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hm-dir {
+  position: absolute; top: 10px; left: 10px;
+  background: var(--gbr); border-radius: 14px; padding: 9px 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hm-dir-arr {
+  width: 22px; height: 22px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.hm-north {
+  position: absolute; top: 10px; right: 10px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(10,14,11,.72); border: 1px solid rgba(40,48,41,.8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: var(--txt2);
+}
+.hm-stats-row {
+  display: flex; padding: 14px 8px 0; gap: 0;
+}
+.hm-stat { flex: 1; text-align: center; }
+.hm-stat + .hm-stat { border-left: 1px solid var(--bor); }
+.hm-sv { font-size: 16px; font-weight: 700; color: var(--txt); letter-spacing: -.02em; }
+.hm-sl { font-size: 9px; color: var(--txt3); margin-top: 2px; }
+
+.hm-alert {
+  margin-top: 12px; padding: 10px 12px;
+  background: var(--org-bg); border: 1px solid var(--org-bor);
+  border-radius: 12px; font-size: 10px; color: var(--org);
+  display: flex; align-items: center; gap: 7px; line-height: 1.4;
+}
+
+/* Side cards */
+.hm-side { display: flex; flex-direction: column; gap: 12px; }
+.hm-side-card {
+  background: var(--bg2); border: 1px solid var(--bor2);
+  border-radius: 24px; padding: 18px 20px;
+  box-shadow: 0 8px 32px var(--shadow);
+  transition: background .3s, border-color .3s;
+}
+.hm-sc-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--gbr);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 7px;
+}
+.hm-sc-label::before { content: ''; width: 10px; height: 1px; background: var(--gbr); }
+.hm-sc-route { display: flex; align-items: center; gap: 12px; }
+.hm-sc-route svg { width: 90px; flex-shrink: 0; }
+.hm-match-badge {
+  display: inline-flex; margin-top: 5px;
+  background: var(--grn-bg); border: 1px solid var(--grn-bor);
+  border-radius: 10px; padding: 3px 8px; font-size: 9px; color: var(--gbr); font-weight: 500;
+}
+
+.hm-cl-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 0; border-bottom: 1px solid var(--bor);
+  font-size: 11px; color: var(--txt);
+}
+.hm-cl-item:last-of-type { border-bottom: none; }
+.hm-cl-ico {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.hm-done .hm-cl-ico { background: var(--gbr); }
+.hm-pend-ico { border: 1.5px solid var(--bor2); background: transparent; }
+.hm-gauge-mini { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--bor); }
+
+.hm-comp-row { display: flex; align-items: center; gap: 10px; }
+.hm-comp-av {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: var(--bg); border: 1px solid var(--bor);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 600; color: var(--txt2);
+}
+
+/* ══════════════════════════════════════════
    KEYFRAMES
 ══════════════════════════════════════════ */
 @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
@@ -950,9 +1063,114 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
     <a href="#manifeste" class="btn-s">Notre philosophie</a>
   </div>
 
-  <div class="hero-img-wrap w">
-    <img src="data:image/webp;base64,__IMG__"
-      alt="Aperçu de l'application Terratrails — 5 écrans" loading="eager">
+  <!-- HERO MOCK INTERFACE (replaces external image) -->
+  <div class="hero-mock-wrap w">
+    <div class="hero-mock">
+      <!-- Phone frame -->
+      <div class="hm-phone">
+        <div class="hm-ph-inner">
+          <div class="hm-status-bar">
+            <span style="font-size:10px;font-weight:600;color:var(--txt)">9:41</span>
+            <svg width="16" height="8" viewBox="0 0 16 8" fill="none"><rect x="0" y="1" width="14" height="6" rx="1.5" stroke="var(--txt3)" stroke-width="1"/><rect x="1" y="2" width="9" height="4" rx=".8" fill="var(--gbr)"/><rect x="15" y="3" width="1" height="2" rx=".5" fill="var(--txt3)"/></svg>
+          </div>
+          <!-- App header -->
+          <div class="hm-app-header">
+            <svg viewBox="0 0 100 100" fill="none" width="18" height="18"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+            <div style="flex:1">
+              <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--txt);line-height:1.1">TERRA</div>
+              <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--gbr);line-height:1.1">TRAILS</div>
+            </div>
+            <div class="hm-notif-dot"></div>
+          </div>
+          <!-- Map area -->
+          <div class="hm-map">
+            <svg class="hm-map-topo" viewBox="0 0 260 120" fill="none" preserveAspectRatio="xMidYMid slice">
+              <path d="M0 90 Q65 70 130 80 Q195 90 260 60" stroke="#1A2E1C" stroke-width="12" fill="none"/>
+              <path d="M0 105 Q65 85 130 95 Q195 105 260 75" stroke="#162416" stroke-width="10" fill="none"/>
+              <path d="M0 75 Q50 55 120 65 Q190 75 260 45" stroke="#1E3020" stroke-width="8" fill="none"/>
+              <!-- Route -->
+              <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#264848" stroke-width="2" fill="none" opacity=".5"/>
+              <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#5FA868" stroke-width="2.5" fill="none"/>
+              <!-- Start -->
+              <circle cx="30" cy="100" r="5" fill="#345A3A" stroke="#5FA868" stroke-width="1.5"/>
+              <!-- Summit -->
+              <circle cx="230" cy="38" r="5" fill="#5FA868"/>
+              <path d="M224 38 L230 32 L236 38" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <!-- User dot -->
+              <circle cx="130" cy="68" r="5" fill="#5FA868" opacity=".3"/>
+              <circle cx="130" cy="68" r="3" fill="#5FA868"/>
+            </svg>
+            <!-- Direction card -->
+            <div class="hm-dir">
+              <div class="hm-dir-arr">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V4M7 4L4 7M7 4l3 3"/></svg>
+              </div>
+              <div>
+                <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:-.02em">1,4 km</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.78);margin-top:1px">Sentier des crêtes</div>
+              </div>
+            </div>
+            <!-- North -->
+            <div class="hm-north">N</div>
+          </div>
+          <!-- Stats row -->
+          <div class="hm-stats-row">
+            <div class="hm-stat"><div class="hm-sv">2h 45</div><div class="hm-sl">Restant</div></div>
+            <div class="hm-stat"><div class="hm-sv">8,4 km</div><div class="hm-sl">Distance</div></div>
+            <div class="hm-stat"><div class="hm-sv">580 m</div><div class="hm-sl">Dénivelé</div></div>
+          </div>
+          <!-- Alert strip -->
+          <div class="hm-alert">
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5.5 1L10 10H1L5.5 1z"/><path d="M5.5 4.5v2.5M5.5 8.5v.1"/></svg>
+            Orage possible à 15h — raccourci disponible
+          </div>
+        </div>
+      </div>
+
+      <!-- Side cards -->
+      <div class="hm-side">
+        <!-- Route card -->
+        <div class="hm-side-card">
+          <div class="hm-sc-label">Itinéraire généré</div>
+          <div class="hm-sc-route">
+            <svg viewBox="0 0 160 36" fill="none">
+              <path d="M8 28 Q40 18 80 22 Q120 26 152 12" stroke="#264848" stroke-width="1.5" fill="none" opacity=".5"/>
+              <path d="M8 28 Q40 18 80 22 Q120 26 152 12" stroke="#5FA868" stroke-width="2" fill="none"/>
+              <circle cx="8" cy="28" r="4" fill="#345A3A" stroke="#5FA868" stroke-width="1.2"/>
+              <circle cx="152" cy="12" r="4" fill="#5FA868"/>
+            </svg>
+            <div class="hm-sc-meta">
+              <div style="font-size:12px;font-weight:700;color:var(--txt);letter-spacing:-.02em">Lac d'Ayous</div>
+              <div style="font-size:10px;color:var(--txt3)">Pyrénées · 16,4 km · 7h30</div>
+              <div class="hm-match-badge">92% adapté</div>
+            </div>
+          </div>
+        </div>
+        <!-- Checklist card -->
+        <div class="hm-side-card">
+          <div class="hm-sc-label">Équipement</div>
+          <div class="hm-cl-item hm-done"><div class="hm-cl-ico"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4.5l2.5 2.5 4.5-4.5"/></svg></div><span>Veste imperméable</span></div>
+          <div class="hm-cl-item hm-done"><div class="hm-cl-ico"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4.5l2.5 2.5 4.5-4.5"/></svg></div><span>Bâtons de marche</span></div>
+          <div class="hm-cl-item hm-pend"><div class="hm-cl-ico hm-pend-ico"></div><span style="color:var(--txt3)">Crème solaire 50+</span></div>
+          <div class="hm-gauge-mini">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span style="font-size:10px;color:var(--txt2)">Eau à emporter</span><span style="font-size:11px;font-weight:700;color:var(--txt)">2,4 L</span></div>
+            <div style="height:4px;background:var(--bor);border-radius:2px;overflow:hidden"><div style="height:100%;width:75%;background:linear-gradient(90deg,#264848,var(--ghi));border-radius:2px"></div></div>
+          </div>
+        </div>
+        <!-- Companion card -->
+        <div class="hm-side-card">
+          <div class="hm-sc-label">Compagnon actif</div>
+          <div class="hm-comp-row">
+            <div class="hm-comp-av">CP</div>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:600;color:var(--txt)">Clelia P.</div>
+              <div style="font-size:9px;color:var(--txt2);margin-top:1px">Progression 64% · ETA 17h40</div>
+            </div>
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--gbr);animation:glw 2s infinite;flex-shrink:0;margin-top:3px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1057,7 +1275,7 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
       <div class="pc-col r d2">
         <div class="ph-card">
           <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="2"/><path d="M7 2v2M7 10v2M2 7h2M10 7h2"/></svg></div><div><div class="pc-l">Interface terrain</div><div class="pc-s">Position · Direction · Temps restant · Alertes</div></div></div>
-          <div class="pc-row"><div class="pc-ico w"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--org)" stroke-width="1.4" stroke-linecap="round"><path d="M7 2l5.5 9.5H1.5L7 2z"/><path d="M7 6v2.5M7 10v.5"/></svg></div><div><div class="pc-l w">Alerte active</div><div class="pc-s">Orage dans 1h40 sur crête · Raccourci proposé</div></div></div>
+          <div class="pc-row"><div class="pc-ico w"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--org)" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7.5"/><circle cx="7" cy="9.5" r=".5" fill="var(--org)" stroke="none"/></svg></div><div><div class="pc-l w">Alerte active</div><div class="pc-s">Orage dans 1h40 sur crête · Raccourci proposé</div></div></div>
           <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><rect x="2" y="4" width="10" height="7" rx="1.5"/><path d="M5 4V3a2 2 0 0 1 4 0v1"/></svg></div><div><div class="pc-l">Export montres GPS</div><div class="pc-s">Garmin · Suunto · Coros · GPX direct</div></div></div>
         </div>
       </div>
@@ -1153,7 +1371,7 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
             </div>
             <div class="mgi-card" style="border-color:var(--org-bor);background:var(--org-bg)">
               <div class="mgi-h" style="color:var(--org)">
-                <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--org)" stroke-width="1.4" stroke-linecap="round"><path d="M7 2l5.5 9.5H1.5L7 2z"/><path d="M7 6v2.5M7 10v.5"/></svg>
+                <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--org)" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7.5"/><circle cx="7" cy="9.5" r=".5" fill="var(--org)" stroke="none"/></svg>
                 Alerte météo J+1
               </div>
               <div class="mgi-p" style="color:var(--org)">Orage possible à partir de 15h. Départ conseillé avant 8h30.</div>
@@ -1238,7 +1456,7 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
             </div>
           </div>
           <div class="meteo-alert">
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><path d="M6.5 1.5l5.5 10H1L6.5 1.5z"/><path d="M6.5 5.5V8M6.5 9.5V10"/></svg>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 4V7"/><circle cx="6.5" cy="9" r=".5" fill="currentColor" stroke="none"/></svg>
             Orage possible cet après-midi. Prévoyez une veste imperméable.
           </div>
         </div>
@@ -1338,7 +1556,7 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
             <div><div class="live-name">Jules C.</div><div class="live-st">Hors ligne · Dernière position 11h22</div></div>
           </div>
           <div class="live-alert">
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><path d="M6.5 1.5l5.5 10H1L6.5 1.5z"/><path d="M6.5 5.5V8M6.5 9.5V10"/></svg>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 4V7"/><circle cx="6.5" cy="9" r=".5" fill="currentColor" stroke="none"/></svg>
             Immobilité détectée depuis 18 min · Vérification en cours
           </div>
         </div>
@@ -1357,15 +1575,15 @@ footer { border-top: 1px solid var(--bor); padding: 40px 0; }
     <div class="faq-list">
       <div class="faq-item r">
         <button class="faq-q" aria-expanded="false">Comment fonctionne la génération d'itinéraire ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Vous décrivez votre sortie en langage naturel. Le moteur IA génère un itinéraire réaliste en intégrant l'effort réel, la météo heure par heure, les points d'eau fiables et les variantes de sécurité. Résultat exportable GPX, compatible Garmin, Suunto, Coros.</div></div>
+        <div class="faq-a" role="region"><div class="faq-a-inner">Terratrails n'analyse pas une carte statique. Notre système croise votre intention textuelle avec l'effort réel — chaleur, exposition, fatigue cumulative — et intègre dynamiquement les points critiques au bon moment. Résultat exportable GPX, compatible Garmin, Suunto, Coros.</div></div>
       </div>
       <div class="faq-item r d1">
         <button class="faq-q" aria-expanded="false">L'application fonctionne-t-elle sans réseau ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Oui, intégralement. Avant le départ, Terratrails télécharge cartes vectorielles, itinéraire et météo. Sur le terrain, la navigation fonctionne via GPS natif — aucune connexion serveur requise. 100% offline par architecture, pas en option payante.</div></div>
+        <div class="faq-a" role="region"><div class="faq-a-inner">Oui. L'intégralité du système de sécurité et des cartes est pré-téléchargée en local. Pas de requêtes serveur sur le terrain, pas de dépendance au réseau, même à 2800 m d'altitude. Le GPS natif fonctionne sans aucune connexion.</div></div>
       </div>
       <div class="faq-item r d2">
         <button class="faq-q" aria-expanded="false">Qu'est-ce que le Mode Compagnon ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Le Mode Compagnon (Premium) permet à vos proches de suivre votre progression : position, batterie, ETA. Aucune logique de réseau social. Le système surveille : immobilité prolongée, sortie de trace, météo dangereuse. Protocole SOS automatique. Fonctionne partiellement hors-réseau via SMS.</div></div>
+        <div class="faq-a" role="region"><div class="faq-a-inner">Une fonction passive de réassurance. Vos proches reçoivent votre progression et vos alertes de sécurité en tâche de fond. Aucun fil d'actualité, aucun réseau social — uniquement de la sécurité brute par SMS de secours si nécessaire.</div></div>
       </div>
       <div class="faq-item r d3">
         <button class="faq-q" aria-expanded="false">Quelle différence avec Komoot ou AllTrails ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
