@@ -241,14 +241,13 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 .nav-cta:hover { background: var(--ghi); }
 
 /* ══════════════════════════════════════════
-   HERO
+   HERO — SPLIT LAYOUT
 ══════════════════════════════════════════ */
 .hero {
   min-height: 100svh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center;
-  padding: 80px 20px 80px;
+  padding: 60px 0 80px;
   position: relative; overflow: hidden;
 }
 .hero-glow {
@@ -262,12 +261,37 @@ html[data-theme="light"] .nav-cta { color: #fff; }
   pointer-events: none;
 }
 
+/* Split container */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+  position: relative; z-index: 1;
+  text-align: center;
+}
+@media(min-width:860px) {
+  .hero-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    text-align: left;
+    min-height: calc(100svh - 120px);
+  }
+}
+
+/* LEFT column */
+.hero-left {
+  display: flex; flex-direction: column;
+  align-items: center;
+  opacity: 0; animation: fadeUp .9s .1s cubic-bezier(.22,1,.36,1) forwards;
+}
+@media(min-width:860px) { .hero-left { align-items: flex-start; } }
+
 .hero-badge {
   display: inline-flex; align-items: center; gap: 9px;
   border: 1px solid var(--bor2); border-radius: 100px;
   padding: 6px 16px; font-size: 12px; font-weight: 400; color: var(--txt2);
-  margin-bottom: 36px; position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp .8s .1s cubic-bezier(.22,1,.36,1) forwards;
+  margin-bottom: 28px; position: relative; z-index: 1;
 }
 .badge-dot {
   width: 6px; height: 6px; border-radius: 50%; background: var(--gbr);
@@ -275,26 +299,76 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 }
 
 .hero-h1 {
-  font-size: clamp(62px,13vw,140px); font-weight: 700;
+  font-size: clamp(52px,10vw,110px); font-weight: 700;
   line-height: .95; letter-spacing: -0.045em; color: var(--txt);
   position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp .9s .2s cubic-bezier(.22,1,.36,1) forwards;
 }
 .hero-h1 em { font-style: normal; color: var(--gbr); }
 
 .hero-sub {
-  margin-top: 26px;
-  font-size: clamp(16px,2.3vw,20px); font-weight: 300;
-  color: var(--txt2); max-width: 540px; line-height: 1.65;
+  margin-top: 22px;
+  font-size: clamp(15px,1.8vw,18px); font-weight: 300;
+  color: var(--txt2); max-width: 460px; line-height: 1.68;
   position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp .9s .34s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-/* ── TYPEWRITER PROMPT ── */
-.prompt-wrap {
-  margin-top: 52px; width: 100%; max-width: 700px;
+/* Hero CTA */
+.hero-actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  align-items: center; justify-content: center;
   position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp 1s .5s cubic-bezier(.22,1,.36,1) forwards;
+}
+@media(min-width:860px) { .hero-actions { justify-content: flex-start; } }
+
+/* RIGHT column — phone showcase */
+.hero-right {
+  display: flex; justify-content: center; align-items: center;
+  opacity: 0; animation: fadeUp 1s .32s cubic-bezier(.22,1,.36,1) forwards;
+}
+.hero-phone-showcase {
+  position: relative;
+  display: inline-block;
+}
+/* Subtle green glow behind phone */
+.hero-phone-showcase::before {
+  content: '';
+  position: absolute; inset: -40px;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, var(--grn-glo) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.hero-phone-showcase .hm-phone {
+  position: relative; z-index: 1;
+  max-width: 260px;
+  box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(74,138,82,.12);
+  transition: transform .4s cubic-bezier(.22,1,.36,1);
+}
+.hero-phone-showcase .hm-phone:hover { transform: translateY(-6px) rotate(-.5deg); }
+
+/* Floating info cards */
+.hero-float-card {
+  position: absolute; z-index: 2;
+  background: var(--bg2);
+  border: 1px solid var(--bor2);
+  border-radius: 16px; padding: 12px 14px;
+  min-width: 160px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.4);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+}
+.hero-float-top {
+  top: 24px; right: -20px;
+  animation: floatY 4s ease-in-out infinite;
+}
+.hero-float-bot {
+  bottom: 40px; left: -20px;
+  animation: floatY 4s ease-in-out 2s infinite;
+}
+@media(max-width:860px) {
+  .hero-float-top { right: -8px; }
+  .hero-float-bot { left: -8px; }
+}
+@keyframes floatY {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
 .prompt-card {
   background: var(--bg2); border: 1px solid var(--bor2);
@@ -345,38 +419,42 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 
 /* Hero CTA */
 .hero-actions {
-  margin-top: 38px; display: flex; flex-wrap: wrap; gap: 12px;
+  display: flex; flex-wrap: wrap; gap: 12px;
   align-items: center; justify-content: center;
   position: relative; z-index: 1;
-  opacity: 0; animation: fadeUp .9s .64s cubic-bezier(.22,1,.36,1) forwards;
 }
 .btn-p {
   background: var(--gbr); color: #fff; border: none;
   border-radius: 100px; padding: 16px 36px;
   font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
-  cursor: pointer; text-decoration: none; display: inline-block;
-  transition: background .15s, transform .12s, box-shadow .2s;
+  cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  transition: background .18s, transform .15s cubic-bezier(.22,1,.36,1), box-shadow .22s;
+  position: relative; overflow: hidden;
 }
-.btn-p:hover { background: var(--ghi); transform: translateY(-2px); box-shadow: 0 16px 48px rgba(74,138,82,.28); }
+.btn-p::after {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,.12); opacity: 0; border-radius: inherit;
+  transition: opacity .18s;
+}
+.btn-p:hover { background: var(--ghi); transform: translateY(-3px) scale(1.02); box-shadow: 0 18px 52px rgba(74,138,82,.36); }
+.btn-p:hover::after { opacity: 1; }
+.btn-p:active { transform: translateY(-1px) scale(1); }
+
 .btn-s {
   background: transparent; color: var(--txt2);
   border: 1px solid var(--bor2); border-radius: 100px;
   padding: 16px 32px; font-family: 'DM Sans', sans-serif;
   font-size: 16px; font-weight: 300;
   cursor: pointer; text-decoration: none; display: inline-block;
-  transition: border-color .15s, color .15s;
+  transition: border-color .18s, color .18s, background .18s, transform .15s;
 }
-.btn-s:hover { border-color: var(--txt2); color: var(--txt); }
+.btn-s:hover { border-color: var(--gbr); color: var(--gbr); background: var(--grn-bg); transform: translateY(-2px); }
+.btn-s:active { transform: translateY(0); }
 
-/* Hero image */
-.hero-img-wrap {
-  margin-top: 64px; width: 100%; max-width: 980px; z-index: 1;
-  opacity: 0; animation: fadeUp 1s .82s cubic-bezier(.22,1,.36,1) forwards;
-}
-.hero-img-wrap img {
-  width: 100%; border-radius: 32px; border: 1px solid var(--bor); display: block;
-  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+/* prompt-wrap kept for hero split */
+.prompt-wrap {
+  width: 100%;
+  position: relative; z-index: 1;
 }
 
 /* ══════════════════════════════════════════
@@ -1199,11 +1277,10 @@ html[data-theme="light"] .figma-embed-wrap:hover {
   display: inline-flex; align-items: center; gap: 9px;
   border: 1px solid var(--bor2); border-radius: 100px;
   padding: 7px 16px; font-size: 12px; font-weight: 400; color: var(--txt2);
-  position: relative; z-index: 1; margin-top: 16px;
-  opacity: 0; animation: fadeUp .9s .78s cubic-bezier(.22,1,.36,1) forwards;
+  position: relative; z-index: 1; margin-top: 16px; margin-bottom: 4px;
   transition: border-color .15s, color .15s;
 }
-.watch-badge:hover { border-color: var(--bor2); color: var(--txt); }
+.watch-badge:hover { border-color: var(--grn-bor); color: var(--gbr); }
 .watch-badge svg { opacity: .55; }
 
 /* ══════════════════════════════════════════
@@ -1238,6 +1315,85 @@ html[data-theme="light"] .live-activity {
 .la-prog-label span { font-size: 9px; color: var(--txt3); }
 .la-prog-bar { height: 3px; background: var(--bor); border-radius: 2px; overflow: hidden; }
 .la-prog-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--grn), var(--gbr)); }
+
+/* ══════════════════════════════════════════
+   CONTACT SECTION
+══════════════════════════════════════════ */
+.contact { border-top: 1px solid var(--bor); }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 64px; align-items: start;
+}
+@media(min-width:720px) { .contact-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+.contact-info { }
+.contact-info .sec-chip { margin-bottom: 16px; }
+.contact-h {
+  font-size: clamp(32px,5vw,56px); font-weight: 700;
+  letter-spacing: -0.032em; line-height: 1.08; margin-bottom: 20px;
+}
+.contact-h span { color: var(--gbr); }
+.contact-p {
+  font-size: 15px; font-weight: 300; color: var(--txt2);
+  line-height: 1.8; margin-bottom: 36px; max-width: 380px;
+}
+.contact-email-card {
+  display: inline-flex; align-items: center; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--bor2);
+  border-radius: 20px; padding: 16px 22px;
+  text-decoration: none;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.contact-email-card:hover { background: var(--bg3); border-color: var(--grn-bor); transform: translateY(-2px); }
+.contact-email-ico {
+  width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+  background: var(--grn-bg); border: 1px solid var(--grn-bor);
+  display: flex; align-items: center; justify-content: center;
+}
+.contact-email-ico svg { color: var(--gbr); }
+.contact-email-lbl { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--txt3); margin-bottom: 3px; }
+.contact-email-addr { font-size: 14px; font-weight: 400; color: var(--txt); }
+
+/* Form */
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.cf-group { display: flex; flex-direction: column; gap: 6px; }
+.cf-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--txt3);
+}
+.cf-input, .cf-textarea {
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300;
+  color: var(--txt); background: var(--bg2);
+  border: 1px solid var(--bor2); border-radius: 14px;
+  padding: 13px 18px; outline: none; width: 100%;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.cf-input::placeholder, .cf-textarea::placeholder { color: var(--txt3); }
+.cf-input:focus, .cf-textarea:focus {
+  border-color: rgba(74,138,82,.5);
+  box-shadow: 0 0 0 3px rgba(74,138,82,.09);
+  background: var(--bg3);
+}
+.cf-textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+.cf-submit {
+  background: var(--gbr); color: #fff; border: none;
+  border-radius: 100px; padding: 15px 32px;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
+  transition: background .15s, transform .12s, box-shadow .2s;
+  width: 100%;
+}
+.cf-submit:hover { background: var(--ghi); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(74,138,82,.32); }
+.cf-submit:active { transform: translateY(0); }
+.cf-submit svg { flex-shrink: 0; }
+.cf-status {
+  font-size: 13px; font-weight: 400; line-height: 1.6;
+  min-height: 18px; opacity: 0; transform: translateY(4px);
+  transition: all .3s cubic-bezier(.22,1,.36,1); text-align: center;
+}
+.cf-status.show { opacity: 1; transform: none; }
+.cf-status.ok { color: var(--gbr); }
+.cf-status.err { color: #d06060; }
 
 /* ══════════════════════════════════════════
    LEGAL MODALS
@@ -1337,6 +1493,7 @@ html[data-theme="light"] .live-activity {
       <li><a href="#phases">Le système</a></li>
       <li><a href="#interface">Interface</a></li>
       <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
       <!-- Hamburger (mobile only) -->
@@ -1371,6 +1528,7 @@ html[data-theme="light"] .live-activity {
     <li><a href="#phases" class="mob-link">Le système</a></li>
     <li><a href="#securite" class="mob-link">Sécurité</a></li>
     <li><a href="#faq" class="mob-link">FAQ</a></li>
+    <li><a href="#contact" class="mob-link">Contact</a></li>
   </ul>
   <a href="#waitlist" class="mob-menu-cta mob-link">Accès bêta</a>
   <p class="mob-menu-close-hint">Appuyer sur Échap ou toucher l'arrière-plan pour fermer</p>
@@ -1379,165 +1537,134 @@ html[data-theme="light"] .live-activity {
   <div class="hero-glow"></div>
   <div class="hero-grain"></div>
 
-  <div class="hero-badge">
-    <span class="badge-dot"></span>
-    Bêta Août 2026 — 0 inscrit pour le moment
-  </div>
-
-  <h1 class="hero-h1">
-    Décrire.<br><em>Générer.</em><br>Partir.
-  </h1>
-
-  <p class="hero-sub">
-    Terratrails n'est pas une application de randonnée.<br>
-    C'est un système d'exécution outdoor qui supprime<br>toute planification manuelle.
-  </p>
-
-  <!-- APPLE WATCH BADGE -->
-  <div class="watch-badge">
-    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
-      <rect x="2.5" y="4" width="9" height="8" rx="2.5"/>
-      <path d="M4.5 2.5h5M4.5 13.5h5"/>
-      <circle cx="7" cy="8" r="1.5" stroke-width="1"/>
-    </svg>
-    Disponible sur Apple Watch
-  </div>
-  <div class="prompt-wrap">
-    <div class="prompt-card">
-      <div class="prompt-label">Votre intention</div>
-      <div class="prompt-text">
-        <span id="tw-text"></span><span id="tw-cursor"></span>
+  <div class="hero-split w">
+    <!-- LEFT: all text content -->
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Bêta Août 2026 — 0 inscrit pour le moment
       </div>
-      <div class="prompt-chips">
-        <span class="p-chip" id="chip0">
-          <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 9l1.5-3 2 2 1.5-3 2.5 4"/></svg>
-          Tracé adapté à votre fatigue
-        </span>
-        <span class="p-chip" id="chip1">
-          <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5V6l1.8 1.5"/></svg>
-          Météo heure par heure
-        </span>
-        <span class="p-chip" id="chip2">
-          <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 3.5h8M2 6h5.5M2 8.5h4"/></svg>
-          Checklist dynamique
-        </span>
-        <span class="p-chip" id="chip3">
-          <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="1.5" y="3" width="9" height="6.5" rx="1.5"/><path d="M4 3V2M8 3V2"/></svg>
-          Cartes offline prêtes
-        </span>
+
+      <h1 class="hero-h1">
+        Décrire.<br><em>Générer.</em><br>Partir.
+      </h1>
+
+      <p class="hero-sub">
+        Terratrails n'est pas une application de randonnée.
+        C'est un système d'exécution outdoor qui supprime toute planification manuelle.
+      </p>
+
+      <div class="watch-badge">
+        <svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+          <rect x="2.5" y="4" width="9" height="8" rx="2.5"/>
+          <path d="M4.5 2.5h5M4.5 13.5h5"/>
+          <circle cx="7" cy="8" r="1.5" stroke-width="1"/>
+        </svg>
+        Disponible sur Apple Watch
+      </div>
+
+      <div class="prompt-wrap" style="margin-top:32px;max-width:100%">
+        <div class="prompt-card">
+          <div class="prompt-label">Votre intention</div>
+          <div class="prompt-text">
+            <span id="tw-text"></span><span id="tw-cursor"></span>
+          </div>
+          <div class="prompt-chips">
+            <span class="p-chip" id="chip0">
+              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 9l1.5-3 2 2 1.5-3 2.5 4"/></svg>
+              Tracé adapté à votre fatigue
+            </span>
+            <span class="p-chip" id="chip1">
+              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5V6l1.8 1.5"/></svg>
+              Météo heure par heure
+            </span>
+            <span class="p-chip" id="chip2">
+              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 3.5h8M2 6h5.5M2 8.5h4"/></svg>
+              Checklist dynamique
+            </span>
+            <span class="p-chip" id="chip3">
+              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="1.5" y="3" width="9" height="6.5" rx="1.5"/><path d="M4 3V2M8 3V2"/></svg>
+              Cartes offline prêtes
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-actions" style="justify-content:flex-start;margin-top:28px">
+        <a href="#waitlist" class="btn-p">Obtenir mon accès anticipé</a>
+        <a href="#manifeste" class="btn-s">Notre philosophie</a>
       </div>
     </div>
-  </div>
 
-  <div class="hero-actions">
-    <a href="#waitlist" class="btn-p">Obtenir mon accès anticipé</a>
-    <a href="#manifeste" class="btn-s">Notre philosophie</a>
-  </div>
-
-  <!-- HERO MOCK INTERFACE (replaces external image) -->
-  <div class="hero-mock-wrap w">
-    <div class="hero-mock">
-      <!-- Phone frame -->
-      <div class="hm-phone">
-        <div class="hm-ph-inner">
-          <div class="hm-status-bar">
-            <span style="font-size:10px;font-weight:600;color:var(--txt)">9:41</span>
-            <svg width="16" height="8" viewBox="0 0 16 8" fill="none"><rect x="0" y="1" width="14" height="6" rx="1.5" stroke="var(--txt3)" stroke-width="1"/><rect x="1" y="2" width="9" height="4" rx=".8" fill="var(--gbr)"/><rect x="15" y="3" width="1" height="2" rx=".5" fill="var(--txt3)"/></svg>
-          </div>
-          <!-- App header -->
-          <div class="hm-app-header">
-            <svg viewBox="0 0 100 100" fill="none" width="18" height="18"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
-            <div style="flex:1">
-              <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--txt);line-height:1.1">TERRA</div>
-              <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--gbr);line-height:1.1">TRAILS</div>
+    <!-- RIGHT: phone mockup only (the core visual) -->
+    <div class="hero-right">
+      <div class="hero-phone-showcase">
+        <div class="hm-phone">
+          <div class="hm-ph-inner">
+            <div class="hm-status-bar">
+              <span style="font-size:10px;font-weight:600;color:var(--txt)">9:41</span>
+              <svg width="16" height="8" viewBox="0 0 16 8" fill="none"><rect x="0" y="1" width="14" height="6" rx="1.5" stroke="var(--txt3)" stroke-width="1"/><rect x="1" y="2" width="9" height="4" rx=".8" fill="var(--gbr)"/><rect x="15" y="3" width="1" height="2" rx=".5" fill="var(--txt3)"/></svg>
             </div>
-            <div class="hm-notif-dot"></div>
-          </div>
-          <!-- Map area -->
-          <div class="hm-map">
-            <svg class="hm-map-topo" viewBox="0 0 260 120" fill="none" preserveAspectRatio="xMidYMid slice">
-              <path d="M0 90 Q65 70 130 80 Q195 90 260 60" stroke="#1A2E1C" stroke-width="12" fill="none"/>
-              <path d="M0 105 Q65 85 130 95 Q195 105 260 75" stroke="#162416" stroke-width="10" fill="none"/>
-              <path d="M0 75 Q50 55 120 65 Q190 75 260 45" stroke="#1E3020" stroke-width="8" fill="none"/>
-              <!-- Route -->
-              <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#264848" stroke-width="2" fill="none" opacity=".5"/>
-              <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#5FA868" stroke-width="2.5" fill="none"/>
-              <!-- Start -->
-              <circle cx="30" cy="100" r="5" fill="#345A3A" stroke="#5FA868" stroke-width="1.5"/>
-              <!-- Summit -->
-              <circle cx="230" cy="38" r="5" fill="#5FA868"/>
-              <path d="M224 38 L230 32 L236 38" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <!-- User dot -->
-              <circle cx="130" cy="68" r="5" fill="#5FA868" opacity=".3"/>
-              <circle cx="130" cy="68" r="3" fill="#5FA868"/>
-            </svg>
-            <!-- Direction card -->
-            <div class="hm-dir">
-              <div class="hm-dir-arr">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V4M7 4L4 7M7 4l3 3"/></svg>
+            <div class="hm-app-header">
+              <svg viewBox="0 0 100 100" fill="none" width="18" height="18"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+              <div style="flex:1">
+                <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--txt);line-height:1.1">TERRA</div>
+                <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--gbr);line-height:1.1">TRAILS</div>
               </div>
-              <div>
-                <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:-.02em">1,4 km</div>
-                <div style="font-size:9px;color:rgba(255,255,255,.78);margin-top:1px">Sentier des crêtes</div>
-              </div>
+              <div class="hm-notif-dot"></div>
             </div>
-            <!-- North -->
-            <div class="hm-north">N</div>
-          </div>
-          <!-- Stats row -->
-          <div class="hm-stats-row">
-            <div class="hm-stat"><div class="hm-sv">2h 45</div><div class="hm-sl">Restant</div></div>
-            <div class="hm-stat"><div class="hm-sv">8,4 km</div><div class="hm-sl">Distance</div></div>
-            <div class="hm-stat"><div class="hm-sv">580 m</div><div class="hm-sl">Dénivelé</div></div>
-          </div>
-          <!-- Alert strip -->
-          <div class="hm-alert">
-            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5.5 1L10 10H1L5.5 1z"/><path d="M5.5 4.5v2.5M5.5 8.5v.1"/></svg>
-            Orage possible à 15h — raccourci disponible
+            <div class="hm-map">
+              <svg class="hm-map-topo" viewBox="0 0 260 120" fill="none" preserveAspectRatio="xMidYMid slice">
+                <path d="M0 90 Q65 70 130 80 Q195 90 260 60" stroke="#1A2E1C" stroke-width="12" fill="none"/>
+                <path d="M0 105 Q65 85 130 95 Q195 105 260 75" stroke="#162416" stroke-width="10" fill="none"/>
+                <path d="M0 75 Q50 55 120 65 Q190 75 260 45" stroke="#1E3020" stroke-width="8" fill="none"/>
+                <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#264848" stroke-width="2" fill="none" opacity=".5"/>
+                <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#5FA868" stroke-width="2.5" fill="none"/>
+                <circle cx="30" cy="100" r="5" fill="#345A3A" stroke="#5FA868" stroke-width="1.5"/>
+                <circle cx="230" cy="38" r="5" fill="#5FA868"/>
+                <path d="M224 38 L230 32 L236 38" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <circle cx="130" cy="68" r="5" fill="#5FA868" opacity=".3"/>
+                <circle cx="130" cy="68" r="3" fill="#5FA868"/>
+              </svg>
+              <div class="hm-dir">
+                <div class="hm-dir-arr">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V4M7 4L4 7M7 4l3 3"/></svg>
+                </div>
+                <div>
+                  <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:-.02em">1,4 km</div>
+                  <div style="font-size:9px;color:rgba(255,255,255,.78);margin-top:1px">Sentier des crêtes</div>
+                </div>
+              </div>
+              <div class="hm-north">N</div>
+            </div>
+            <div class="hm-stats-row">
+              <div class="hm-stat"><div class="hm-sv">2h 45</div><div class="hm-sl">Restant</div></div>
+              <div class="hm-stat"><div class="hm-sv">8,4 km</div><div class="hm-sl">Distance</div></div>
+              <div class="hm-stat"><div class="hm-sv">580 m</div><div class="hm-sl">Dénivelé</div></div>
+            </div>
+            <div class="hm-alert">
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5.5 1L10 10H1L5.5 1z"/><path d="M5.5 4.5v2.5M5.5 8.5v.1"/></svg>
+              Orage possible à 15h — raccourci disponible
+            </div>
           </div>
         </div>
-      </div>
-
-      <!-- Side cards -->
-      <div class="hm-side">
-        <!-- Route card -->
-        <div class="hm-side-card">
+        <!-- floating side card — route -->
+        <div class="hero-float-card hero-float-top">
           <div class="hm-sc-label">Itinéraire généré</div>
-          <div class="hm-sc-route">
-            <svg viewBox="0 0 160 36" fill="none">
-              <path d="M8 28 Q40 18 80 22 Q120 26 152 12" stroke="#264848" stroke-width="1.5" fill="none" opacity=".5"/>
-              <path d="M8 28 Q40 18 80 22 Q120 26 152 12" stroke="#5FA868" stroke-width="2" fill="none"/>
-              <circle cx="8" cy="28" r="4" fill="#345A3A" stroke="#5FA868" stroke-width="1.2"/>
-              <circle cx="152" cy="12" r="4" fill="#5FA868"/>
-            </svg>
-            <div class="hm-sc-meta">
-              <div style="font-size:12px;font-weight:700;color:var(--txt);letter-spacing:-.02em">Lac d'Ayous</div>
-              <div style="font-size:10px;color:var(--txt3)">Pyrénées · 16,4 km · 7h30</div>
-              <div class="hm-match-badge">92% adapté</div>
-            </div>
-          </div>
+          <div style="font-size:12px;font-weight:700;color:var(--txt);letter-spacing:-.01em">Lac d'Ayous</div>
+          <div style="font-size:10px;color:var(--txt3);margin-top:2px">Pyrénées · 16,4 km · 7h30</div>
+          <div class="hm-match-badge" style="margin-top:6px">92% adapté</div>
         </div>
-        <!-- Checklist card -->
-        <div class="hm-side-card">
-          <div class="hm-sc-label">Équipement</div>
-          <div class="hm-cl-item hm-done"><div class="hm-cl-ico"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4.5l2.5 2.5 4.5-4.5"/></svg></div><span>Veste imperméable</span></div>
-          <div class="hm-cl-item hm-done"><div class="hm-cl-ico"><svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4.5l2.5 2.5 4.5-4.5"/></svg></div><span>Bâtons de marche</span></div>
-          <div class="hm-cl-item hm-pend"><div class="hm-cl-ico hm-pend-ico"></div><span style="color:var(--txt3)">Crème solaire 50+</span></div>
-          <div class="hm-gauge-mini">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span style="font-size:10px;color:var(--txt2)">Eau à emporter</span><span style="font-size:11px;font-weight:700;color:var(--txt)">2,4 L</span></div>
-            <div style="height:4px;background:var(--bor);border-radius:2px;overflow:hidden"><div style="height:100%;width:75%;background:linear-gradient(90deg,#264848,var(--ghi));border-radius:2px"></div></div>
-          </div>
-        </div>
-        <!-- Companion card -->
-        <div class="hm-side-card">
+        <!-- floating side card — companion -->
+        <div class="hero-float-card hero-float-bot">
           <div class="hm-sc-label">Compagnon actif</div>
           <div class="hm-comp-row">
             <div class="hm-comp-av">CP</div>
-            <div style="flex:1">
+            <div>
               <div style="font-size:11px;font-weight:600;color:var(--txt)">Clelia P.</div>
-              <div style="font-size:9px;color:var(--txt2);margin-top:1px">Progression 64% · ETA 17h40</div>
+              <div style="font-size:9px;color:var(--txt2);margin-top:1px">64% · ETA 17h40</div>
             </div>
-            <div style="width:5px;height:5px;border-radius:50%;background:var(--gbr);animation:glw 2s infinite;flex-shrink:0;margin-top:3px"></div>
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--gbr);animation:glw 2s infinite;margin-left:auto;flex-shrink:0"></div>
           </div>
         </div>
       </div>
@@ -1661,7 +1788,6 @@ html[data-theme="light"] .live-activity {
 
       <!-- CARD 0 (full-width): Figma Design Embed -->
       <div class="bento-card wide figma-bento r">
-        <div class="bento-label">Maquette interactive — Génération</div>
         <div class="figma-embed-wrap">
           <iframe class="figma-embed-frame" src="https://embed.figma.com/design/NVrmfcEmJJ8OAzjnlAQTRJ/Sans-titre?node-id=0-1&embed-host=share" allowfullscreen></iframe>
         </div>
@@ -2011,6 +2137,54 @@ html[data-theme="light"] .live-activity {
         <div class="wl-status" id="wlStatus" role="status" aria-live="polite"></div>
       </div>
       <p class="wl-note">Pas de spam, pas de marketing · 1 mail par mois max · Uniquement les accès de développement</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CONTACT ══════ -->
+<section class="contact" id="contact">
+  <div class="w">
+    <div class="contact-grid">
+      <!-- Info side -->
+      <div class="r">
+        <div class="sec-chip">Contact</div>
+        <h2 class="contact-h">Une question ?<br>Parlons-en <span>directement.</span></h2>
+        <p class="contact-p">Terratrails est en développement actif. Chaque retour compte. Pour un partenariat, une question sur la bêta ou simplement un mot d'encouragement — on répond.</p>
+        <a href="mailto:contact.terratrails@gmail.com" class="contact-email-card">
+          <div class="contact-email-ico">
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3.5" width="14" height="9" rx="2"/>
+              <path d="M1 5.5l7 4.5 7-4.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-email-lbl">Email direct</div>
+            <div class="contact-email-addr">contact.terratrails@gmail.com</div>
+          </div>
+        </a>
+      </div>
+      <!-- Form side -->
+      <div class="r d1">
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="cf-group">
+            <label class="cf-label" for="cfName">Nom</label>
+            <input class="cf-input" type="text" id="cfName" name="name" placeholder="Votre prénom ou nom" autocomplete="name">
+          </div>
+          <div class="cf-group">
+            <label class="cf-label" for="cfEmail">Email</label>
+            <input class="cf-input" type="email" id="cfEmail" name="email" placeholder="votre@email.com" autocomplete="email" inputmode="email">
+          </div>
+          <div class="cf-group">
+            <label class="cf-label" for="cfMsg">Message</label>
+            <textarea class="cf-textarea" id="cfMsg" name="message" placeholder="Votre message…"></textarea>
+          </div>
+          <button type="submit" class="cf-submit" id="cfBtn">
+            <svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7.5h11M9 3.5l4 4-4 4"/></svg>
+            Envoyer le message
+          </button>
+          <div class="cf-status" id="cfStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -2420,6 +2594,51 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
   });
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 })();
+/* ════════════════════════════════════════════
+   CONTACT FORM
+════════════════════════════════════════════ */
+(function initContact() {
+  var form    = document.getElementById('contactForm');
+  var nameIn  = document.getElementById('cfName');
+  var emailIn = document.getElementById('cfEmail');
+  var msgIn   = document.getElementById('cfMsg');
+  var btn     = document.getElementById('cfBtn');
+  var status  = document.getElementById('cfStatus');
+  if (!form) return;
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function showStatus(msg, type) {
+    status.textContent = msg;
+    status.className = 'cf-status show ' + type;
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name  = nameIn.value.trim();
+    var email = emailIn.value.trim().toLowerCase();
+    var msg   = msgIn.value.trim();
+
+    if (!name)  { showStatus('Merci d\'indiquer votre nom.', 'err'); nameIn.focus(); return; }
+    if (!EMAIL_RE.test(email)) { showStatus('Format d\'email invalide.', 'err'); emailIn.focus(); return; }
+    if (msg.length < 10) { showStatus('Votre message est trop court.', 'err'); msgIn.focus(); return; }
+
+    /* Build mailto link as graceful fallback */
+    var subject = encodeURIComponent('Message via terratrails.fr — ' + name);
+    var body    = encodeURIComponent('Nom : ' + name + '\nEmail : ' + email + '\n\n' + msg);
+    var mailto  = 'mailto:contact.terratrails@gmail.com?subject=' + subject + '&body=' + body;
+
+    btn.disabled = true;
+    window.location.href = mailto;
+
+    setTimeout(function() {
+      showStatus('✓ Votre client mail s\'est ouvert. Message prêt à envoyer.', 'ok');
+      form.reset();
+      btn.disabled = false;
+    }, 800);
+  });
+})();
+
 /* ════════════════════════════════════════════
    LEGAL MODALS
 ════════════════════════════════════════════ */
