@@ -114,17 +114,22 @@ section { padding: 110px 0; }
    NAV
 ══════════════════════════════════════════ */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  padding: 20px 0;
-  border-bottom: 1px solid transparent;
+  position: sticky; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 16px 0;
+  background: rgba(10,14,11,.72);
+  backdrop-filter: blur(32px) saturate(1.6); -webkit-backdrop-filter: blur(32px) saturate(1.6);
+  border-bottom: 1px solid rgba(255,255,255,.05);
   transition: background .35s, border-color .35s, padding .25s;
 }
 nav.on {
-  background: rgba(10,14,11,.92);
-  backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-  border-color: var(--bor); padding: 14px 0;
+  padding: 12px 0;
+  background: rgba(10,14,11,.86);
 }
-html[data-theme="light"] nav.on { background: rgba(255,255,255,.92); }
+html[data-theme="light"] nav {
+  background: rgba(255,255,255,.72);
+  border-color: rgba(0,0,0,.06);
+}
+html[data-theme="light"] nav.on { background: rgba(255,255,255,.88); }
 
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -243,7 +248,7 @@ html[data-theme="light"] .nav-cta { color: #fff; }
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 140px 20px 80px;
+  padding: 80px 20px 80px;
   position: relative; overflow: hidden;
 }
 .hero-glow {
@@ -767,7 +772,15 @@ html[data-theme="light"] .msi-btn { background: #1D1D1F; color: #fff; }
   display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600;
   color: var(--gbr); letter-spacing: .1em; text-transform: uppercase;
 }
-.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gbr); animation: glw 2s infinite; }
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--gbr); animation: glw 2s infinite;
+  position: relative;
+}
+.live-dot.pulse-ring::before {
+  content: ''; position: absolute; inset: -4px;
+  border-radius: 50%; background: var(--gbr); opacity: 0;
+  animation: pulsering 2s cubic-bezier(.4,0,.6,1) infinite;
+}
 .live-person { display: flex; align-items: center; gap: 13px; padding: 15px 24px; border-bottom: 1px solid var(--bor); }
 .live-person.dim { opacity: .38; }
 .live-av {
@@ -899,17 +912,171 @@ html[data-theme="light"] .msi-btn { background: #1D1D1F; color: #fff; }
 .wl-note { margin-top: 20px; font-size: 12px; color: var(--txt3); position: relative; z-index: 1; line-height: 1.65; }
 
 /* ══════════════════════════════════════════
-   FOOTER
+   FOOTER — PREMIUM APPLE-STYLE
 ══════════════════════════════════════════ */
-footer { border-top: 1px solid var(--bor); padding: 40px 0; }
-.foot-row { display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
-@media(min-width:640px) { .foot-row { flex-direction: row; justify-content: space-between; text-align: left; } }
-.foot-copy { font-size: 12px; font-weight: 300; color: var(--txt3); }
-.foot-ig a { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--txt2); text-decoration: none; transition: color .15s; }
-.foot-ig a:hover { color: var(--txt); }
-.foot-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; justify-content: center; }
-.foot-links a { font-size: 12px; font-weight: 300; color: var(--txt2); text-decoration: none; transition: color .15s; }
-.foot-links a:hover { color: var(--txt); }
+footer {
+  border-top: 1px solid var(--bor);
+  padding: 72px 0 48px;
+  transition: border-color .3s;
+}
+.foot-main {
+  display: grid; grid-template-columns: 1fr;
+  gap: 56px; margin-bottom: 64px;
+}
+@media(min-width:700px) {
+  .foot-main { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
+}
+/* Brand column */
+.foot-brand { display: flex; flex-direction: column; gap: 20px; }
+.foot-tagline {
+  font-size: 13px; font-weight: 300; color: var(--txt3); line-height: 1.72;
+  max-width: 220px;
+}
+.foot-ig-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--bor2); border-radius: 100px; padding: 8px 14px;
+  font-size: 12px; color: var(--txt2); text-decoration: none;
+  transition: color .15s, border-color .15s; width: fit-content;
+}
+.foot-ig-pill:hover { color: var(--txt); border-color: var(--bor2); }
+
+/* Link columns */
+.foot-col h4 {
+  font-size: 10px; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--txt3); margin-bottom: 18px;
+}
+.foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.foot-col a {
+  font-size: 13px; font-weight: 300; color: var(--txt2); text-decoration: none;
+  position: relative; display: inline-block;
+  transition: color .18s;
+}
+.foot-col a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 1px; background: var(--gbr);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .22s cubic-bezier(.22,1,.36,1);
+}
+.foot-col a:hover { color: var(--txt); }
+.foot-col a:hover::after { transform: scaleX(1); }
+
+/* Footnotes */
+.foot-notes {
+  border-top: 1px solid var(--bor);
+  padding-top: 32px; display: flex;
+  flex-direction: column; gap: 14px;
+  transition: border-color .3s;
+}
+.foot-note {
+  font-size: 11px; font-weight: 300; color: var(--txt3);
+  line-height: 1.75; max-width: 680px;
+}
+.foot-note::before { content: '¹'; font-size: 9px; vertical-align: super; margin-right: 5px; }
+.foot-note:nth-child(2)::before { content: '²'; }
+.foot-note:nth-child(3)::before { content: '³'; }
+
+/* Bottom bar */
+.foot-bar {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--bor);
+  transition: border-color .3s;
+}
+@media(min-width:640px) { .foot-bar { flex-direction: row; justify-content: space-between; } }
+.foot-copy { font-size: 11px; font-weight: 300; color: var(--txt3); }
+.foot-legal { display: flex; gap: 20px; }
+.foot-legal a { font-size: 11px; font-weight: 300; color: var(--txt3); text-decoration: none; transition: color .15s; }
+.foot-legal a:hover { color: var(--txt2); }
+
+/* ══════════════════════════════════════════
+   TYPOGRAPHIC HIERARCHY
+══════════════════════════════════════════ */
+/* All secondary body text uses --txt2, not --txt */
+.ph-p, .man-s, .showcase-hd p, .comp-p, .mgi-p,
+.faq-a-inner, .pc-s, .nav-dir-road, .meteo-pct,
+.hm-sl, .la-msg, .la-app, .la-time, .hm-sc-meta > div:nth-child(2) {
+  color: var(--txt2);
+}
+/* Section intro subtitles */
+.sec-sub { color: var(--txt2); }
+/* Force muted on all description-level text in cards */
+.mgi-p, .man-s, .pc-s, .faq-a-inner, .ph-p, .comp-p { color: var(--txt2); }
+html[data-theme="dark"] .mgi-p,
+html[data-theme="dark"] .man-s,
+html[data-theme="dark"] .pc-s,
+html[data-theme="dark"] .faq-a-inner { color: var(--txt2); }
+
+/* ══════════════════════════════════════════
+   FIGMA EMBED
+══════════════════════════════════════════ */
+.figma-embed-wrap {
+  width: 100%; overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.06);
+  box-shadow: 0 24px 80px rgba(0,0,0,.5);
+  transition: box-shadow .4s cubic-bezier(.22,1,.36,1), border-color .3s;
+  margin-top: 20px;
+}
+html[data-theme="light"] .figma-embed-wrap {
+  border-color: rgba(0,0,0,.08);
+  box-shadow: 0 16px 56px rgba(0,0,0,.14);
+}
+.figma-embed-wrap:hover {
+  box-shadow: 0 32px 96px rgba(0,0,0,.55), 0 0 0 1px rgba(95,168,104,.14);
+}
+html[data-theme="light"] .figma-embed-wrap:hover {
+  box-shadow: 0 20px 64px rgba(0,0,0,.18), 0 0 0 1px rgba(42,92,52,.14);
+}
+.figma-embed-frame {
+  display: block; width: 100%; border: none;
+  height: 400px; background: #1E1E1E;
+}
+@media(min-width:540px) { .figma-embed-frame { height: 450px; } }
+@media(min-width:900px) { .figma-embed-frame { height: 500px; } }
+.figma-bento { padding-bottom: 28px; }
+
+/* ══════════════════════════════════════════
+   PULSE ANIMATION — live notification dots
+══════════════════════════════════════════ */
+.pulse-dot {
+  position: relative; display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 10px; height: 10px; flex-shrink: 0;
+}
+.pulse-dot::before {
+  content: ''; position: absolute;
+  width: 100%; height: 100%; border-radius: 50%;
+  background: #22c55e; opacity: .6;
+  animation: pulsering 2s cubic-bezier(.4,0,.6,1) infinite;
+}
+.pulse-dot::after {
+  content: ''; position: absolute;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80;
+}
+@keyframes pulsering {
+  0%   { transform: scale(1);   opacity: .6; }
+  70%  { transform: scale(2.2); opacity: 0;  }
+  100% { transform: scale(2.2); opacity: 0;  }
+}
+
+/* Override old glw-based notif dot in hm-phone */
+.hm-notif-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  position: relative; display: inline-flex;
+  align-items: center; justify-content: center;
+  margin-left: auto; flex-shrink: 0;
+}
+.hm-notif-dot::before {
+  content: ''; position: absolute;
+  width: 100%; height: 100%; border-radius: 50%;
+  background: var(--gbr); opacity: .5;
+  animation: pulsering 2.4s cubic-bezier(.4,0,.6,1) infinite;
+}
+.hm-notif-dot::after {
+  content: ''; position: absolute;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--gbr);
+}
 
 /* ══════════════════════════════════════════
    HERO MOCK INTERFACE
@@ -1071,6 +1238,76 @@ html[data-theme="light"] .live-activity {
 .la-prog-label span { font-size: 9px; color: var(--txt3); }
 .la-prog-bar { height: 3px; background: var(--bor); border-radius: 2px; overflow: hidden; }
 .la-prog-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--grn), var(--gbr)); }
+
+/* ══════════════════════════════════════════
+   LEGAL MODALS
+══════════════════════════════════════════ */
+.legal-modal {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.64);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .32s cubic-bezier(.22,1,.36,1);
+}
+@media(min-width:600px) { .legal-modal { align-items: center; } }
+.legal-modal.open { opacity: 1; pointer-events: auto; }
+
+.legal-modal-inner {
+  width: 100%; max-width: 680px; max-height: 88vh;
+  background: var(--bg2); border: 1px solid var(--bor2);
+  border-radius: 28px 28px 0 0; overflow: hidden;
+  display: flex; flex-direction: column;
+  transform: translateY(24px);
+  transition: transform .4s cubic-bezier(.22,1,.36,1);
+  box-shadow: 0 -16px 64px rgba(0,0,0,.4);
+}
+@media(min-width:600px) {
+  .legal-modal-inner { border-radius: 28px; transform: scale(.96); box-shadow: 0 32px 96px rgba(0,0,0,.5); }
+}
+.legal-modal.open .legal-modal-inner { transform: none; }
+
+.legal-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 28px; border-bottom: 1px solid var(--bor);
+  flex-shrink: 0;
+}
+.legal-modal-title {
+  font-size: 16px; font-weight: 600; color: var(--txt); letter-spacing: -.015em;
+}
+.legal-modal-close {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--bor);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: var(--txt2); transition: background .15s, color .15s;
+  flex-shrink: 0;
+}
+.legal-modal-close:hover { background: var(--bg4); color: var(--txt); }
+
+.legal-modal-body {
+  overflow-y: auto; padding: 28px 28px 40px; -webkit-overflow-scrolling: touch;
+}
+.legal-modal-body h3 {
+  font-size: 13px; font-weight: 600; color: var(--txt);
+  letter-spacing: -.01em; margin: 24px 0 8px;
+}
+.legal-modal-body h3:first-of-type { margin-top: 0; }
+.legal-modal-body p {
+  font-size: 14px; font-weight: 300; color: var(--txt2);
+  line-height: 1.78; margin-bottom: 4px;
+}
+.legal-modal-body a { color: var(--gbr); text-decoration: none; }
+.legal-modal-body a:hover { text-decoration: underline; }
+.legal-modal-body code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px; background: var(--bg3);
+  border: 1px solid var(--bor); border-radius: 4px; padding: 1px 5px;
+  color: var(--txt2);
+}
+.legal-date {
+  font-size: 11px; font-weight: 400; color: var(--txt3);
+  letter-spacing: .06em; margin-bottom: 20px !important;
+}
 
 /* ══════════════════════════════════════════
    KEYFRAMES
@@ -1420,12 +1657,15 @@ html[data-theme="light"] .live-activity {
 <!-- ══════ SHOWCASE — CODED MOCK SCREENS ══════ -->
 <section class="showcase" id="interface">
   <div class="w">
-    <div class="showcase-hd r">
-      <div class="sec-chip">L'interface en détail</div>
-      <h2>Le produit.<br>En détail.</h2>
-      <p>Chaque écran pensé pour être compris en moins de 10 secondes. Même en effort, même hors-réseau.</p>
-    </div>
     <div class="bento-grid">
+
+      <!-- CARD 0 (full-width): Figma Design Embed -->
+      <div class="bento-card wide figma-bento r">
+        <div class="bento-label">Maquette interactive — Génération</div>
+        <div class="figma-embed-wrap">
+          <iframe class="figma-embed-frame" src="https://embed.figma.com/design/NVrmfcEmJJ8OAzjnlAQTRJ/Sans-titre?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+        </div>
+      </div>
 
       <!-- CARD A (wide): AI Generation -->
       <div class="bento-card wide r">
@@ -1691,7 +1931,7 @@ html[data-theme="light"] .live-activity {
       </div>
       <div class="r d1">
         <div class="live-card">
-          <div class="live-hd"><div class="live-title">Suivi en direct</div><div class="live-badge"><span class="live-dot"></span>Actif</div></div>
+          <div class="live-hd"><div class="live-title">Suivi en direct</div><div class="live-badge"><span class="live-dot pulse-ring"></span>Actif</div></div>
           <div class="live-person">
             <div class="live-av">CP</div>
             <div><div class="live-name">Clelia P.</div><div class="live-st">Progression · 64% · ETA 17h40</div></div>
@@ -1778,25 +2018,140 @@ html[data-theme="light"] .live-activity {
 <!-- ══════ FOOTER ══════ -->
 <footer>
   <div class="w">
-    <div class="foot-row">
-      <a href="#" class="logo" aria-label="Terratrails">
-        <svg width="28" height="28" viewBox="0 0 100 100" fill="none"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
-        <div class="logo-text"><span style="font-size:10px">TERRA</span><span style="font-size:10px">TRAILS</span></div>
-      </a>
-      <div class="foot-ig">
-        <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+    <!-- Grid principal 4 colonnes -->
+    <div class="foot-main">
+      <!-- Brand column -->
+      <div class="foot-brand r">
+        <a href="#" class="logo" aria-label="Terratrails">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+          <div class="logo-text"><span style="font-size:10px">TERRA</span><span style="font-size:10px">TRAILS</span></div>
+        </a>
+        <p class="foot-tagline">Décrire. Générer. Partir.<br>Le copilote outdoor qui supprime la planification.</p>
+        <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="foot-ig-pill">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           @terratrails.fr
         </a>
       </div>
-      <ul class="foot-links">
-        <li><a href="mailto:contact.terratrails@gmail.com">Contact</a></li>
-        <li><a href="#">Confidentialité</a></li>
-        <li><span class="foot-copy">© 2026 Terratrails</span></li>
-      </ul>
+      <!-- Produit column -->
+      <div class="foot-col r d1">
+        <h4>Produit</h4>
+        <ul>
+          <li><a href="#phases">Le système</a></li>
+          <li><a href="#interface">Interface</a></li>
+          <li><a href="#securite">Mode Compagnon</a></li>
+          <li><a href="#waitlist">Accès bêta</a></li>
+        </ul>
+      </div>
+      <!-- Philosophie column -->
+      <div class="foot-col r d2">
+        <h4>Philosophie</h4>
+        <ul>
+          <li><a href="#manifeste">Manifeste</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="mailto:contact.terratrails@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+      <!-- Légal column -->
+      <div class="foot-col r d3">
+        <h4>Légal</h4>
+        <ul>
+          <li><a href="#" onclick="openModal('privacy');return false;">Politique de confidentialité</a></li>
+          <li><a href="#" onclick="openModal('terms');return false;">Conditions d'utilisation</a></li>
+          <li><a href="mailto:contact.terratrails@gmail.com">Nous contacter</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Disclaimers -->
+    <div class="foot-notes r">
+      <p class="foot-note">L'utilisation du GPS en arrière-plan peut impacter l'autonomie de la batterie selon l'appareil et les conditions terrain.</p>
+      <p class="foot-note">Le Mode Compagnon nécessite une couverture réseau minimale pour l'envoi des alertes SMS de secours. En zone blanche totale, le protocole SOS local reste actif.</p>
+      <p class="foot-note">Terratrails est un produit en développement actif. Certaines fonctionnalités décrites sont prévues pour la version bêta (août 2026).</p>
+    </div>
+
+    <!-- Barre du bas -->
+    <div class="foot-bar">
+      <span class="foot-copy">© 2026 Terratrails — Tous droits réservés</span>
+      <div class="foot-legal">
+        <a href="#" onclick="openModal('privacy');return false;">Confidentialité</a>
+        <a href="#" onclick="openModal('terms');return false;">Conditions</a>
+        <a href="mailto:contact.terratrails@gmail.com">Contact</a>
+      </div>
     </div>
   </div>
 </footer>
+
+<!-- ══════ MODAL CONFIDENTIALITÉ ══════ -->
+<div class="legal-modal" id="modalPrivacy" role="dialog" aria-modal="true" aria-label="Politique de confidentialité">
+  <div class="legal-modal-inner">
+    <div class="legal-modal-header">
+      <div class="legal-modal-title">Politique de confidentialité</div>
+      <button class="legal-modal-close" onclick="closeModal()" aria-label="Fermer">
+        <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
+      </button>
+    </div>
+    <div class="legal-modal-body">
+      <p class="legal-date">Dernière mise à jour : mai 2026</p>
+
+      <h3>1. Collecte des données</h3>
+      <p>Terratrails collecte uniquement les données strictement nécessaires au fonctionnement du service : adresse email lors de l'inscription à la liste d'attente, données de position GPS pendant une sortie active (traitées localement sur l'appareil), préférences de randonnée renseignées par l'utilisateur.</p>
+
+      <h3>2. Traitement local et offline</h3>
+      <p>Les données de navigation GPS sont traitées en priorité sur l'appareil de l'utilisateur. Aucune donnée de position en temps réel n'est transmise à nos serveurs sans consentement explicite. Les cartes et itinéraires sont téléchargés en local et fonctionnent sans connexion réseau.</p>
+
+      <h3>3. Partage des données</h3>
+      <p>Terratrails ne vend, ne loue et ne cède aucune donnée personnelle à des tiers à des fins commerciales. Les données ne sont partagées qu'avec les contacts explicitement désignés par l'utilisateur via le Mode Compagnon, et uniquement avec son accord.</p>
+
+      <h3>4. Sécurité</h3>
+      <p>Les données transmises à nos serveurs sont chiffrées en transit (TLS 1.3) et au repos. Les données de liste d'attente sont stockées dans une base sécurisée avec accès restreint.</p>
+
+      <h3>5. Conservation</h3>
+      <p>Les données de la liste d'attente sont conservées jusqu'à la notification du lancement bêta, puis supprimées sur demande. Les données de sorties sont conservées localement sur l'appareil de l'utilisateur. Aucune durée de conservation excessive n'est appliquée.</p>
+
+      <h3>6. Droits de l'utilisateur</h3>
+      <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Pour toute demande : <a href="mailto:contact.terratrails@gmail.com">contact.terratrails@gmail.com</a>.</p>
+
+      <h3>7. Cookies</h3>
+      <p>Aucun cookie de tracking ou publicitaire n'est utilisé sur ce site. Seule la préférence de thème (clair/sombre) est stockée en local via <code>localStorage</code>, sans transmission à des tiers.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ MODAL CONDITIONS D'UTILISATION ══════ -->
+<div class="legal-modal" id="modalTerms" role="dialog" aria-modal="true" aria-label="Conditions d'utilisation">
+  <div class="legal-modal-inner">
+    <div class="legal-modal-header">
+      <div class="legal-modal-title">Conditions d'utilisation</div>
+      <button class="legal-modal-close" onclick="closeModal()" aria-label="Fermer">
+        <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
+      </button>
+    </div>
+    <div class="legal-modal-body">
+      <p class="legal-date">Dernière mise à jour : mai 2026</p>
+
+      <h3>1. Objet</h3>
+      <p>Les présentes conditions régissent l'utilisation du site terratrails.fr et de l'application Terratrails (en développement). En vous inscrivant à la liste d'attente, vous acceptez ces conditions.</p>
+
+      <h3>2. Accès bêta</h3>
+      <p>L'accès à la version bêta (prévue août 2026) est réservé aux inscrits sélectionnés. Terratrails se réserve le droit de modifier le nombre de places, les dates de lancement ou les fonctionnalités disponibles sans préavis.</p>
+
+      <h3>3. Responsabilité terrain</h3>
+      <p>Terratrails est un outil d'assistance à la planification et à la navigation. Il ne remplace pas le jugement personnel, la formation aux techniques de randonnée ni les équipements de sécurité adaptés. L'utilisateur reste seul responsable de ses décisions en milieu naturel.</p>
+
+      <h3>4. Fiabilité des données</h3>
+      <p>Les données terrain (météo, état des sentiers, points d'eau) sont fournies à titre indicatif. Terratrails ne garantit pas leur exactitude en temps réel. Vérifiez toujours les conditions auprès des autorités locales avant une sortie engagée.</p>
+
+      <h3>5. Propriété intellectuelle</h3>
+      <p>L'ensemble des éléments du service (interface, algorithmes, contenus) est la propriété exclusive de Terratrails. Toute reproduction ou utilisation commerciale est interdite sans autorisation écrite.</p>
+
+      <h3>6. Modification des conditions</h3>
+      <p>Terratrails se réserve le droit de modifier ces conditions à tout moment. Les utilisateurs inscrits seront notifiés par email lors de changements substantiels.</p>
+
+      <h3>7. Contact</h3>
+      <p>Pour toute question : <a href="mailto:contact.terratrails@gmail.com">contact.terratrails@gmail.com</a></p>
+    </div>
+  </div>
+</div>
 
 <!-- ══════ SCRIPTS ══════ -->
 <script>
@@ -2065,6 +2420,26 @@ document.querySelectorAll('.faq-q').forEach(function(btn) {
   });
   observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 })();
+/* ════════════════════════════════════════════
+   LEGAL MODALS
+════════════════════════════════════════════ */
+function openModal(type) {
+  var id = type === 'privacy' ? 'modalPrivacy' : 'modalTerms';
+  var modal = document.getElementById(id);
+  if (!modal) return;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modal.addEventListener('click', function onBg(e) {
+    if (e.target === modal) { closeModal(); modal.removeEventListener('click', onBg); }
+  });
+  document.addEventListener('keydown', function onEsc(e) {
+    if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', onEsc); }
+  });
+}
+function closeModal() {
+  document.querySelectorAll('.legal-modal.open').forEach(function(m) { m.classList.remove('open'); });
+  document.body.style.overflow = '';
+}
 </script>
 </body>
 </html>
