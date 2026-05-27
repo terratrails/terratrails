@@ -352,11 +352,28 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 }
 .hero-phone-showcase .hm-phone {
   position: relative; z-index: 1;
-  max-width: 260px;
+  max-width: 280px;
   box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(74,138,82,.12);
   transition: transform .4s cubic-bezier(.22,1,.36,1);
 }
+@media(min-width:860px) { .hero-phone-showcase .hm-phone { max-width: 320px; } }
 .hero-phone-showcase .hm-phone:hover { transform: translateY(-6px) rotate(-.5deg); }
+
+/* ── Real screenshot images inside appshot rows ── */
+.appshot-real-phone {
+  width: 300px; max-width: 100%;
+  display: block; border-radius: 4px;
+  box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(74,138,82,.08);
+  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
+}
+@media(min-width:760px) { .appshot-real-phone { width: 340px; } }
+html[data-theme="light"] .appshot-real-phone {
+  box-shadow: 0 24px 64px rgba(0,0,0,.18), 0 0 0 1px rgba(42,92,52,.1);
+}
+.appshot-real-phone:hover {
+  transform: translateY(-6px) rotate(-.5deg);
+  box-shadow: 0 52px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(74,138,82,.16);
+}
 
 /* Floating info cards */
 .hero-float-card {
@@ -386,7 +403,7 @@ html[data-theme="light"] .nav-cta { color: #fff; }
 }
 .prompt-card {
   background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 28px; padding: 30px 32px 26px;
+  border-radius: 28px; padding: 32px 36px 28px;
   text-align: left;
   box-shadow: 0 0 0 1px rgba(74,138,82,.06), 0 28px 100px var(--shadow),
               inset 0 1px 0 rgba(255,255,255,.03);
@@ -402,7 +419,7 @@ html[data-theme="light"] .nav-cta { color: #fff; }
   background: var(--gbr); opacity: .6;
 }
 .prompt-text {
-  font-size: clamp(15px,2.2vw,18px); font-weight: 300;
+  font-size: clamp(16px,2.4vw,20px); font-weight: 300;
   font-style: italic; color: var(--txt); line-height: 1.7;
   min-height: 60px;
 }
@@ -1723,8 +1740,9 @@ html[data-theme="light"] .live-activity {
       <li><a href="#manifeste">Manifeste</a></li>
       <li><a href="#phases">Le système</a></li>
       <li><a href="#interface">L'Application</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#waitlist">Inscription Bêta</a></li>
       <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
       <!-- Hamburger (mobile only) -->
@@ -1758,8 +1776,9 @@ html[data-theme="light"] .live-activity {
     <li><a href="#manifeste" class="mob-link">Manifeste</a></li>
     <li><a href="#phases" class="mob-link">Le système</a></li>
     <li><a href="#interface" class="mob-link">L'Application</a></li>
-    <li><a href="#contact" class="mob-link">Contact</a></li>
+    <li><a href="#waitlist" class="mob-link">Inscription Bêta</a></li>
     <li><a href="#faq" class="mob-link">FAQ</a></li>
+    <li><a href="#contact" class="mob-link">Contact</a></li>
   </ul>
   <a href="#waitlist" class="mob-menu-cta mob-link">Accès bêta</a>
   <p class="mob-menu-close-hint">Appuyer sur Échap ou toucher l'arrière-plan pour fermer</p>
@@ -1794,7 +1813,7 @@ html[data-theme="light"] .live-activity {
         Disponible sur Apple Watch
       </div>
 
-      <div class="prompt-wrap" style="margin-top:32px;max-width:100%">
+      <div class="prompt-wrap" style="margin-top:36px;max-width:100%;width:100%">
         <div class="prompt-card">
           <div class="prompt-label">Votre intention</div>
           <div class="prompt-text">
@@ -2024,38 +2043,7 @@ html[data-theme="light"] .live-activity {
     <!-- Row 1: phone left, text right -->
     <div class="appshot-row r">
       <div class="appshot-phone-col">
-        <div class="appshot-device">
-          <div class="appshot-notch"></div>
-          <div class="appshot-screen as-screen-gen">
-            <div class="ass-status">
-              <span>9:41</span>
-              <svg width="14" height="7" viewBox="0 0 14 7" fill="none"><rect x="0" y=".5" width="12" height="5.5" rx="1.3" stroke="rgba(255,255,255,.5)" stroke-width="1"/><rect x="1" y="1.5" width="7" height="3.5" rx=".6" fill="#5FA868"/><rect x="13" y="2" width=".8" height="2" rx=".4" fill="rgba(255,255,255,.4)"/></svg>
-            </div>
-            <div class="ass-logo-row">
-              <svg viewBox="0 0 100 100" fill="none" width="20" height="20"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
-              <span class="ass-logo-t">TERRA<br>TRAILS</span>
-              <span class="ass-tab">IA · ITINÉRAIRE</span>
-            </div>
-            <div class="ass-title">Où veux-tu<br>aller aujourd'hui ?</div>
-            <div class="ass-input-fake">J'ai demain après-midi libre autour d'Annecy, je veux une randonnée de 4h avec un lac où se baigner et un refuge pour manger.<span class="ass-cur"></span></div>
-            <div class="ass-chips-row">
-              <span class="ass-chip active-chip">Durée : 1 journée</span>
-              <span class="ass-chip">Niveau Intermédiaire</span>
-              <span class="ass-chip">Montagne</span>
-              <span class="ass-chip">Bivouac</span>
-            </div>
-            <div class="ass-gen-btn">
-              <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="rgba(255,255,255,.9)" stroke-width="1.4" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5.5"/><path d="M4 6.5l2 2 3-3"/></svg>
-              Générer l'itinéraire
-            </div>
-            <!-- Nav bar -->
-            <div class="ass-navbar">
-              <div class="ass-nb-item active"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 6l6-4 6 4v8H10V9H6v5H2z"/></svg><span>Explorer</span></div>
-              <div class="ass-nb-item"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2L2 7v7h4v-4h4v4h4V7z"/></svg><span>Aventures</span></div>
-              <div class="ass-nb-item"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg><span>Profil</span></div>
-            </div>
-          </div>
-        </div>
+        <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer — Génération d'itinéraire Terratrails" class="appshot-real-phone">
       </div>
       <div class="appshot-text-col">
         <div class="as-eyebrow">Écran 01 — Explorer</div>
@@ -2084,106 +2072,24 @@ html[data-theme="light"] .live-activity {
         </ul>
       </div>
       <div class="appshot-phone-col">
-        <div class="appshot-device">
-          <div class="appshot-notch"></div>
-          <div class="appshot-screen as-screen-terrain">
-            <div class="ass-status"><span>9:41</span><svg width="14" height="7" viewBox="0 0 14 7" fill="none"><rect x="0" y=".5" width="12" height="5.5" rx="1.3" stroke="rgba(255,255,255,.4)" stroke-width="1"/><rect x="1" y="1.5" width="7" height="3.5" rx=".6" fill="#5FA868"/><rect x="13" y="2" width=".8" height="2" rx=".4" fill="rgba(255,255,255,.3)"/></svg></div>
-            <div class="ass-map-zone">
-              <svg viewBox="0 0 200 140" fill="none" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%">
-                <path d="M0 100 Q50 80 100 90 Q150 100 200 70" stroke="#1A2E1C" stroke-width="14" fill="none"/>
-                <path d="M0 115 Q50 95 100 105 Q150 115 200 85" stroke="#162416" stroke-width="12" fill="none"/>
-                <path d="M0 82 Q40 65 100 72 Q160 80 200 55" stroke="#1E3020" stroke-width="9" fill="none"/>
-                <path d="M20 110 Q60 85 100 78 Q140 72 180 48" stroke="#264848" stroke-width="2" fill="none" opacity=".5"/>
-                <path d="M20 110 Q60 85 100 78 Q140 72 180 48" stroke="#5FA868" stroke-width="3" fill="none"/>
-                <circle cx="20" cy="110" r="6" fill="#345A3A" stroke="#5FA868" stroke-width="2"/>
-                <circle cx="180" cy="48" r="6" fill="#5FA868"/>
-                <path d="M174 48 L180 42 L186 48" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <circle cx="100" cy="78" r="7" fill="#5FA868" opacity=".25"/>
-                <circle cx="100" cy="78" r="4" fill="#5FA868"/>
-              </svg>
-              <div class="ass-dir-card">
-                <div class="ass-dir-arr"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10V3M6 3L3 6M6 3l3 3"/></svg></div>
-                <div><div style="font-size:11px;font-weight:800;color:#fff">1,4 km</div><div style="font-size:8px;color:rgba(255,255,255,.7);margin-top:1px">Sentier des crêtes</div></div>
-              </div>
-            </div>
-            <div class="ass-stats-row">
-              <div class="ass-stat"><div class="ass-sv">2h 45</div><div class="ass-sl">Restant</div></div>
-              <div class="ass-stat"><div class="ass-sv">8,4 km</div><div class="ass-sl">Distance</div></div>
-              <div class="ass-stat"><div class="ass-sv">580 m</div><div class="ass-sl">Dénivelé</div></div>
-            </div>
-            <div class="ass-alert-strip">
-              <span class="storm-alert-badge" style="font-size:10px"><svg width="10" height="10" fill="none" viewBox="0 0 11 13"><polygon points="6,1 1,7 5,7 5,12 10,6 6,6" fill="#D97706" stroke="#D97706" stroke-width=".4" stroke-linejoin="round"/></svg>Orage possible à 15h — raccourci disponible</span>
-            </div>
-          </div>
-        </div>
+        <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain — Navigation Terratrails" class="appshot-real-phone">
       </div>
     </div>
 
     <!-- Row 3: phone left, text right -->
     <div class="appshot-row r d2">
       <div class="appshot-phone-col">
-        <div class="appshot-device">
-          <div class="appshot-notch"></div>
-          <div class="appshot-screen as-screen-base">
-            <div class="ass-status"><span>9:41</span><svg width="14" height="7" viewBox="0 0 14 7" fill="none"><rect x="0" y=".5" width="12" height="5.5" rx="1.3" stroke="rgba(255,255,255,.4)" stroke-width="1"/><rect x="1" y="1.5" width="9" height="3.5" rx=".6" fill="#5FA868"/><rect x="13" y="2" width=".8" height="2" rx=".4" fill="rgba(255,255,255,.3)"/></svg></div>
-            <!-- Tab row -->
-            <div class="ass-base-tabs">
-              <span class="ass-base-tab active-tab">Mon Pack</span>
-              <span class="ass-base-tab">Mes Cartes</span>
-              <span class="ass-base-tab">Historique</span>
-            </div>
-            <!-- Score card -->
-            <div class="ass-score-card">
-              <div class="ass-score-row">
-                <div>
-                  <div style="font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,232,228,.4)">Score préparation</div>
-                  <div style="font-size:22px;font-weight:800;color:#5FA868;letter-spacing:-.03em;margin-top:2px">87<span style="font-size:12px;font-weight:400;color:rgba(95,168,104,.6)">/100</span></div>
-                </div>
-                <div class="ass-ring-wrap">
-                  <svg viewBox="0 0 40 40" width="40" height="40">
-                    <circle cx="20" cy="20" r="16" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="4"/>
-                    <circle cx="20" cy="20" r="16" fill="none" stroke="#5FA868" stroke-width="4" stroke-linecap="round" stroke-dasharray="87.96" stroke-dashoffset="11.44" transform="rotate(-90 20 20)" opacity=".85"/>
-                  </svg>
-                </div>
-              </div>
-              <div style="font-size:8.5px;color:rgba(232,232,228,.35);margin-top:4px">Basé sur vos 12 dernières sorties · Apple Santé</div>
-            </div>
-            <!-- Pack items -->
-            <div class="ass-pack-section">
-              <div style="font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,232,228,.35);margin-bottom:7px">Équipement validé</div>
-              <div class="ass-pack-grid">
-                <div class="ass-pack-item checked"><svg width="8" height="8" fill="none" viewBox="0 0 8 8" stroke="#5FA868" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2 2 4-4"/></svg>Veste imper</div>
-                <div class="ass-pack-item checked"><svg width="8" height="8" fill="none" viewBox="0 0 8 8" stroke="#5FA868" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2 2 4-4"/></svg>Bâtons</div>
-                <div class="ass-pack-item checked"><svg width="8" height="8" fill="none" viewBox="0 0 8 8" stroke="#5FA868" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2 2 4-4"/></svg>Frontale</div>
-                <div class="ass-pack-item checked"><svg width="8" height="8" fill="none" viewBox="0 0 8 8" stroke="#5FA868" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4l2 2 4-4"/></svg>Filtre eau</div>
-                <div class="ass-pack-item miss"><svg width="8" height="8" fill="none" viewBox="0 0 8 8" stroke="rgba(200,121,65,.8)" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l4 4M6 2L2 6"/></svg>Crème 50+</div>
-                <div class="ass-pack-item miss"><svg width="8" height="8" fill="none" viewBox="0 0 8 8" stroke="rgba(200,121,65,.8)" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l4 4M6 2L2 6"/></svg>Powerbank</div>
-              </div>
-            </div>
-            <!-- Offline maps -->
-            <div class="ass-maps-row">
-              <div style="font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,232,228,.35);margin-bottom:6px">Cartes offline</div>
-              <div class="ass-map-chip"><svg width="9" height="9" fill="none" viewBox="0 0 9 9" stroke="var(--gbr)" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="2" width="7" height="5" rx="1"/><path d="M3 2V1M6 2V1"/></svg>Pyrénées · 2,3 Go</div>
-              <div class="ass-map-chip"><svg width="9" height="9" fill="none" viewBox="0 0 9 9" stroke="var(--gbr)" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="2" width="7" height="5" rx="1"/><path d="M3 2V1M6 2V1"/></svg>Alpes Nord · 1,8 Go</div>
-            </div>
-            <!-- Nav bar -->
-            <div class="ass-navbar">
-              <div class="ass-nb-item"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 6l6-4 6 4v8H10V9H6v5H2z"/></svg><span>Explorer</span></div>
-              <div class="ass-nb-item"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 2L2 7v7h4v-4h4v4h4V7z"/></svg><span>Aventures</span></div>
-              <div class="ass-nb-item active"><svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg><span>Base</span></div>
-            </div>
-          </div>
-        </div>
+        <img src="Ecran_3_BASE.png" alt="Écran Base — Hub logistique Terratrails" class="appshot-real-phone">
       </div>
       <div class="appshot-text-col">
         <div class="as-eyebrow">Écran 03 — Base</div>
         <h3 class="as-h">Votre hub logistique.<br>Personnel et <span style="color:var(--gbr)">privé.</span></h3>
-        <p class="as-p">Gérez votre équipement, vos cartes hors-ligne et suivez votre condition physique réelle. Aucun profil public, aucune donnée partagée — tout reste local sur votre appareil.</p>
+        <p class="as-p">Gérez votre matériel, consultez vos cartes hors-ligne et suivez votre condition physique réelle. Zéro profil public, zéro donnée partagée — tout reste chiffré localement sur votre appareil.</p>
         <ul class="as-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Score de préparation via Apple Santé</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Score de préparation indexé sur Apple Santé</li>
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Checklist équipement dynamique et intelligente</li>
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Cartes offline pré-téléchargées par région</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Données chiffrées — 100% locales sur l'appareil</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Données 100% locales — chiffrées sur l'appareil</li>
         </ul>
       </div>
     </div>
