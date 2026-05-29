@@ -1,2742 +1,318 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="dark">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terratrails — Décrire. Générer. Partir.</title>
-<meta name="description" content="Terratrails n'est pas une application de randonnée. C'est un système d'exécution outdoor qui supprime toute planification manuelle.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22.37' fill='%230A0E0B'/%3E%3Cline x1='50' y1='59.5' x2='50' y2='79' stroke='%23264848' stroke-width='1.3' stroke-linecap='round'/%3E%3Cpolyline points='29.5,59.5 50,29.5 70.5,59.5' stroke='%23E8E8E4' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='79' r='4.32' fill='%23345A3A'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800&family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
-<style>
-/* ══════════════════════════════════════════
-   CSS VARIABLES — DARK (default) + LIGHT
-══════════════════════════════════════════ */
-:root,
-html[data-theme="dark"] {
-  --bg:      #0A0E0B;
-  --bg1:     #0D110E;
-  --bg2:     #111611;
-  --bg3:     #141A15;
-  --bg4:     #1A221B;
-  --bor:     #1E281F;
-  --bor2:    #283029;
-  --txt:     #E8E8E4;
-  --txt2:    #8A9A8C;
-  --txt3:    #566860;
-  --grn:     #345A3A;
-  --ghi:     #4A8A52;
-  --gbr:     #5FA868;
-  --org:     #C87941;
-  --org-bg:  rgba(200,121,65,.07);
-  --org-bor: rgba(200,121,65,.2);
-  --red:     #8B3A3A;
-  --red-bg:  rgba(139,58,58,.1);
-  --red-bor: rgba(139,58,58,.18);
-  --grn-bg:  rgba(74,138,82,.08);
-  --grn-bor: rgba(74,138,82,.18);
-  --grn-glo: rgba(52,90,58,.24);
-  --wht:     #FAFAF8;
-  --card:    #111611;
-  --shadow:  rgba(0,0,0,.45);
-  --hero-bg: radial-gradient(ellipse 55% 48% at 50% 20%, rgba(52,90,58,.26) 0%, rgba(38,72,72,.10) 44%, transparent 72%);
-  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-}
-
-html[data-theme="light"] {
-  --bg:      #FFFFFF;
-  --bg1:     #F5F5F7;
-  --bg2:     #FAFAFA;
-  --bg3:     #F2F2F2;
-  --bg4:     #E8E8E8;
-  --bor:     #E0E0E0;
-  --bor2:    #CACACA;
-  --txt:     #1D1D1F;
-  --txt2:    #6E6E73;
-  --txt3:    #AEAEB2;
-  --grn:     #2A5C34;
-  --ghi:     #38724A;
-  --gbr:     #3A8A46;
-  --org:     #B5682A;
-  --org-bg:  rgba(181,104,42,.07);
-  --org-bor: rgba(181,104,42,.22);
-  --red:     #8B2A2A;
-  --red-bg:  rgba(139,42,42,.07);
-  --red-bor: rgba(139,42,42,.18);
-  --grn-bg:  rgba(42,92,52,.07);
-  --grn-bor: rgba(42,92,52,.22);
-  --grn-glo: rgba(42,92,52,.14);
-  --wht:     #1D1D1F;
-  --card:    #F5F5F7;
-  --shadow:  rgba(0,0,0,.12);
-  --hero-bg: radial-gradient(ellipse 55% 48% at 50% 20%, rgba(42,92,52,.12) 0%, rgba(38,72,72,.04) 44%, transparent 72%);
-  --noise: none;
-}
-
-/* ══════════════════════════════════════════
-   TRANSITION (smooth theme switch)
-══════════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
-/* Offset anchor scroll for fixed nav (62px height) */
-section[id], [id="waitlist"], [id="contact"], [id="faq"], [id="manifeste"],
-[id="phases"], [id="interface"], [id="securite"] {
-  scroll-margin-top: 66px;
-}
-
-body {
-  background: var(--bg); color: var(--txt);
-  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-  font-weight: 300; line-height: 1;
-  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  transition: background .3s, color .3s;
-}
-
-/* ══════════════════════════════════════════
-   LAYOUT
-══════════════════════════════════════════ */
-.w { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-@media(min-width:640px) { .w { padding: 0 48px; } }
-@media(min-width:1200px) { .w { padding: 0 60px; } }
-section { padding: 110px 0; }
-@media(max-width:640px) { section { padding: 72px 0; } }
-
-/* ══════════════════════════════════════════
-   REVEAL ON SCROLL
-══════════════════════════════════════════ */
-.r {
-  opacity: 0; transform: translateY(18px);
-  transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1);
-}
-.r.in { opacity: 1; transform: none; }
-.d1{transition-delay:.07s} .d2{transition-delay:.14s}
-.d3{transition-delay:.21s} .d4{transition-delay:.28s} .d5{transition-delay:.35s}
-
-/* ══════════════════════════════════════════
-   NAV — always visible, fixed glass
-══════════════════════════════════════════ */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  padding: 14px 0;
-  background: rgba(10,14,11,.78);
-  backdrop-filter: blur(40px) saturate(1.8); -webkit-backdrop-filter: blur(40px) saturate(1.8);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  transition: background .3s, border-color .3s, padding .25s;
-  will-change: transform; /* force GPU layer — prevents disappearance */
-}
-nav.on {
-  padding: 10px 0;
-  background: rgba(10,14,11,.92);
-  border-bottom-color: rgba(255,255,255,.09);
-}
-html[data-theme="light"] nav {
-  background: rgba(250,250,248,.82);
-  border-color: rgba(0,0,0,.07);
-}
-html[data-theme="light"] nav.on {
-  background: rgba(250,250,248,.96);
-  border-bottom-color: rgba(0,0,0,.1);
-}
-/* Push body content below the fixed nav */
-body { padding-top: 62px; }
-
-.nav-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  max-width: 1220px; margin: 0 auto; padding: 0 24px;
-}
-@media(min-width:640px) { .nav-inner { padding: 0 48px; } }
-@media(min-width:1200px) { .nav-inner { padding: 0 60px; } }
-
-.logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
-.logo svg { width: 30px; height: 30px; flex-shrink: 0; }
-.logo-text { display: flex; flex-direction: column; line-height: 1.12; }
-.logo-text span:first-child {
-  font-family: 'Nunito', sans-serif; font-weight: 800;
-  font-size: 11.5px; letter-spacing: .07em; color: var(--txt);
-}
-.logo-text span:last-child {
-  font-family: 'Nunito', sans-serif; font-weight: 800;
-  font-size: 11.5px; letter-spacing: .07em; color: var(--gbr);
-}
-
-.nav-links { display: none; gap: 26px; list-style: none; }
-@media(min-width:800px) {
-  .nav-links { display: flex; }
-  .nav-links a { font-size: 13px; font-weight: 400; color: var(--txt2); text-decoration: none; transition: color .15s; }
-  .nav-links a:hover { color: var(--txt); }
-}
-
-/* ── Hamburger button (mobile only) ── */
-.ham-btn {
-  display: flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--bg3); border: 1px solid var(--bor);
-  cursor: pointer; flex-shrink: 0;
-  transition: background .2s, border-color .2s;
-}
-.ham-btn:hover { background: var(--bg4); }
-@media(min-width:800px) { .ham-btn { display: none; } }
-.ham-btn .hb { display: block; width: 16px; }
-.ham-btn .hb-line {
-  display: block; height: 1.5px; background: var(--txt2);
-  border-radius: 2px; transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .18s;
-  transform-origin: center;
-}
-.ham-btn .hb-line + .hb-line { margin-top: 4.5px; }
-/* X state */
-body.menu-open .hb-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-body.menu-open .hb-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
-body.menu-open .hb-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-/* ── Mobile menu overlay ── */
-.mob-menu {
-  position: fixed; inset: 0; z-index: 190;
-  background: rgba(10,14,11,.86);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0;
-  opacity: 0; pointer-events: none;
-  transition: opacity .32s cubic-bezier(.22,1,.36,1);
-}
-html[data-theme="light"] .mob-menu { background: rgba(255,255,255,.92); }
-body.menu-open .mob-menu { opacity: 1; pointer-events: auto; }
-
-.mob-menu-links { list-style: none; text-align: center; }
-.mob-menu-links li { border-bottom: 1px solid var(--bor); }
-.mob-menu-links li:first-child { border-top: 1px solid var(--bor); }
-.mob-menu-links a {
-  display: block; padding: 24px 48px;
-  font-size: 28px; font-weight: 700; letter-spacing: -.025em;
-  color: var(--txt); text-decoration: none;
-  transition: color .15s;
-}
-.mob-menu-links a:hover { color: var(--gbr); }
-.mob-menu-cta {
-  margin-top: 36px;
-  display: inline-block; background: var(--gbr); color: #fff;
-  border-radius: 100px; padding: 16px 40px;
-  font-size: 16px; font-weight: 500; text-decoration: none;
-  transition: background .15s;
-}
-.mob-menu-cta:hover { background: var(--ghi); }
-.mob-menu-close-hint {
-  margin-top: 28px; font-size: 12px; color: var(--txt3); letter-spacing: .08em;
-}
-
-.nav-right { display: flex; align-items: center; gap: 10px; }
-
-/* Theme toggle */
-.theme-btn {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--bg3); border: 1px solid var(--bor);
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background .2s, border-color .2s, transform .15s;
-  flex-shrink: 0;
-}
-.theme-btn:hover { background: var(--bg4); transform: scale(1.08); }
-.theme-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-.icon-sun { display: block; }
-.icon-moon { display: none; }
-html[data-theme="light"] .icon-sun { display: none; }
-html[data-theme="light"] .icon-moon { display: block; }
-
-.nav-cta {
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-  background: var(--grn); color: var(--wht);
-  border: none; border-radius: 100px; padding: 9px 22px;
-  cursor: pointer; text-decoration: none; white-space: nowrap;
-  transition: background .15s;
-}
-html[data-theme="light"] .nav-cta { color: #fff; }
-.nav-cta:hover { background: var(--ghi); }
-
-/* ══════════════════════════════════════════
-   HERO — SPLIT LAYOUT
-══════════════════════════════════════════ */
-.hero {
-  min-height: calc(100svh - 62px);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 40px 0 80px;
-  position: relative; overflow: hidden;
-}
-.hero-glow {
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: min(1200px,160vw); height: min(900px,130vw);
-  background: var(--hero-bg); pointer-events: none;
-}
-.hero-grain {
-  position: absolute; inset: 0;
-  background-image: var(--noise);
-  pointer-events: none;
-}
-
-/* Split container */
-.hero-split {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
-  align-items: center;
-  position: relative; z-index: 1;
-  text-align: center;
-}
-@media(min-width:860px) {
-  .hero-split {
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    text-align: left;
-    min-height: calc(100svh - 120px);
-  }
-}
-
-/* LEFT column */
-.hero-left {
-  display: flex; flex-direction: column;
-  align-items: center;
-  opacity: 0; animation: fadeUp .9s .1s cubic-bezier(.22,1,.36,1) forwards;
-}
-@media(min-width:860px) { .hero-left { align-items: flex-start; } }
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 9px;
-  border: 1px solid var(--bor2); border-radius: 100px;
-  padding: 6px 16px; font-size: 12px; font-weight: 400; color: var(--txt2);
-  margin-bottom: 28px; position: relative; z-index: 1;
-}
-.badge-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--gbr);
-  animation: glw 2.2s ease-in-out infinite;
-}
-
-.hero-h1 {
-  font-size: clamp(52px,10vw,110px); font-weight: 700;
-  line-height: .95; letter-spacing: -0.045em; color: var(--txt);
-  position: relative; z-index: 1;
-}
-.hero-h1 em { font-style: normal; color: var(--gbr); }
-
-.hero-sub {
-  margin-top: 22px;
-  font-size: clamp(15px,1.8vw,18px); font-weight: 300;
-  color: var(--txt2); max-width: 460px; line-height: 1.68;
-  position: relative; z-index: 1;
-}
-
-/* Hero CTA */
-.hero-actions {
-  display: flex; flex-wrap: wrap; gap: 12px;
-  align-items: center; justify-content: center;
-  position: relative; z-index: 1;
-}
-@media(min-width:860px) { .hero-actions { justify-content: flex-start; } }
-
-/* RIGHT column — phone showcase */
-.hero-right {
-  display: flex; justify-content: center; align-items: center;
-  opacity: 0; animation: fadeUp 1s .32s cubic-bezier(.22,1,.36,1) forwards;
-}
-.hero-phone-showcase {
-  position: relative;
-  display: inline-block;
-}
-/* Subtle green glow behind phone */
-.hero-phone-showcase::before {
-  content: '';
-  position: absolute; inset: -40px;
-  background: radial-gradient(ellipse 70% 60% at 50% 50%, var(--grn-glo) 0%, transparent 70%);
-  pointer-events: none; z-index: 0;
-}
-.hero-phone-showcase .hm-phone {
-  position: relative; z-index: 1;
-  max-width: 280px;
-  box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(74,138,82,.12);
-  transition: transform .4s cubic-bezier(.22,1,.36,1);
-}
-@media(min-width:860px) { .hero-phone-showcase .hm-phone { max-width: 320px; } }
-.hero-phone-showcase .hm-phone:hover { transform: translateY(-6px) rotate(-.5deg); }
-
-/* ── Real screenshot images inside appshot rows ── */
-.appshot-real-phone {
-  width: 300px; max-width: 100%;
-  display: block; border-radius: 4px;
-  box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(74,138,82,.08);
-  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
-}
-@media(min-width:760px) { .appshot-real-phone { width: 340px; } }
-html[data-theme="light"] .appshot-real-phone {
-  box-shadow: 0 24px 64px rgba(0,0,0,.18), 0 0 0 1px rgba(42,92,52,.1);
-}
-.appshot-real-phone:hover {
-  transform: translateY(-6px) rotate(-.5deg);
-  box-shadow: 0 52px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(74,138,82,.16);
-}
-
-/* Floating info cards */
-.hero-float-card {
-  position: absolute; z-index: 2;
-  background: var(--bg2);
-  border: 1px solid var(--bor2);
-  border-radius: 16px; padding: 12px 14px;
-  min-width: 160px;
-  box-shadow: 0 12px 40px rgba(0,0,0,.4);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-}
-.hero-float-top {
-  top: 24px; right: -20px;
-  animation: floatY 4s ease-in-out infinite;
-}
-.hero-float-bot {
-  bottom: 40px; left: -20px;
-  animation: floatY 4s ease-in-out 2s infinite;
-}
-@media(max-width:860px) {
-  .hero-float-top { right: -8px; }
-  .hero-float-bot { left: -8px; }
-}
-@keyframes floatY {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-.prompt-card {
-  background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 28px; padding: 32px 36px 28px;
-  text-align: left;
-  box-shadow: 0 0 0 1px rgba(74,138,82,.06), 0 28px 100px var(--shadow),
-              inset 0 1px 0 rgba(255,255,255,.03);
-  transition: background .3s, border-color .3s;
-}
-.prompt-label {
-  font-size: 11px; font-weight: 700; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--gbr);
-  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
-}
-.prompt-label::before {
-  content: ''; display: inline-block; width: 20px; height: 1px;
-  background: var(--gbr); opacity: .6;
-}
-.prompt-text {
-  font-size: clamp(16px,2.4vw,20px); font-weight: 300;
-  font-style: italic; color: var(--txt); line-height: 1.7;
-  min-height: 60px;
-}
-/* CSS-only cursor on the span inside .prompt-text */
-#tw-cursor {
-  display: inline-block; width: 2px; height: 1.1em;
-  background: var(--gbr); margin-left: 2px; border-radius: 1px;
-  vertical-align: text-bottom;
-  animation: cur .9s step-end infinite;
-}
-
-.prompt-chips {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--bor);
-}
-.p-chip {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--bg3); border: 1px solid var(--bor);
-  border-radius: 10px; padding: 9px 14px;
-  font-size: 12.5px; font-weight: 400; color: var(--txt3);
-  transition: all .35s cubic-bezier(.22,1,.36,1);
-}
-.p-chip.on {
-  background: var(--grn-bg); border-color: var(--grn-bor); color: var(--gbr);
-}
-.p-chip svg { opacity: .4; transition: opacity .35s; }
-.p-chip.on svg { opacity: .8; }
-
-/* Hero CTA */
-.hero-actions {
-  display: flex; flex-wrap: wrap; gap: 12px;
-  align-items: center; justify-content: center;
-  position: relative; z-index: 1;
-}
-.btn-p {
-  background: var(--gbr); color: #fff; border: none;
-  border-radius: 100px; padding: 16px 36px;
-  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
-  cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-  transition: background .18s, transform .15s cubic-bezier(.22,1,.36,1), box-shadow .22s;
-  position: relative; overflow: hidden;
-}
-.btn-p::after {
-  content: ''; position: absolute; inset: 0;
-  background: rgba(255,255,255,.12); opacity: 0; border-radius: inherit;
-  transition: opacity .18s;
-}
-.btn-p:hover { background: var(--ghi); transform: translateY(-3px) scale(1.02); box-shadow: 0 18px 52px rgba(74,138,82,.36); }
-.btn-p:hover::after { opacity: 1; }
-.btn-p:active { transform: translateY(-1px) scale(1); }
-
-.btn-s {
-  background: transparent; color: var(--txt2);
-  border: 1px solid var(--bor2); border-radius: 100px;
-  padding: 16px 32px; font-family: 'DM Sans', sans-serif;
-  font-size: 16px; font-weight: 300;
-  cursor: pointer; text-decoration: none; display: inline-block;
-  transition: border-color .18s, color .18s, background .18s, transform .15s;
-}
-.btn-s:hover { border-color: var(--gbr); color: var(--gbr); background: var(--grn-bg); transform: translateY(-2px); }
-.btn-s:active { transform: translateY(0); }
-
-/* prompt-wrap kept for hero split */
-.prompt-wrap {
-  width: 100%;
-  position: relative; z-index: 1;
-}
-
-/* ══════════════════════════════════════════
-   SECTION UTILITIES
-══════════════════════════════════════════ */
-.sec-chip {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; font-weight: 600; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--gbr); margin-bottom: 18px;
-}
-.sec-chip::before { content: ''; width: 18px; height: 1px; background: var(--gbr); }
-.sec-h {
-  font-size: clamp(36px,6vw,72px); font-weight: 700;
-  letter-spacing: -0.036em; line-height: 1.06;
-}
-.sec-h span { color: var(--gbr); }
-
-/* ══════════════════════════════════════════
-   MANIFESTE
-══════════════════════════════════════════ */
-.manifeste { border-top: 1px solid var(--bor); }
-.man-grid {
-  display: grid; grid-template-columns: 1fr; gap: 2px;
-  background: var(--bor); border: 1px solid var(--bor);
-  border-radius: 40px; overflow: hidden; margin-top: 56px;
-}
-@media(min-width:640px) { .man-grid { grid-template-columns: 1fr 1fr; } }
-.man-col { padding: 40px 38px; }
-.man-col.dk { background: var(--bg); }
-.man-col.lt { background: var(--bg3); }
-.man-hd {
-  font-size: 10px; font-weight: 700; letter-spacing: .2em;
-  text-transform: uppercase; margin-bottom: 28px;
-  display: flex; align-items: center; gap: 10px;
-}
-.man-col.dk .man-hd { color: var(--red); }
-.man-col.lt .man-hd { color: var(--gbr); }
-.mhd-dot { width: 7px; height: 7px; border-radius: 50%; }
-.man-col.dk .mhd-dot { background: var(--red); }
-.man-col.lt .mhd-dot { background: var(--gbr); }
-.man-rows { display: flex; flex-direction: column; }
-.man-row {
-  display: flex; align-items: flex-start; gap: 15px;
-  padding: 16px 0; border-bottom: 1px solid var(--bor);
-}
-.man-row:last-child { border-bottom: none; padding-bottom: 0; }
-.man-ico {
-  width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; margin-top: 1px;
-}
-.man-col.dk .man-ico { background: var(--red-bg); border: 1px solid var(--red-bor); }
-.man-col.lt .man-ico { background: var(--grn-bg); border: 1px solid var(--grn-bor); }
-.man-t { font-size: 14px; font-weight: 500; color: var(--txt); line-height: 1.35; margin-bottom: 4px; }
-.man-s { font-size: 12px; font-weight: 300; color: var(--txt2); line-height: 1.55; }
-
-/* ══════════════════════════════════════════
-   3 PHASES
-══════════════════════════════════════════ */
-.phases { border-top: 1px solid var(--bor); }
-.phases-hd { padding-bottom: 64px; border-bottom: 1px solid var(--bor); }
-.phase {
-  display: grid; grid-template-columns: 1fr; gap: 36px;
-  padding: 64px 0; border-top: 1px solid var(--bor);
-  align-items: center;
-}
-@media(min-width:700px) {
-  .phase { grid-template-columns: 1fr 1fr; gap: 72px; }
-  .phase.fl .pc-col { order: -1; }
-}
-.ph-num {
-  font-size: 10px; font-weight: 700; letter-spacing: .22em;
-  text-transform: uppercase; color: var(--txt3); margin-bottom: 14px; display: block;
-}
-.ph-h {
-  font-size: clamp(30px,4.5vw,52px); font-weight: 700;
-  letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 18px;
-}
-.ph-h em { font-style: normal; color: var(--gbr); }
-.ph-p { font-size: 15px; font-weight: 300; color: var(--txt2); line-height: 1.82; max-width: 400px; }
-.ph-card {
-  background: var(--card); border: 1px solid var(--bor);
-  border-radius: 28px; overflow: hidden;
-  transition: background .3s, border-color .3s, transform .24s cubic-bezier(.22,1,.36,1), box-shadow .24s;
-}
-.ph-card:hover { transform: translateY(-2px); box-shadow: 0 16px 44px var(--shadow); }
-.pc-row {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 18px 22px; border-bottom: 1px solid var(--bor);
-}
-.pc-row:last-child { border-bottom: none; }
-.pc-ico {
-  width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
-  background: var(--grn-bg); border: 1px solid var(--bor);
-  display: flex; align-items: center; justify-content: center;
-}
-.pc-ico.w { background: var(--org-bg); border-color: var(--org-bor); }
-.pc-l { font-size: 13px; font-weight: 500; color: var(--txt); margin-bottom: 4px; }
-.pc-l.w { color: var(--org); }
-.pc-s { font-size: 12px; font-weight: 300; color: var(--txt2); line-height: 1.5; }
-.storm-alert-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(217,119,6,.12); border: 1px solid rgba(217,119,6,.3);
-  border-radius: 6px; padding: 3px 8px;
-  color: #D97706; font-size: 11px; font-weight: 500;
-  animation: stormPulse 2.4s ease-in-out infinite;
-}
-@keyframes stormPulse {
-  0%,100% { background: rgba(217,119,6,.12); border-color: rgba(217,119,6,.3); }
-  50%      { background: rgba(217,119,6,.22); border-color: rgba(217,119,6,.55); }
-}
-.pc-bar { height: 3px; background: var(--bor); border-radius: 2px; overflow: hidden; margin-top: 9px; }
-.pc-fill { height: 100%; border-radius: 2px; background: var(--gbr); }
-.pc-fill.tl { background: var(--grn); }
-
-/* ══════════════════════════════════════════
-   SHOWCASE — CODED MOCK SCREENS
-══════════════════════════════════════════ */
-.showcase { border-top: 1px solid var(--bor); background: var(--bg1); }
-.showcase-hd { text-align: center; margin-bottom: 56px; }
-.showcase-hd h2 {
-  font-size: clamp(36px,6vw,72px); font-weight: 700;
-  letter-spacing: -0.036em; line-height: 1.06; margin-bottom: 12px;
-}
-.showcase-hd p {
-  font-size: 16px; font-weight: 300; color: var(--txt2);
-  max-width: 380px; margin: 0 auto; line-height: 1.65;
-}
-.bento-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-@media(min-width:640px) { .bento-grid { grid-template-columns: 1fr 1fr; } }
-
-.bento-card {
-  background: var(--bg); border: 1px solid var(--bor);
-  border-radius: 32px; overflow: hidden; padding: 24px;
-  transition: background .3s, border-color .3s, transform .24s cubic-bezier(.22,1,.36,1), box-shadow .24s cubic-bezier(.22,1,.36,1);
-}
-.bento-card:hover { transform: translateY(-3px); box-shadow: 0 20px 64px var(--shadow); }
-.bento-card.wide { grid-column: 1; }
-@media(min-width:640px) { .bento-card.wide { grid-column: 1 / 3; } }
-
-.bento-label {
-  font-size: 10px; font-weight: 700; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--gbr); margin-bottom: 20px;
-  display: flex; align-items: center; gap: 8px;
-}
-.bento-label::before { content: ''; width: 14px; height: 1px; background: var(--gbr); }
-
-/* ── MOCK SCREEN: Generation AI ── */
-.mock-gen {
-  display: grid; grid-template-columns: 1fr;
-  gap: 24px; align-items: start;
-}
-@media(min-width:640px) { .mock-gen { grid-template-columns: 1fr 1fr; } }
-
-.mock-phone-frame {
-  background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 28px; overflow: hidden; padding: 14px;
-  box-shadow: 0 20px 60px var(--shadow);
-}
-.mock-status {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 4px 8px 10px;
-}
-.mock-time { font-size: 11px; font-weight: 600; color: var(--txt); }
-.mock-bat {
-  display: flex; align-items: center; gap: 4px;
-}
-.mock-bat-icon {
-  width: 18px; height: 9px; border: 1px solid var(--bor2); border-radius: 2px; position: relative;
-}
-.mock-bat-icon::after {
-  content: ''; position: absolute; top: 1.5px; left: 1.5px;
-  width: 11px; height: 5px; background: var(--gbr); border-radius: 1px;
-}
-.mock-screen-inner { border-radius: 20px; overflow: hidden; background: var(--bg); }
-
-.msi-head {
-  display: flex; align-items: center; gap: 8px; padding: 14px 16px 10px;
-}
-.msi-logo { width: 20px; height: 20px; flex-shrink: 0; }
-.msi-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-.msi-logo-text span:first-child { font-family: 'Nunito', sans-serif; font-size: 8px; font-weight: 800; color: var(--txt); letter-spacing: .06em; }
-.msi-logo-text span:last-child { font-family: 'Nunito', sans-serif; font-size: 8px; font-weight: 800; color: var(--gbr); letter-spacing: .06em; }
-
-.msi-title { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; color: var(--txt); padding: 4px 16px 14px; line-height: 1.25; }
-
-.msi-filters { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 16px 14px; }
-.msi-filter {
-  font-size: 10px; font-weight: 400; color: var(--txt2);
-  background: var(--bg3); border: 1px solid var(--bor);
-  border-radius: 20px; padding: 4px 10px;
-  display: flex; align-items: center; gap: 4px;
-}
-.msi-filter .val { color: var(--gbr); font-weight: 500; }
-
-.msi-btn {
-  margin: 0 16px 14px; background: var(--txt); color: var(--bg);
-  border-radius: 14px; padding: 12px 16px;
-  font-size: 13px; font-weight: 600; text-align: center;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
-html[data-theme="light"] .msi-btn { background: #1D1D1F; color: #fff; }
-
-/* Route card */
-.mock-route-card {
-  margin: 0 16px 16px; background: var(--bg3);
-  border: 1px solid var(--bor); border-radius: 18px; overflow: hidden;
-}
-.mrc-map {
-  height: 80px; background: linear-gradient(135deg, #1A2E1C 0%, #0F1A10 100%);
-  position: relative; overflow: hidden;
-}
-.mrc-map-badge {
-  position: absolute; top: 8px; right: 8px;
-  background: var(--grn-bg); border: 1px solid var(--grn-bor);
-  border-radius: 20px; padding: 3px 8px; font-size: 9px; color: var(--gbr);
-}
-.mrc-route-svg { width: 100%; height: 100%; }
-.mrc-body { padding: 12px 14px; }
-.mrc-name { font-size: 13px; font-weight: 600; color: var(--txt); margin-bottom: 2px; line-height: 1.3; }
-.mrc-place { font-size: 10px; color: var(--txt3); margin-bottom: 10px; }
-.mrc-stats { display: flex; gap: 14px; margin-bottom: 10px; }
-.mrc-stat-val { font-size: 14px; font-weight: 700; color: var(--txt); letter-spacing: -0.02em; }
-.mrc-stat-lbl { font-size: 9px; color: var(--txt3); margin-top: 1px; }
-.mrc-level { margin-left: auto; font-size: 10px; color: var(--org); font-weight: 500; align-self: center; }
-.mrc-cta {
-  background: var(--gbr); color: #fff; border-radius: 10px;
-  padding: 9px 14px; font-size: 12px; font-weight: 500; text-align: center;
-}
-
-/* Right side: feature bullets */
-.mock-gen-info { display: flex; flex-direction: column; gap: 12px; }
-.mgi-card {
-  background: var(--bg3); border: 1px solid var(--bor);
-  border-radius: 18px; padding: 18px 18px;
-  transition: background .3s, border-color .3s, transform .22s cubic-bezier(.22,1,.36,1);
-}
-.mgi-card:hover { transform: scale(1.013); }
-.mgi-h { font-size: 13px; font-weight: 600; color: var(--txt); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-.mgi-h svg { color: var(--gbr); }
-.mgi-p { font-size: 12px; font-weight: 300; color: var(--txt2); line-height: 1.6; }
-.mgi-bar { height: 3px; background: var(--bor); border-radius: 2px; margin-top: 10px; overflow: hidden; }
-.mgi-bar-fill { height: 100%; border-radius: 2px; }
-
-/* ── MOCK SCREEN: Navigation ── */
-.mock-nav { position: relative; border-radius: 20px; overflow: hidden; min-height: 320px; background: #0A0F0A; }
-.nav-map-bg {
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, #0D130E 0%, #0A0F0A 100%);
-}
-/* CSS contour lines */
-.nav-topo { position: absolute; inset: 0; overflow: hidden; }
-.nav-topo-line {
-  position: absolute; left: -10%; right: -10%;
-  height: 1px; background: #1A261B; transform-origin: center;
-}
-.nav-route-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.nav-user-dot {
-  position: absolute; width: 14px; height: 14px;
-  border-radius: 50%; background: var(--gbr);
-  box-shadow: 0 0 0 4px rgba(95,168,104,.25);
-  transform: translate(-50%, -50%);
-}
-.nav-north {
-  position: absolute; top: 12px; right: 12px;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(10,14,11,.7); border: 1px solid rgba(40,48,41,.8);
-  backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700; color: var(--txt2);
-}
-.nav-dir-card {
-  position: absolute; top: 12px; left: 12px; right: 50px;
-  background: var(--gbr); border-radius: 16px; padding: 12px 14px;
-  display: flex; align-items: center; gap: 10px;
-}
-.nav-arrow {
-  width: 28px; height: 28px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.nav-dir-dist { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; }
-.nav-dir-road { font-size: 11px; color: rgba(255,255,255,.82); margin-top: 2px; line-height: 1.3; }
-.nav-stats {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: var(--bg); border-top: 1px solid var(--bor);
-  padding: 14px 16px;
-  display: flex; gap: 0;
-}
-.nav-stat { flex: 1; text-align: center; }
-.nav-stat + .nav-stat { border-left: 1px solid var(--bor); }
-.nav-sv { font-size: 18px; font-weight: 700; color: var(--txt); letter-spacing: -0.02em; }
-.nav-sl { font-size: 10px; color: var(--txt3); margin-top: 2px; }
-
-/* ── MOCK SCREEN: Météo ── */
-.mock-meteo { }
-.meteo-hd { font-size: 14px; font-weight: 600; color: var(--txt); margin-bottom: 8px; padding-bottom: 14px; border-bottom: 1px solid var(--bor); }
-.meteo-rows { display: flex; flex-direction: column; }
-.meteo-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 13px 0; border-bottom: 1px solid var(--bor);
-}
-.meteo-row:last-child { border-bottom: none; padding-bottom: 0; }
-.meteo-time { font-size: 12px; color: var(--txt3); width: 42px; flex-shrink: 0; }
-.meteo-icon { width: 28px; height: 28px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.meteo-deg { font-size: 16px; font-weight: 700; color: var(--txt); letter-spacing: -0.02em; width: 38px; }
-.meteo-bar-wrap { flex: 1; }
-.meteo-bar-bg { height: 4px; background: var(--bor); border-radius: 2px; overflow: hidden; }
-.meteo-bar-fill { height: 100%; border-radius: 2px; transition: width .5s; }
-.meteo-pct { font-size: 11px; color: var(--txt3); margin-top: 3px; text-align: right; }
-.meteo-pct.warn { color: var(--org); }
-.meteo-alert {
-  margin-top: 14px; padding: 12px 14px;
-  background: var(--org-bg); border: 1px solid var(--org-bor);
-  border-radius: 12px; font-size: 12px; color: var(--org); line-height: 1.55;
-  display: flex; align-items: flex-start; gap: 8px;
-}
-
-/* ── MOCK SCREEN: Checklist + Logistique ── */
-.mock-logistic { }
-.logistic-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
-.log-tab {
-  font-size: 11px; font-weight: 500; padding: 6px 14px;
-  border-radius: 20px; cursor: pointer;
-}
-.log-tab.active { background: var(--gbr); color: #fff; }
-.log-tab.inactive {
-  background: var(--bg3); border: 1px solid var(--bor);
-  color: var(--txt2);
-}
-.check-list { display: flex; flex-direction: column; }
-.check-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 0; border-bottom: 1px solid var(--bor);
-}
-.check-item:last-child { border-bottom: none; }
-.check-ico {
-  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.check-ico.done { background: var(--gbr); }
-.check-ico.pend { background: transparent; border: 1.5px solid var(--bor); }
-.check-name { font-size: 13px; color: var(--txt); flex: 1; }
-.check-name.dim { color: var(--txt3); }
-
-.logistic-gauges {
-  margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--bor);
-  display: flex; flex-direction: column; gap: 12px;
-}
-.gauge-row { }
-.gauge-label {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 6px; font-size: 12px; font-weight: 500; color: var(--txt2);
-}
-.gauge-val { font-size: 13px; font-weight: 700; color: var(--txt); }
-.gauge-bar { height: 6px; background: var(--bor); border-radius: 3px; overflow: hidden; }
-.gauge-fill { height: 100%; border-radius: 3px; }
-.water-fill { background: linear-gradient(90deg, #264848, var(--ghi)); }
-.bat-fill { background: linear-gradient(90deg, var(--gbr), #3A7A42); }
-
-.logistic-cta {
-  margin-top: 14px; display: flex; align-items: center; justify-content: space-between;
-  font-size: 13px; color: var(--gbr); font-weight: 500;
-  padding-top: 14px; border-top: 1px solid var(--bor);
-}
-
-/* ══════════════════════════════════════════
-   COMPAGNON
-══════════════════════════════════════════ */
-.companion { border-top: 1px solid var(--bor); background: var(--bg2); }
-.comp-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
-@media(min-width:700px) { .comp-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
-.comp-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--grn-bor); border-radius: 100px;
-  padding: 5px 14px; font-size: 11px; font-weight: 500;
-  color: var(--gbr); letter-spacing: .07em; text-transform: uppercase; margin-bottom: 18px;
-}
-.comp-h {
-  font-size: clamp(32px,5vw,60px); font-weight: 700;
-  letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 20px;
-}
-.comp-p { font-size: 15px; font-weight: 300; color: var(--txt2); line-height: 1.82; margin-bottom: 12px; }
-.comp-note {
-  margin-top: 26px; background: var(--bg3); border: 1px solid var(--bor);
-  border-radius: 18px; padding: 18px 20px;
-}
-.comp-note-h {
-  font-size: 13px; font-weight: 500; color: var(--txt); margin-bottom: 5px;
-  display: flex; align-items: center; gap: 8px;
-}
-.comp-note-p { font-size: 12px; font-weight: 300; color: var(--txt2); line-height: 1.65; }
-.live-card {
-  background: var(--bg3); border: 1px solid var(--bor); border-radius: 32px; overflow: hidden;
-}
-.live-hd {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 24px; border-bottom: 1px solid var(--bor);
-}
-.live-title { font-size: 13px; font-weight: 500; color: var(--txt); }
-.live-badge {
-  display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 600;
-  color: var(--gbr); letter-spacing: .1em; text-transform: uppercase;
-}
-.live-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: var(--gbr); animation: glw 2s infinite;
-  position: relative;
-}
-.live-dot.pulse-ring::before {
-  content: ''; position: absolute; inset: -4px;
-  border-radius: 50%; background: var(--gbr); opacity: 0;
-  animation: pulsering 2s cubic-bezier(.4,0,.6,1) infinite;
-}
-.live-person { display: flex; align-items: center; gap: 13px; padding: 15px 24px; border-bottom: 1px solid var(--bor); }
-.live-person.dim { opacity: .38; }
-.live-av {
-  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-  background: var(--bg); border: 1px solid var(--bor);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11.5px; font-weight: 500; color: var(--txt2);
-}
-.live-name { font-size: 13px; font-weight: 500; color: var(--txt); }
-.live-st { font-size: 11px; font-weight: 300; color: var(--txt2); margin-top: 2px; }
-.live-bars { display: flex; gap: 3px; align-items: flex-end; margin-left: auto; }
-.live-bar { width: 4px; border-radius: 2px; background: var(--ghi); }
-.live-sync {
-  padding: 11px 24px; background: var(--bg); font-size: 12px; color: var(--txt2);
-  display: flex; align-items: center; gap: 7px; border-bottom: 1px solid var(--bor); font-weight: 300;
-}
-.sync-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gbr); }
-.live-alert {
-  padding: 13px 24px; font-size: 12px; color: var(--org);
-  display: flex; align-items: flex-start; gap: 9px; line-height: 1.55;
-  background: var(--org-bg);
-}
-
-/* ══════════════════════════════════════════
-   FAQ
-══════════════════════════════════════════ */
-.faq { border-top: 1px solid var(--bor); }
-.faq-head { margin-bottom: 52px; }
-.faq-list { max-width: 760px; }
-.faq-item { border-bottom: 1px solid var(--bor); }
-.faq-item:first-child { border-top: 1px solid var(--bor); }
-.faq-q {
-  width: 100%; background: transparent; border: none;
-  padding: 24px 0; text-align: left; cursor: pointer;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
-  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
-  color: var(--txt); line-height: 1.4; transition: color .15s;
-}
-.faq-q:hover { color: var(--gbr); }
-.faq-ico {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--bg3); border: 1px solid var(--bor);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  transition: transform .3s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s;
-}
-.faq-item.open .faq-ico { transform: rotate(45deg); background: var(--grn-bg); border-color: var(--grn-bor); }
-.faq-ico svg { transition: stroke .2s; }
-.faq-item.open .faq-ico svg { stroke: var(--gbr); }
-.faq-a { overflow: hidden; max-height: 0; transition: max-height .45s cubic-bezier(.22,1,.36,1); }
-.faq-a-inner { padding: 0 40px 24px 0; font-size: 15px; font-weight: 300; color: var(--txt2); line-height: 1.82; }
-.faq-item.open .faq-a { max-height: 400px; }
-
-/* ══════════════════════════════════════════
-   WAITLIST
-══════════════════════════════════════════ */
-.waitlist {
-  border-top: 1px solid var(--bor); text-align: center;
-  position: relative; overflow: hidden;
-}
-.wl-glow {
-  position: absolute; bottom: -200px; left: 50%; transform: translateX(-50%);
-  width: min(1000px,140vw); height: min(1000px,140vw);
-  background: radial-gradient(circle, var(--grn-glo) 0%, transparent 62%);
-  pointer-events: none;
-}
-.wl-badge {
-  font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--gbr); margin-bottom: 18px; display: block; position: relative; z-index: 1;
-}
-.wl-h {
-  font-size: clamp(44px,9vw,100px); font-weight: 700;
-  letter-spacing: -0.04em; line-height: .97;
-  max-width: 800px; margin: 0 auto 14px; position: relative; z-index: 1;
-}
-.wl-h em { font-style: normal; color: var(--gbr); }
-.wl-benefit {
-  display: inline-block;
-  background: var(--grn-bg); border: 1px solid var(--grn-bor);
-  border-radius: 18px; padding: 13px 24px;
-  font-size: clamp(13px,2vw,15px); color: var(--gbr);
-  max-width: 500px; line-height: 1.6;
-  margin: 20px auto 30px; position: relative; z-index: 1;
-}
-.wl-sub {
-  font-size: 16px; font-weight: 300; color: var(--txt2);
-  max-width: 360px; margin: 0 auto 42px; line-height: 1.65;
-  position: relative; z-index: 1;
-}
-.wl-wrap { max-width: 460px; margin: 0 auto; position: relative; z-index: 1; }
-.hp { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
-.wl-row { display: flex; flex-direction: column; gap: 10px; transition: all .2s; }
-@media(min-width:500px) {
-  .wl-row {
-    flex-direction: row; background: var(--bg3);
-    border: 1px solid var(--bor2); border-radius: 100px;
-    padding: 6px 6px 6px 22px; gap: 0;
-  }
-  .wl-row:focus-within { border-color: rgba(74,138,82,.5); box-shadow: 0 0 0 3px rgba(74,138,82,.08); }
-  .wl-in { background: transparent !important; border: none !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; }
-}
-.wl-in {
-  flex: 1; outline: none; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--txt);
-  background: var(--bg3); border: 1px solid var(--bor2);
-  border-radius: 100px; padding: 14px 22px; width: 100%; transition: border-color .2s;
-}
-.wl-in::placeholder { color: var(--txt3); }
-.wl-btn {
-  background: var(--gbr); color: #fff; border: none; border-radius: 100px;
-  padding: 14px 26px; font-family: 'DM Sans', sans-serif;
-  font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; width: 100%;
-  display: flex; align-items: center; justify-content: center; gap: 9px;
-  transition: background .15s; min-height: 48px;
-}
-@media(min-width:500px) { .wl-btn { width: auto; min-width: 200px; } }
-.wl-btn:hover:not(:disabled) { background: var(--ghi); }
-.wl-btn:disabled { opacity: .55; cursor: not-allowed; }
-.spin { width: 15px; height: 15px; display: none; animation: spin .65s linear infinite; flex-shrink: 0; }
-.wl-btn.loading .spin { display: block; }
-.wl-btn.loading .bl { display: none; }
-.wl-status {
-  margin-top: 16px; font-size: 13px; font-weight: 400; line-height: 1.6;
-  min-height: 18px; opacity: 0; transform: translateY(5px);
-  transition: all .3s cubic-bezier(.22,1,.36,1);
-}
-.wl-status.show { opacity: 1; transform: none; }
-.wl-status.ok { color: var(--gbr); }
-.wl-status.warn { color: var(--org); }
-.wl-status.err { color: #d06060; }
-.wl-note { margin-top: 20px; font-size: 12px; color: var(--txt3); position: relative; z-index: 1; line-height: 1.65; }
-
-/* ══════════════════════════════════════════
-   FOOTER — PREMIUM APPLE-STYLE
-══════════════════════════════════════════ */
-footer {
-  border-top: 1px solid var(--bor);
-  padding: 72px 0 48px;
-  transition: border-color .3s;
-}
-.foot-main {
-  display: grid; grid-template-columns: 1fr;
-  gap: 56px; margin-bottom: 64px;
-}
-@media(min-width:700px) {
-  .foot-main { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
-}
-/* Brand column */
-.foot-brand { display: flex; flex-direction: column; gap: 20px; }
-.foot-tagline {
-  font-size: 13px; font-weight: 300; color: var(--txt3); line-height: 1.72;
-  max-width: 220px;
-}
-.foot-ig-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--bor2); border-radius: 100px; padding: 8px 14px;
-  font-size: 12px; color: var(--txt2); text-decoration: none;
-  transition: color .15s, border-color .15s; width: fit-content;
-}
-.foot-ig-pill:hover { color: var(--txt); border-color: var(--bor2); }
-
-/* Link columns */
-.foot-col h4 {
-  font-size: 10px; font-weight: 700; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--txt3); margin-bottom: 18px;
-}
-.foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.foot-col a {
-  font-size: 13px; font-weight: 300; color: var(--txt2); text-decoration: none;
-  position: relative; display: inline-block;
-  transition: color .18s;
-}
-.foot-col a::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-  height: 1px; background: var(--gbr);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .22s cubic-bezier(.22,1,.36,1);
-}
-.foot-col a:hover { color: var(--txt); }
-.foot-col a:hover::after { transform: scaleX(1); }
-
-/* Footnotes */
-.foot-notes {
-  border-top: 1px solid var(--bor);
-  padding-top: 32px; display: flex;
-  flex-direction: column; gap: 14px;
-  transition: border-color .3s;
-}
-.foot-note {
-  font-size: 11px; font-weight: 300; color: var(--txt3);
-  line-height: 1.75; max-width: 680px;
-}
-.foot-note::before { content: '¹'; font-size: 9px; vertical-align: super; margin-right: 5px; }
-.foot-note:nth-child(2)::before { content: '²'; }
-.foot-note:nth-child(3)::before { content: '³'; }
-
-/* Bottom bar */
-.foot-bar {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  margin-top: 36px; padding-top: 24px;
-  border-top: 1px solid var(--bor);
-  transition: border-color .3s;
-}
-@media(min-width:640px) { .foot-bar { flex-direction: row; justify-content: space-between; } }
-.foot-copy { font-size: 11px; font-weight: 300; color: var(--txt3); }
-.foot-legal { display: flex; gap: 20px; }
-.foot-legal a { font-size: 11px; font-weight: 300; color: var(--txt3); text-decoration: none; transition: color .15s; }
-.foot-legal a:hover { color: var(--txt2); }
-
-/* ══════════════════════════════════════════
-   TYPOGRAPHIC HIERARCHY
-══════════════════════════════════════════ */
-/* All secondary body text uses --txt2, not --txt */
-.ph-p, .man-s, .showcase-hd p, .comp-p, .mgi-p,
-.faq-a-inner, .pc-s, .nav-dir-road, .meteo-pct,
-.hm-sl, .la-msg, .la-app, .la-time, .hm-sc-meta > div:nth-child(2) {
-  color: var(--txt2);
-}
-/* Section intro subtitles */
-.sec-sub { color: var(--txt2); }
-/* Force muted on all description-level text in cards */
-.mgi-p, .man-s, .pc-s, .faq-a-inner, .ph-p, .comp-p { color: var(--txt2); }
-html[data-theme="dark"] .mgi-p,
-html[data-theme="dark"] .man-s,
-html[data-theme="dark"] .pc-s,
-html[data-theme="dark"] .faq-a-inner { color: var(--txt2); }
-
-/* ══════════════════════════════════════════
-   APP SCREENSHOTS — Apple Fitness+ style
-══════════════════════════════════════════ */
-.appshots { }
-.appshots-hd { text-align: center; max-width: 640px; margin: 0 auto 80px; }
-.appshots-sub {
-  font-size: 17px; font-weight: 300; color: var(--txt2);
-  margin-top: 16px; line-height: 1.7;
-}
-
-.appshot-row {
-  display: grid; grid-template-columns: 1fr;
-  gap: 48px; align-items: center;
-  margin-bottom: 100px;
-}
-.appshot-row:last-child { margin-bottom: 0; }
-@media(min-width:760px) {
-  .appshot-row { grid-template-columns: 1fr 1fr; gap: 72px; }
-  .appshot-row-rev .appshot-text-col { order: -1; }
-  .appshot-row-rev .appshot-phone-col { order: 1; }
-}
-
-/* Phone device frame */
-.appshot-phone-col { display: flex; justify-content: center; }
-.appshot-device {
-  position: relative;
-  width: 240px;
-  border-radius: 40px; overflow: hidden;
-  background: #0A0E0B;
-  border: 1.5px solid rgba(255,255,255,.1);
-  box-shadow: 0 40px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(74,138,82,.08),
-              inset 0 1px 0 rgba(255,255,255,.06);
-  transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
-}
-html[data-theme="light"] .appshot-device {
-  border-color: rgba(0,0,0,.12);
-  box-shadow: 0 24px 64px rgba(0,0,0,.18), 0 0 0 1px rgba(42,92,52,.1);
-}
-.appshot-device:hover { transform: translateY(-6px) rotate(-.5deg); box-shadow: 0 52px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(74,138,82,.16); }
-.appshot-notch {
-  position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-  width: 80px; height: 24px; background: #0A0E0B;
-  border-radius: 0 0 14px 14px; z-index: 10;
-  border: 1.5px solid rgba(255,255,255,.06); border-top: none;
-}
-.appshot-screen {
-  width: 100%; min-height: 480px;
-  display: flex; flex-direction: column;
-  padding-top: 42px;
-}
-
-/* Screen: Generation */
-.as-screen-gen { background: var(--bg1); }
-.ass-status {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 16px 10px; font-size: 10px; font-weight: 600; color: var(--txt);
-}
-.ass-logo-row {
-  display: flex; align-items: center; gap: 8px;
-  padding: 0 16px 12px;
-}
-.ass-logo-t {
-  font-family: 'Nunito', sans-serif; font-weight: 800;
-  font-size: 8px; letter-spacing: .07em;
-  color: var(--txt); line-height: 1.15; flex: 1;
-}
-.ass-logo-t span { display: block; }
-.ass-tab {
-  font-size: 8px; font-weight: 600; letter-spacing: .1em;
-  color: var(--gbr); text-transform: uppercase;
-}
-.ass-title {
-  font-size: 16px; font-weight: 700; line-height: 1.25;
-  letter-spacing: -.02em; color: var(--txt);
-  padding: 0 16px 12px;
-}
-.ass-input-fake {
-  font-size: 9.5px; font-weight: 300; font-style: italic;
-  color: var(--txt2); line-height: 1.6; padding: 10px 14px;
-  margin: 0 12px 10px;
-  background: var(--bg3); border: 1px solid var(--bor2); border-radius: 14px;
-  position: relative;
-}
-.ass-cur {
-  display: inline-block; width: 1.5px; height: .9em;
-  background: var(--gbr); margin-left: 1px; border-radius: 1px;
-  vertical-align: text-bottom; animation: cur .9s step-end infinite;
-}
-.ass-chips-row {
-  display: flex; flex-wrap: wrap; gap: 5px; padding: 0 12px 12px;
-}
-.ass-chip {
-  font-size: 8.5px; font-weight: 400; color: var(--txt3);
-  background: var(--bg3); border: 1px solid var(--bor); border-radius: 7px;
-  padding: 5px 9px; white-space: nowrap;
-}
-.active-chip { background: var(--grn-bg); border-color: var(--grn-bor); color: var(--gbr); }
-.ass-gen-btn {
-  margin: 0 12px 14px;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  background: var(--gbr); color: #fff;
-  border-radius: 12px; padding: 11px 14px;
-  font-size: 10px; font-weight: 600; letter-spacing: -.01em;
-}
-.ass-navbar {
-  display: flex; justify-content: space-around; align-items: center;
-  padding: 10px 8px 14px;
-  border-top: 1px solid var(--bor); margin-top: auto;
-}
-.ass-nb-item {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  font-size: 7px; font-weight: 500; color: var(--txt3);
-  transition: color .15s;
-}
-.ass-nb-item.active { color: var(--gbr); }
-.ass-nb-item svg { opacity: .5; }
-.ass-nb-item.active svg { opacity: 1; color: var(--gbr); }
-
-/* Screen: Terrain */
-.as-screen-terrain { background: #0A1209; padding-top: 42px; }
-.ass-map-zone {
-  position: relative; height: 160px; margin: 0 0 0 0; overflow: hidden;
-}
-.ass-dir-card {
-  position: absolute; left: 10px; bottom: 10px;
-  background: rgba(52,90,58,.9); backdrop-filter: blur(8px);
-  border-radius: 10px; padding: 7px 10px;
-  display: flex; align-items: center; gap: 7px;
-}
-.ass-dir-arr {
-  width: 22px; height: 22px; border-radius: 7px;
-  background: var(--gbr); display: flex; align-items: center; justify-content: center;
-}
-.ass-stats-row {
-  display: flex; justify-content: space-around; padding: 14px 12px 10px;
-  border-top: 1px solid rgba(255,255,255,.06);
-}
-.ass-stat { text-align: center; }
-.ass-sv { font-size: 13px; font-weight: 700; color: #E8E8E4; letter-spacing: -.02em; }
-.ass-sl { font-size: 8px; color: rgba(232,232,228,.4); margin-top: 2px; }
-.ass-alert-strip {
-  padding: 8px 12px 14px;
-}
-
-/* Screen: Base (hub logistique) */
-.as-screen-base { background: #0A1209; }
-.ass-base-tabs {
-  display: flex; gap: 0; padding: 0 12px 10px; margin-top: 4px;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-.ass-base-tab {
-  font-size: 9px; font-weight: 600; color: rgba(232,232,228,.35);
-  padding: 6px 10px; border-radius: 8px; cursor: default;
-  white-space: nowrap;
-}
-.active-tab {
-  background: rgba(95,168,104,.12); color: #5FA868;
-  border: 1px solid rgba(95,168,104,.2);
-}
-.ass-score-card {
-  margin: 10px 12px 0;
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
-  border-radius: 14px; padding: 10px 12px;
-}
-.ass-score-row { display: flex; align-items: center; justify-content: space-between; }
-.ass-ring-wrap { flex-shrink: 0; }
-.ass-pack-section { padding: 10px 12px 0; }
-.ass-pack-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 5px;
-}
-.ass-pack-item {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 8.5px; font-weight: 500; color: rgba(232,232,228,.55);
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06);
-  border-radius: 8px; padding: 5px 8px;
-}
-.ass-pack-item.checked { border-color: rgba(95,168,104,.18); background: rgba(95,168,104,.07); color: rgba(232,232,228,.7); }
-.ass-pack-item.miss { border-color: rgba(200,121,65,.2); background: rgba(200,121,65,.06); color: rgba(200,121,65,.8); }
-.ass-maps-row { padding: 10px 12px 0; }
-.ass-map-chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 8.5px; font-weight: 500; color: rgba(95,168,104,.75);
-  background: rgba(95,168,104,.08); border: 1px solid rgba(95,168,104,.15);
-  border-radius: 8px; padding: 5px 9px; margin-right: 5px; margin-bottom: 5px;
-}
-
-/* Text column */
-.appshot-text-col { }
-.as-eyebrow {
-  font-size: 11px; font-weight: 700; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--gbr); margin-bottom: 14px;
-}
-.as-h {
-  font-size: clamp(26px,3.8vw,42px); font-weight: 700;
-  letter-spacing: -.028em; line-height: 1.1;
-  color: var(--txt); margin-bottom: 16px;
-}
-.as-p {
-  font-size: 15px; font-weight: 300; color: var(--txt2);
-  line-height: 1.78; margin-bottom: 24px; max-width: 420px;
-}
-.as-list {
-  list-style: none; display: flex; flex-direction: column; gap: 11px;
-}
-.as-list li {
-  display: flex; align-items: flex-start; gap: 10px;
-  font-size: 14px; font-weight: 400; color: var(--txt2); line-height: 1.5;
-}
-.as-list li svg { flex-shrink: 0; margin-top: 2px; }
-.figma-embed-wrap {
-  width: 100%; overflow: hidden;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,.06);
-  box-shadow: 0 24px 80px rgba(0,0,0,.5);
-  transition: box-shadow .4s cubic-bezier(.22,1,.36,1), border-color .3s;
-  margin-top: 20px;
-}
-html[data-theme="light"] .figma-embed-wrap {
-  border-color: rgba(0,0,0,.08);
-  box-shadow: 0 16px 56px rgba(0,0,0,.14);
-}
-.figma-embed-wrap:hover {
-  box-shadow: 0 32px 96px rgba(0,0,0,.55), 0 0 0 1px rgba(95,168,104,.14);
-}
-html[data-theme="light"] .figma-embed-wrap:hover {
-  box-shadow: 0 20px 64px rgba(0,0,0,.18), 0 0 0 1px rgba(42,92,52,.14);
-}
-.figma-embed-frame {
-  display: block; width: 100%; border: none;
-  height: 400px; background: #1E1E1E;
-}
-@media(min-width:540px) { .figma-embed-frame { height: 450px; } }
-@media(min-width:900px) { .figma-embed-frame { height: 500px; } }
-.figma-bento { padding-bottom: 28px; }
-
-/* ══════════════════════════════════════════
-   PULSE ANIMATION — live notification dots
-══════════════════════════════════════════ */
-.pulse-dot {
-  position: relative; display: inline-flex;
-  align-items: center; justify-content: center;
-  width: 10px; height: 10px; flex-shrink: 0;
-}
-.pulse-dot::before {
-  content: ''; position: absolute;
-  width: 100%; height: 100%; border-radius: 50%;
-  background: #22c55e; opacity: .6;
-  animation: pulsering 2s cubic-bezier(.4,0,.6,1) infinite;
-}
-.pulse-dot::after {
-  content: ''; position: absolute;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #4ade80;
-}
-@keyframes pulsering {
-  0%   { transform: scale(1);   opacity: .6; }
-  70%  { transform: scale(2.2); opacity: 0;  }
-  100% { transform: scale(2.2); opacity: 0;  }
-}
-
-/* Override old glw-based notif dot in hm-phone */
-.hm-notif-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  position: relative; display: inline-flex;
-  align-items: center; justify-content: center;
-  margin-left: auto; flex-shrink: 0;
-}
-.hm-notif-dot::before {
-  content: ''; position: absolute;
-  width: 100%; height: 100%; border-radius: 50%;
-  background: var(--gbr); opacity: .5;
-  animation: pulsering 2.4s cubic-bezier(.4,0,.6,1) infinite;
-}
-.hm-notif-dot::after {
-  content: ''; position: absolute;
-  width: 6px; height: 6px; border-radius: 50%; background: var(--gbr);
-}
-
-/* ══════════════════════════════════════════
-   HERO MOCK INTERFACE
-══════════════════════════════════════════ */
-.hero-mock-wrap {
-  margin-top: 72px; z-index: 1; position: relative;
-  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-}
-.hero-mock {
-  display: grid; grid-template-columns: 1fr;
-  gap: 16px; align-items: start;
-  opacity: 0; animation: fadeUp 1s .82s cubic-bezier(.22,1,.36,1) forwards;
-}
-@media(min-width:700px) { .hero-mock { grid-template-columns: 1fr 1fr; gap: 20px; } }
-
-/* Phone frame */
-.hm-phone {
-  background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 36px; overflow: hidden;
-  box-shadow: 0 32px 80px var(--shadow), 0 0 0 1px rgba(74,138,82,.06);
-}
-.hm-ph-inner { padding: 16px 16px 20px; }
-.hm-status-bar { display: flex; align-items: center; justify-content: space-between; padding: 0 8px 10px; }
-
-.hm-app-header {
-  display: flex; align-items: center; gap: 9px;
-  padding: 6px 8px 12px;
-}
-.hm-notif-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--gbr);
-  animation: glw 2.2s ease-in-out infinite; margin-left: auto;
-}
-
-.hm-map {
-  position: relative; height: 120px;
-  background: linear-gradient(160deg, #0D130E 0%, #0A0F0A 100%);
-  border-radius: 20px; overflow: hidden;
-}
-.hm-map-topo { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hm-dir {
-  position: absolute; top: 10px; left: 10px;
-  background: var(--gbr); border-radius: 14px; padding: 9px 12px;
-  display: flex; align-items: center; gap: 8px;
-}
-.hm-dir-arr {
-  width: 22px; height: 22px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.hm-north {
-  position: absolute; top: 10px; right: 10px;
-  width: 26px; height: 26px; border-radius: 50%;
-  background: rgba(10,14,11,.72); border: 1px solid rgba(40,48,41,.8);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; color: var(--txt2);
-}
-.hm-stats-row {
-  display: flex; padding: 14px 8px 0; gap: 0;
-}
-.hm-stat { flex: 1; text-align: center; }
-.hm-stat + .hm-stat { border-left: 1px solid var(--bor); }
-.hm-sv { font-size: 16px; font-weight: 700; color: var(--txt); letter-spacing: -.02em; }
-.hm-sl { font-size: 9px; color: var(--txt3); margin-top: 2px; }
-
-.hm-alert {
-  margin-top: 12px; padding: 10px 12px;
-  background: var(--org-bg); border: 1px solid var(--org-bor);
-  border-radius: 12px; font-size: 10px; color: var(--org);
-  display: flex; align-items: center; gap: 7px; line-height: 1.4;
-}
-
-/* Side cards */
-.hm-side { display: flex; flex-direction: column; gap: 12px; }
-.hm-side-card {
-  background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 24px; padding: 18px 20px;
-  box-shadow: 0 8px 32px var(--shadow);
-  transition: background .3s, border-color .3s;
-}
-.hm-sc-label {
-  font-size: 9px; font-weight: 700; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--gbr);
-  margin-bottom: 12px; display: flex; align-items: center; gap: 7px;
-}
-.hm-sc-label::before { content: ''; width: 10px; height: 1px; background: var(--gbr); }
-.hm-sc-route { display: flex; align-items: center; gap: 12px; }
-.hm-sc-route svg { width: 90px; flex-shrink: 0; }
-.hm-match-badge {
-  display: inline-flex; margin-top: 5px;
-  background: var(--grn-bg); border: 1px solid var(--grn-bor);
-  border-radius: 10px; padding: 3px 8px; font-size: 9px; color: var(--gbr); font-weight: 500;
-}
-
-.hm-cl-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 0; border-bottom: 1px solid var(--bor);
-  font-size: 11px; color: var(--txt);
-}
-.hm-cl-item:last-of-type { border-bottom: none; }
-.hm-cl-ico {
-  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.hm-done .hm-cl-ico { background: var(--gbr); }
-.hm-pend-ico { border: 1.5px solid var(--bor2); background: transparent; }
-.hm-gauge-mini { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--bor); }
-
-.hm-comp-row { display: flex; align-items: center; gap: 10px; }
-.hm-comp-av {
-  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
-  background: var(--bg); border: 1px solid var(--bor);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 600; color: var(--txt2);
-}
-
-/* ══════════════════════════════════════════
-   APPLE WATCH BADGE
-══════════════════════════════════════════ */
-.watch-badge {
-  display: inline-flex; align-items: center; gap: 9px;
-  border: 1px solid var(--bor2); border-radius: 100px;
-  padding: 7px 16px; font-size: 12px; font-weight: 400; color: var(--txt2);
-  position: relative; z-index: 1; margin-top: 16px; margin-bottom: 4px;
-  transition: border-color .15s, color .15s;
-}
-.watch-badge:hover { border-color: var(--grn-bor); color: var(--gbr); }
-.watch-badge svg { opacity: .55; }
-
-/* ══════════════════════════════════════════
-   LIVE ACTIVITY — iOS style notification
-══════════════════════════════════════════ */
-.live-activity-wrap { margin-top: 28px; }
-.live-activity {
-  background: rgba(17,22,17,.85);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(74,138,82,.24);
-  border-radius: 20px; padding: 14px 18px;
-  display: flex; align-items: center; gap: 13px;
-  transition: background .3s, border-color .3s;
-}
-html[data-theme="light"] .live-activity {
-  background: rgba(245,245,247,.92);
-  border-color: rgba(42,92,52,.2);
-  box-shadow: 0 8px 32px rgba(0,0,0,.08);
-}
-.la-icon {
-  width: 34px; height: 34px; flex-shrink: 0; border-radius: 9px;
-  background: var(--grn-bg); border: 1px solid var(--grn-bor);
-  display: flex; align-items: center; justify-content: center;
-}
-.la-body { flex: 1; min-width: 0; }
-.la-app { font-size: 9.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gbr); margin-bottom: 3px; }
-.la-msg { font-size: 12.5px; font-weight: 400; color: var(--txt); line-height: 1.45; }
-.la-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; }
-.la-time { font-size: 10px; color: var(--txt3); white-space: nowrap; }
-.la-prog-wrap { width: 52px; }
-.la-prog-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
-.la-prog-label span { font-size: 9px; color: var(--txt3); }
-.la-prog-bar { height: 3px; background: var(--bor); border-radius: 2px; overflow: hidden; }
-.la-prog-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--grn), var(--gbr)); }
-
-/* ══════════════════════════════════════════
-   CONTACT SECTION
-══════════════════════════════════════════ */
-.contact { border-top: 1px solid var(--bor); }
-.contact-grid {
-  display: grid; grid-template-columns: 1fr;
-  gap: 64px; align-items: start;
-}
-@media(min-width:720px) { .contact-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
-
-.contact-info { }
-.contact-info .sec-chip { margin-bottom: 16px; }
-.contact-h {
-  font-size: clamp(32px,5vw,56px); font-weight: 700;
-  letter-spacing: -0.032em; line-height: 1.08; margin-bottom: 20px;
-}
-.contact-h span { color: var(--gbr); }
-.contact-p {
-  font-size: 15px; font-weight: 300; color: var(--txt2);
-  line-height: 1.8; margin-bottom: 36px; max-width: 380px;
-}
-.contact-email-card {
-  display: inline-flex; align-items: center; gap: 14px;
-  background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 20px; padding: 16px 22px;
-  text-decoration: none;
-  transition: background .2s, border-color .2s, transform .2s;
-}
-.contact-email-card:hover { background: var(--bg3); border-color: var(--grn-bor); transform: translateY(-2px); }
-.contact-email-ico {
-  width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
-  background: var(--grn-bg); border: 1px solid var(--grn-bor);
-  display: flex; align-items: center; justify-content: center;
-}
-.contact-email-ico svg { color: var(--gbr); }
-.contact-email-lbl { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--txt3); margin-bottom: 3px; }
-.contact-email-addr { font-size: 14px; font-weight: 400; color: var(--txt); }
-
-/* Form */
-.contact-form { display: flex; flex-direction: column; gap: 14px; }
-.cf-group { display: flex; flex-direction: column; gap: 6px; }
-.cf-label {
-  font-size: 11px; font-weight: 600; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--txt3);
-}
-.cf-input, .cf-textarea {
-  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300;
-  color: var(--txt); background: var(--bg2);
-  border: 1px solid var(--bor2); border-radius: 14px;
-  padding: 13px 18px; outline: none; width: 100%;
-  transition: border-color .2s, box-shadow .2s, background .2s;
-}
-.cf-input::placeholder, .cf-textarea::placeholder { color: var(--txt3); }
-.cf-input:focus, .cf-textarea:focus {
-  border-color: rgba(74,138,82,.5);
-  box-shadow: 0 0 0 3px rgba(74,138,82,.09);
-  background: var(--bg3);
-}
-.cf-textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
-.cf-submit {
-  background: var(--gbr); color: #fff; border: none;
-  border-radius: 100px; padding: 15px 32px;
-  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 9px;
-  transition: background .15s, transform .12s, box-shadow .2s;
-  width: 100%;
-}
-.cf-submit:hover { background: var(--ghi); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(74,138,82,.32); }
-.cf-submit:active { transform: translateY(0); }
-.cf-submit svg { flex-shrink: 0; }
-.cf-status {
-  font-size: 13px; font-weight: 400; line-height: 1.6;
-  min-height: 18px; opacity: 0; transform: translateY(4px);
-  transition: all .3s cubic-bezier(.22,1,.36,1); text-align: center;
-}
-.cf-status.show { opacity: 1; transform: none; }
-.cf-status.ok { color: var(--gbr); }
-.cf-status.err { color: #d06060; }
-
-/* ══════════════════════════════════════════
-   LEGAL MODALS
-══════════════════════════════════════════ */
-.legal-modal {
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(0,0,0,.64);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  display: flex; align-items: flex-end; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity .32s cubic-bezier(.22,1,.36,1);
-}
-@media(min-width:600px) { .legal-modal { align-items: center; } }
-.legal-modal.open { opacity: 1; pointer-events: auto; }
-
-.legal-modal-inner {
-  width: 100%; max-width: 680px; max-height: 88vh;
-  background: var(--bg2); border: 1px solid var(--bor2);
-  border-radius: 28px 28px 0 0; overflow: hidden;
-  display: flex; flex-direction: column;
-  transform: translateY(24px);
-  transition: transform .4s cubic-bezier(.22,1,.36,1);
-  box-shadow: 0 -16px 64px rgba(0,0,0,.4);
-}
-@media(min-width:600px) {
-  .legal-modal-inner { border-radius: 28px; transform: scale(.96); box-shadow: 0 32px 96px rgba(0,0,0,.5); }
-}
-.legal-modal.open .legal-modal-inner { transform: none; }
-
-.legal-modal-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 22px 28px; border-bottom: 1px solid var(--bor);
-  flex-shrink: 0;
-}
-.legal-modal-title {
-  font-size: 16px; font-weight: 600; color: var(--txt); letter-spacing: -.015em;
-}
-.legal-modal-close {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: var(--bg3); border: 1px solid var(--bor);
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  color: var(--txt2); transition: background .15s, color .15s;
-  flex-shrink: 0;
-}
-.legal-modal-close:hover { background: var(--bg4); color: var(--txt); }
-
-.legal-modal-body {
-  overflow-y: auto; padding: 28px 28px 40px; -webkit-overflow-scrolling: touch;
-}
-.legal-modal-body h3 {
-  font-size: 13px; font-weight: 600; color: var(--txt);
-  letter-spacing: -.01em; margin: 24px 0 8px;
-}
-.legal-modal-body h3:first-of-type { margin-top: 0; }
-.legal-modal-body p {
-  font-size: 14px; font-weight: 300; color: var(--txt2);
-  line-height: 1.78; margin-bottom: 4px;
-}
-.legal-modal-body a { color: var(--gbr); text-decoration: none; }
-.legal-modal-body a:hover { text-decoration: underline; }
-.legal-modal-body code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 12px; background: var(--bg3);
-  border: 1px solid var(--bor); border-radius: 4px; padding: 1px 5px;
-  color: var(--txt2);
-}
-.legal-date {
-  font-size: 11px; font-weight: 400; color: var(--txt3);
-  letter-spacing: .06em; margin-bottom: 20px !important;
-}
-
-/* ══════════════════════════════════════════
-   KEYFRAMES
-══════════════════════════════════════════ */
-@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
-@keyframes cur { 0%,100%{opacity:1} 50%{opacity:0} }
-@keyframes glw { 0%,100%{opacity:.4;transform:scale(.82)} 50%{opacity:1;transform:scale(1.12)} }
-@keyframes spin { to{transform:rotate(360deg)} }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratrails — Le premier système d'exécution outdoor par IA. Itinéraires complets, navigation hors-ligne, zéro friction.">
+  <title>Terratrails — Outdoor sans friction</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Page-specific ─── */
+    .hero { padding: 100px 0 120px; min-height: calc(100vh - 64px); display: flex; align-items: center; }
+    .hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    @media(max-width:920px) { .hero-inner { grid-template-columns: 1fr; gap: 56px; text-align: center; } }
+
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--grn-bg); border: 1px solid var(--grn-bor); border-radius: 100px; padding: 5px 14px; font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--grn-lit); margin-bottom: 28px; }
+    .hero-eyebrow::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--grn-lit); animation: pulseGrn 2s infinite; }
+
+    .hero-sub { font-size: clamp(16px, 2vw, 19px); font-weight: 300; color: var(--txt2); line-height: 1.78; margin: 24px 0 36px; max-width: 500px; }
+    @media(max-width:920px) { .hero-sub { margin: 24px auto 36px; } }
+
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    @media(max-width:920px) { .hero-ctas { justify-content: center; } }
+
+    .store-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--bg3); border: 1px solid var(--bor2); border-radius: 14px;
+      padding: 12px 20px; text-decoration: none; color: var(--txt);
+      transition: border-color .2s, background .2s, transform .25s cubic-bezier(.22,1,.36,1);
+    }
+    .store-btn:hover { border-color: var(--bor-grn); background: rgba(52,90,58,.1); transform: translateY(-2px); }
+    .store-btn-label { display: flex; flex-direction: column; line-height: 1; }
+    .store-btn-label small { font-size: 9px; font-weight: 400; color: var(--txt3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 3px; }
+    .store-btn-label strong { font-size: 14px; font-weight: 700; }
+
+    /* Hero image */
+    .hero-image-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+    .hero-image-glow {
+      position: absolute; width: 480px; height: 480px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(52,90,58,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-image-container {
+      position: relative; z-index: 1;
+      background: var(--bg2); border: 1px solid var(--bor2);
+      border-radius: 40px; overflow: hidden;
+      width: 280px; aspect-ratio: 9/19;
+      box-shadow: 0 48px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(52,90,58,.08);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s;
+    }
+    .hero-image-container:hover { transform: translateY(-8px) rotate(-.5deg); box-shadow: 0 64px 140px rgba(0,0,0,.7); }
+    .hero-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-image-placeholder {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      color: var(--txt3); font-size: 12px; font-weight: 400; letter-spacing: .1em; text-align: center; padding: 24px;
+    }
+    .hero-img-float {
+      position: absolute; background: var(--bg3); border: 1px solid var(--bor-grn);
+      border-radius: 16px; padding: 12px 16px; backdrop-filter: blur(12px);
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-img-float.f1 { bottom: 60px; left: -60px; animation-delay: 0s; }
+    .hero-img-float.f2 { top: 80px; right: -50px; animation-delay: -2s; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .float-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--grn-lit); }
+    .float-val { font-size: 16px; font-weight: 800; color: var(--txt); line-height: 1; margin-top: 2px; }
+    @media(max-width:920px) { .hero-img-float { display: none; } }
+
+    /* Pricing teaser */
+    .pricing-tease {
+      background: linear-gradient(135deg, rgba(52,90,58,.06) 0%, rgba(38,72,72,.06) 100%);
+      border: 1px solid var(--bor-grn); border-radius: var(--radius);
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px;
+      padding: 36px 40px;
+    }
+    @media(max-width:640px) { .pricing-tease { grid-template-columns: 1fr; gap: 20px; text-align: center; } }
+    .pricing-tease::before { background: linear-gradient(90deg, transparent, rgba(95,168,104,.2), transparent); }
+    .pt-sub { font-size: 13px; font-weight: 300; color: var(--txt2); margin-top: 6px; }
+  </style>
 </head>
 <body>
 
-<!-- ══════ NAV ══════ -->
-<nav id="mainNav">
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav class="nav" id="top">
   <div class="nav-inner">
-    <a href="#" class="logo" aria-label="Terratrails">
-      <svg viewBox="0 0 100 100" fill="none">
+    <a href="index.html" class="nav-logo">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none">
         <rect width="100" height="100" rx="22.37" fill="#0A0E0B"/>
-        <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
         <polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <circle cx="50" cy="79" r="4.32" fill="#345A3A"/>
       </svg>
-      <div class="logo-text"><span>TERRA</span><span>TRAILS</span></div>
+      <div class="nav-logo-text">TERRA<span>TRAILS</span></div>
     </a>
     <ul class="nav-links">
-      <li><a href="#manifeste">Manifeste</a></li>
-      <li><a href="#phases">Le système</a></li>
-      <li><a href="#interface">L'Application</a></li>
-      <li><a href="#waitlist">Inscription Bêta</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
-    <div class="nav-right">
-      <!-- Hamburger (mobile only) -->
-      <button class="ham-btn" id="hamBtn" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span class="hb">
-          <span class="hb-line"></span>
-          <span class="hb-line"></span>
-          <span class="hb-line"></span>
-        </span>
+    <div class="nav-cta">
+      <a href="premium.html" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
+      <button class="ham-btn" id="hamBtn" aria-label="Menu" aria-expanded="false">
+        <span class="ham-line"></span><span class="ham-line"></span>
       </button>
-      <!-- Theme Toggle -->
-      <button class="theme-btn" id="themeBtn" aria-label="Basculer le thème" title="Changer de thème">
-        <!-- Sun icon: shown in dark mode -->
-        <svg class="icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--txt2)">
-          <circle cx="10" cy="10" r="4"/>
-          <path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.22 4.22l1.42 1.42M14.36 14.36l1.42 1.42M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42"/>
-        </svg>
-        <!-- Moon icon: shown in light mode -->
-        <svg class="icon-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--txt2)">
-          <path d="M17 10.5A7 7 0 1 1 9.5 3a5 5 0 0 0 7.5 7.5z"/>
-        </svg>
-      </button>
-      <a href="#waitlist" class="nav-cta">Accès bêta</a>
     </div>
   </div>
 </nav>
 
-<!-- ══════ MOBILE MENU OVERLAY ══════ -->
-<div class="mob-menu" id="mobMenu" role="dialog" aria-modal="true" aria-label="Menu principal">
-  <ul class="mob-menu-links">
-    <li><a href="#manifeste" class="mob-link">Manifeste</a></li>
-    <li><a href="#phases" class="mob-link">Le système</a></li>
-    <li><a href="#interface" class="mob-link">L'Application</a></li>
-    <li><a href="#waitlist" class="mob-link">Inscription Bêta</a></li>
-    <li><a href="#faq" class="mob-link">FAQ</a></li>
-    <li><a href="#contact" class="mob-link">Contact</a></li>
+<div class="mob-overlay" id="mobMenu">
+  <ul>
+    <li><a href="index.html" class="active">Accueil</a></li>
+    <li><a href="premium.html">Premium</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="#waitlist" class="mob-menu-cta mob-link">Accès bêta</a>
-  <p class="mob-menu-close-hint">Appuyer sur Échap ou toucher l'arrière-plan pour fermer</p>
+  <div class="mob-cta"><a href="premium.html" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
 </div>
+
+<!-- ════════════════════ HERO ════════════════════ -->
 <section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-grain"></div>
+  <div class="wrap">
+    <div class="hero-inner">
 
-  <div class="hero-split w">
-    <!-- LEFT: all text content -->
-    <div class="hero-left">
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        Bêta Août 2026 — 0 inscrit pour le moment
-      </div>
-
-      <h1 class="hero-h1">
-        Décrire.<br><em>Générer.</em><br>Partir.
-      </h1>
-
-      <p class="hero-sub">
-        Terratrails n'est pas une application de randonnée.
-        C'est un système d'exécution outdoor qui supprime toute planification manuelle.
-      </p>
-
-      <div class="watch-badge">
-        <svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
-          <rect x="2.5" y="4" width="9" height="8" rx="2.5"/>
-          <path d="M4.5 2.5h5M4.5 13.5h5"/>
-          <circle cx="7" cy="8" r="1.5" stroke-width="1"/>
-        </svg>
-        Disponible sur Apple Watch
-      </div>
-
-      <div class="prompt-wrap" style="margin-top:36px;max-width:100%;width:100%">
-        <div class="prompt-card">
-          <div class="prompt-label">Votre intention</div>
-          <div class="prompt-text">
-            <span id="tw-text"></span><span id="tw-cursor"></span>
-          </div>
-          <div class="prompt-chips">
-            <span class="p-chip" id="chip0">
-              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 9l1.5-3 2 2 1.5-3 2.5 4"/></svg>
-              Tracé adapté à votre fatigue
-            </span>
-            <span class="p-chip" id="chip1">
-              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5V6l1.8 1.5"/></svg>
-              Météo heure par heure
-            </span>
-            <span class="p-chip" id="chip2">
-              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 3.5h8M2 6h5.5M2 8.5h4"/></svg>
-              Checklist dynamique
-            </span>
-            <span class="p-chip" id="chip3">
-              <svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="1.5" y="3" width="9" height="6.5" rx="1.5"/><path d="M4 3V2M8 3V2"/></svg>
-              Cartes offline prêtes
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-actions" style="justify-content:flex-start;margin-top:28px">
-        <a href="#waitlist" class="btn-p">Obtenir mon accès anticipé</a>
-        <a href="#manifeste" class="btn-s">Notre philosophie</a>
-      </div>
-    </div>
-
-    <!-- RIGHT: phone mockup only (the core visual) -->
-    <div class="hero-right">
-      <div class="hero-phone-showcase">
-        <div class="hm-phone">
-          <div class="hm-ph-inner">
-            <div class="hm-status-bar">
-              <span style="font-size:10px;font-weight:600;color:var(--txt)">9:41</span>
-              <svg width="16" height="8" viewBox="0 0 16 8" fill="none"><rect x="0" y="1" width="14" height="6" rx="1.5" stroke="var(--txt3)" stroke-width="1"/><rect x="1" y="2" width="9" height="4" rx=".8" fill="var(--gbr)"/><rect x="15" y="3" width="1" height="2" rx=".5" fill="var(--txt3)"/></svg>
-            </div>
-            <div class="hm-app-header">
-              <svg viewBox="0 0 100 100" fill="none" width="18" height="18"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
-              <div style="flex:1">
-                <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--txt);line-height:1.1">TERRA</div>
-                <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:9px;letter-spacing:.07em;color:var(--gbr);line-height:1.1">TRAILS</div>
-              </div>
-              <div class="hm-notif-dot"></div>
-            </div>
-            <div class="hm-map">
-              <svg class="hm-map-topo" viewBox="0 0 260 120" fill="none" preserveAspectRatio="xMidYMid slice">
-                <path d="M0 90 Q65 70 130 80 Q195 90 260 60" stroke="#1A2E1C" stroke-width="12" fill="none"/>
-                <path d="M0 105 Q65 85 130 95 Q195 105 260 75" stroke="#162416" stroke-width="10" fill="none"/>
-                <path d="M0 75 Q50 55 120 65 Q190 75 260 45" stroke="#1E3020" stroke-width="8" fill="none"/>
-                <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#264848" stroke-width="2" fill="none" opacity=".5"/>
-                <path d="M30 100 Q70 75 120 68 Q160 62 230 38" stroke="#5FA868" stroke-width="2.5" fill="none"/>
-                <circle cx="30" cy="100" r="5" fill="#345A3A" stroke="#5FA868" stroke-width="1.5"/>
-                <circle cx="230" cy="38" r="5" fill="#5FA868"/>
-                <path d="M224 38 L230 32 L236 38" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                <circle cx="130" cy="68" r="5" fill="#5FA868" opacity=".3"/>
-                <circle cx="130" cy="68" r="3" fill="#5FA868"/>
-              </svg>
-              <div class="hm-dir">
-                <div class="hm-dir-arr">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V4M7 4L4 7M7 4l3 3"/></svg>
-                </div>
-                <div>
-                  <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:-.02em">1,4 km</div>
-                  <div style="font-size:9px;color:rgba(255,255,255,.78);margin-top:1px">Sentier des crêtes</div>
-                </div>
-              </div>
-              <div class="hm-north">N</div>
-            </div>
-            <div class="hm-stats-row">
-              <div class="hm-stat"><div class="hm-sv">2h 45</div><div class="hm-sl">Restant</div></div>
-              <div class="hm-stat"><div class="hm-sv">8,4 km</div><div class="hm-sl">Distance</div></div>
-              <div class="hm-stat"><div class="hm-sv">580 m</div><div class="hm-sl">Dénivelé</div></div>
-            </div>
-            <div class="hm-alert">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5.5 1L10 10H1L5.5 1z"/><path d="M5.5 4.5v2.5M5.5 8.5v.1"/></svg>
-              Orage possible à 15h — raccourci disponible
-            </div>
-          </div>
-        </div>
-        <!-- floating side card — route -->
-        <div class="hero-float-card hero-float-top">
-          <div class="hm-sc-label">Itinéraire généré</div>
-          <div style="font-size:12px;font-weight:700;color:var(--txt);letter-spacing:-.01em">Lac d'Ayous</div>
-          <div style="font-size:10px;color:var(--txt3);margin-top:2px">Pyrénées · 16,4 km · 7h30</div>
-          <div class="hm-match-badge" style="margin-top:6px">92% adapté</div>
-        </div>
-        <!-- floating side card — companion -->
-        <div class="hero-float-card hero-float-bot">
-          <div class="hm-sc-label">Compagnon actif</div>
-          <div class="hm-comp-row">
-            <div class="hm-comp-av">CP</div>
-            <div>
-              <div style="font-size:11px;font-weight:600;color:var(--txt)">Clelia P.</div>
-              <div style="font-size:9px;color:var(--txt2);margin-top:1px">64% · ETA 17h40</div>
-            </div>
-            <div style="width:5px;height:5px;border-radius:50%;background:var(--gbr);animation:glw 2s infinite;margin-left:auto;flex-shrink:0"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ MANIFESTE ══════ -->
-<section class="manifeste" id="manifeste">
-  <div class="w">
-    <div class="r">
-      <div class="sec-chip">Manifeste</div>
-      <h2 class="sec-h">Ce que nous sommes.<br>Ce que nous refusons <span>d'être.</span></h2>
-    </div>
-    <div class="man-grid">
-      <div class="man-col dk r">
-        <div class="man-hd"><span class="mhd-dot"></span>Ce que Terratrails ne sera jamais</div>
-        <div class="man-rows">
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></div>
-            <div><div class="man-t">Un réseau social</div><div class="man-s">Pas de feed, pas de followers, pas de likes. Vos sorties vous appartiennent.</div></div>
-          </div>
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></div>
-            <div><div class="man-t">Une application de badges et statistiques</div><div class="man-s">La montagne ne se quantifie pas en trophées virtuels.</div></div>
-          </div>
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></div>
-            <div><div class="man-t">Une carte surchargée d'informations</div><div class="man-s">En effort physique, 47 couches de données obscurcissent la décision.</div></div>
-          </div>
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 2.5l9 9M11.5 2.5l-9 9"/></svg></div>
-            <div><div class="man-t">Un chatbot générique</div><div class="man-s">Pas de conversation inutile. Une intention, un résultat exécutable.</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="man-col lt r d1">
-        <div class="man-hd"><span class="mhd-dot"></span>Ce que Terratrails est</div>
-        <div class="man-rows">
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3.5 3.5 6.5-6.5"/></svg></div>
-            <div><div class="man-t">Un copilote silencieux</div><div class="man-s">Présent quand vous en avez besoin. Invisible le reste du temps.</div></div>
-          </div>
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3.5 3.5 6.5-6.5"/></svg></div>
-            <div><div class="man-t">Un moteur d'itinéraire vivant</div><div class="man-s">Le tracé s'adapte aux conditions réelles. Pas à une carte statique.</div></div>
-          </div>
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3.5 3.5 6.5-6.5"/></svg></div>
-            <div><div class="man-t">Un système de sécurité offline</div><div class="man-s">Entier. Fiable. Sans réseau, à 2 800 m, en zone blanche.</div></div>
-          </div>
-          <div class="man-row">
-            <div class="man-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3.5 3.5 6.5-6.5"/></svg></div>
-            <div><div class="man-t">Une obsession pour la fiabilité terrain</div><div class="man-s">Fiabilité, simplicité, exécution. Dans cet ordre. Toujours.</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ 3 PHASES ══════ -->
-<section class="phases" id="phases">
-  <div class="w">
-    <div class="phases-hd r">
-      <div class="sec-chip">Le système en 3 phases</div>
-      <h2 class="sec-h" style="margin-bottom:0">De l'intention à l'exécution.<br><span>Sans friction.</span></h2>
-    </div>
-    <!-- Phase 1 -->
-    <div class="phase r">
+      <!-- Text column -->
       <div>
-        <span class="ph-num">Phase 01 — Génération</span>
-        <h3 class="ph-h">La génération<br><em>contextuelle.</em></h3>
-        <p class="ph-p">L'IA ne calcule pas "distance + dénivelé". Elle comprend l'effort réel : chaleur, exposition solaire, fatigue progressive. Elle intègre dynamiquement sources d'eau, zones de bivouac autorisées, abris météo.</p>
-      </div>
-      <div class="pc-col r d2">
-        <div class="ph-card">
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><path d="M7 4.5V7l2 1.5"/></svg></div><div style="flex:1"><div class="pc-l">Effort réel estimé</div><div class="pc-s">Chaleur + exposition + fatigue cumulative</div><div class="pc-bar"><div class="pc-fill" style="width:72%"></div></div></div></div>
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><circle cx="4" cy="9.5" r="1.3"/><circle cx="7" cy="5.5" r="1.3"/><circle cx="10.5" cy="7.5" r="1.3"/><path d="M5 8.5l1.2-1.8M8.2 6.5l1.2.8"/></svg></div><div><div class="pc-l">Points d'intérêt critiques</div><div class="pc-s">3 sources d'eau · 2 zones bivouac · 1 abri météo</div></div></div>
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><path d="M2 9l1.5-3 2.5 2 2-4 2 3.5"/></svg></div><div><div class="pc-l">Variantes intelligentes</div><div class="pc-s">2 alternatives selon météo J+1</div></div></div>
+        <div class="hero-eyebrow r">Bêta ouverte</div>
+        <h1 class="display display-xl r d1">TERRA<br><span class="accent">TRAILS</span></h1>
+        <p class="hero-sub r d2">Le premier système d'exécution outdoor par IA. Énoncez une intention, obtenez un itinéraire complet, naviguez hors-ligne au sol. Sans friction.</p>
+        <div class="hero-ctas r d3">
+          <a href="#" class="store-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--txt2)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <div class="store-btn-label"><small>Télécharger sur</small><strong>App Store</strong></div>
+          </a>
+          <a href="#fonctionnalites" class="btn btn-outline">Découvrir →</a>
         </div>
       </div>
+
+      <!-- Image column -->
+      <div class="hero-image-wrap r d2">
+        <div class="hero-image-glow"></div>
+        <div class="hero-image-container">
+          <img src="Ecran_1_EXPLORER.png" alt="Interface Terratrails — Écran Explorer">
+        </div>
+        <div class="hero-img-float f1 glass">
+          <div class="float-label">Généré en</div>
+          <div class="float-val">2,3 s</div>
+        </div>
+        <div class="hero-img-float f2 glass">
+          <div class="float-label">Offline total</div>
+          <div class="float-val">100 %</div>
+        </div>
+      </div>
+
     </div>
-    <!-- Phase 2 -->
-    <div class="phase fl r">
+  </div>
+</section>
+
+<!-- ════════════════════ FONCTIONNALITES ════════════════════ -->
+<section id="fonctionnalites">
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">Le système</span>
+      <h2 class="display display-md">Intention.<br><span class="accent">Itinéraire.</span><br>Terrain.</h2>
+      <p class="body-lg" style="max-width:520px;margin-top:18px">Trois onglets. Zéro menu profond. Compréhensible en dix secondes.</p>
+    </div>
+
+    <div class="feat-grid">
+
+      <!-- Card 1 — Explorer -->
+      <div class="feat-card glass glass-bright r d1">
+        <div class="fc-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3C7 8 5 11 5 14a7 7 0 0 0 14 0c0-3-2-6-7-11z"/>
+            <circle cx="12" cy="14" r="2.5"/>
+          </svg>
+        </div>
+        <span class="fc-label">Onglet 01</span>
+        <div class="fc-title">Explorer</div>
+        <p class="fc-tagline">Décrivez une intention. L'IA génère immédiatement un itinéraire complet adapté à votre profil, la météo et le terrain réel.</p>
+        <ul class="fc-list">
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Génération IA depuis une phrase naturelle
+          </li>
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            3 variantes d'effort — Directe, Panoramique, Sportive
+          </li>
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Eau, refuges et bivouacs intégrés automatiquement
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 2 — Terrain -->
+      <div class="feat-card glass glass-bright r d2">
+        <div class="fc-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20L9 8l5 7 4-5 3 10"/>
+          </svg>
+        </div>
+        <span class="fc-label">Onglet 02</span>
+        <div class="fc-title">Terrain</div>
+        <p class="fc-tagline">Interface de survie. Position, direction, temps restant. Le tracé vit et s'adapte — même sans réseau, même en plein effort.</p>
+        <ul class="fc-list">
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Navigation 100 % hors-ligne, cartes vectorielles
+          </li>
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Itinéraire vivant — raccourcis et variantes en temps réel
+          </li>
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Alertes haptiques critiques : orage, sortie de trace, SOS
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 3 — Base -->
+      <div class="feat-card glass glass-bright r d3">
+        <div class="fc-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <span class="fc-label">Onglet 03</span>
+        <div class="fc-title">Base</div>
+        <p class="fc-tagline">Hub logistique privé. Matériel, cartes, condition physique. Aucun profil public, aucun réseau social, aucune gamification.</p>
+        <ul class="fc-list">
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Checklist dynamique indexée sur météo et altitude
+          </li>
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Score de préparation via Apple Santé
+          </li>
+          <li>
+            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
+            Données 100 % locales — chiffrées sur l'appareil
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Screenshots row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px">
+      <div style="border-radius:20px;overflow:hidden;border:1px solid var(--bor);transition:transform .3s cubic-bezier(.22,1,.36,1)" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+        <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer" style="width:100%;display:block">
+      </div>
+      <div style="border-radius:20px;overflow:hidden;border:1px solid var(--bor);transition:transform .3s cubic-bezier(.22,1,.36,1)" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+        <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain" style="width:100%;display:block">
+      </div>
+      <div style="border-radius:20px;overflow:hidden;border:1px solid var(--bor);transition:transform .3s cubic-bezier(.22,1,.36,1)" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
+        <img src="Ecran_3_BASE.png" alt="Écran Base" style="width:100%;display:block">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ PRICING TEASER ════════════════════ -->
+<section>
+  <div class="wrap">
+    <div class="pricing-tease glass r">
       <div>
-        <span class="ph-num">Phase 02 — Logistique</span>
-        <h3 class="ph-h">La logistique<br><em>automatique.</em></h3>
-        <p class="ph-p">Une fois l'itinéraire validé, votre sac est déjà prêt. Checklist indexée sur l'altitude, le vent, la météo réelle. Besoins en eau calculés. Autonomie batterie estimée. Rien à prévoir.</p>
+        <span class="eyebrow">Modèle économique</span>
+        <h3 class="display display-sm">Gratuit pour commencer.<br><span class="accent">Premium</span> pour aller plus loin.</h3>
+        <p class="pt-sub">4,99 € / mois. Premier mois à 1 €. L'accès gratuit couvre l'essentiel — Premium débloque l'IA illimitée, l'offline mondial et la couche sécurité avancée.</p>
       </div>
-      <div class="pc-col r d2">
-        <div class="ph-card">
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><path d="M2 4h10M2 7h7M2 10h5"/></svg></div><div><div class="pc-l">Checklist dynamique</div><div class="pc-s">Veste imper · Bâtons · Frontale · Crème 50+</div></div></div>
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><path d="M7 2c0 0-4 3-4 6a4 4 0 0 0 8 0c0-3-4-6-4-6z"/></svg></div><div style="flex:1"><div class="pc-l">Besoins en eau calculés</div><div class="pc-s">2,4 L · 3 points de recharge identifiés</div><div class="pc-bar"><div class="pc-fill tl" style="width:60%"></div></div></div></div>
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><rect x="2" y="4.5" width="8" height="5" rx="1.5"/><path d="M10 6.5h1.5v1H10"/></svg></div><div><div class="pc-l">Autonomie batterie</div><div class="pc-s">7h estimées · Powerbank conseillée si &gt; 6h</div></div></div>
-        </div>
-      </div>
-    </div>
-    <!-- Phase 3 -->
-    <div class="phase r">
-      <div>
-        <span class="ph-num">Phase 03 — Terrain</span>
-        <h3 class="ph-h">L'itinéraire<br><em>vivant.</em></h3>
-        <p class="ph-p">Interface ultra-minimaliste. Le tracé vit : ralentissement anormal, risque d'orage → raccourci, abri ou retour optimisé proposés instantanément. Pas une notification. Une décision.</p>
-      </div>
-      <div class="pc-col r d2">
-        <div class="ph-card">
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="2"/><path d="M7 2v2M7 10v2M2 7h2M10 7h2"/></svg></div><div><div class="pc-l">Interface terrain</div><div class="pc-s">Position · Direction · Temps restant · Alertes</div></div></div>
-          <div class="pc-row"><div class="pc-ico w"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--org)" stroke-width="1.4" stroke-linecap="round"><circle cx="7" cy="7" r="5.5"/><path d="M7 4.5V7.5"/><circle cx="7" cy="9.5" r=".5" fill="var(--org)" stroke="none"/></svg></div><div><div class="pc-l w">Alerte active</div><div class="pc-s"><span class="storm-alert-badge"><svg width="11" height="11" fill="none" viewBox="0 0 11 13" style="flex-shrink:0"><polygon points="6,1 1,7 5,7 5,12 10,6 6,6" fill="#D97706" stroke="#D97706" stroke-width=".4" stroke-linejoin="round"/></svg>Orage dans 1h40 sur crête · Raccourci proposé</span></div></div></div>
-          <div class="pc-row"><div class="pc-ico"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><rect x="2" y="4" width="10" height="7" rx="1.5"/><path d="M5 4V3a2 2 0 0 1 4 0v1"/></svg></div><div><div class="pc-l">Export montres GPS</div><div class="pc-s">Garmin · Suunto · Coros · GPX direct</div></div></div>
-        </div>
+      <div style="flex-shrink:0">
+        <a href="premium.html" class="btn btn-primary">Voir l'offre Premium →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════ APP SCREENSHOTS — Apple Fitness+ style ══════ -->
-<section class="appshots" id="interface">
-  <div class="w">
-    <div class="appshots-hd r">
-      <div class="sec-chip">L'Application</div>
-      <h2 class="sec-h">Conçue pour être<br>comprise en <span>10 secondes.</span></h2>
-      <p class="appshots-sub">Chaque écran pensé pour l'effort physique. Même fatigué, même hors-réseau.</p>
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 100 100" fill="none" width="24" height="24">
+        <rect width="100" height="100" rx="22.37" fill="#0A0E0B"/>
+        <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
+        <polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="50" cy="79" r="4.32" fill="#345A3A"/>
+      </svg>
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
     </div>
-
-    <!-- Row 1: phone left, text right -->
-    <div class="appshot-row r">
-      <div class="appshot-phone-col">
-        <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer — Génération d'itinéraire Terratrails" class="appshot-real-phone">
-      </div>
-      <div class="appshot-text-col">
-        <div class="as-eyebrow">Écran 01 — Explorer</div>
-        <h3 class="as-h">Décrivez une intention.<br>Obtenez un itinéraire.</h3>
-        <p class="as-p">Pas de menu complexe. Vous écrivez ce que vous voulez faire — le système construit le reste. Durée, terrain, météo, niveau — tout est intégré automatiquement.</p>
-        <ul class="as-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Génération IA depuis une phrase naturelle</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>3 variantes adaptées à votre profil</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Effort réel calculé (pas seulement D+)</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Sources d'eau, refuges et bivouacs intégrés</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Row 2: text left, phone right -->
-    <div class="appshot-row appshot-row-rev r d1">
-      <div class="appshot-text-col">
-        <div class="as-eyebrow">Écran 02 — Terrain</div>
-        <h3 class="as-h">Navigation épurée.<br>Interface de survie.</h3>
-        <p class="as-p">En effort physique, chaque information superflue coûte de l'énergie. L'écran terrain ne montre que l'essentiel — et s'adapte si les conditions changent.</p>
-        <ul class="as-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Position · Direction · Temps restant</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Alertes météo avec raccourci instantané</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Fonctionne hors-réseau total</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Compatible Garmin · Suunto · Coros</li>
-        </ul>
-      </div>
-      <div class="appshot-phone-col">
-        <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain — Navigation Terratrails" class="appshot-real-phone">
-      </div>
-    </div>
-
-    <!-- Row 3: phone left, text right -->
-    <div class="appshot-row r d2">
-      <div class="appshot-phone-col">
-        <img src="Ecran_3_BASE.png" alt="Écran Base — Hub logistique Terratrails" class="appshot-real-phone">
-      </div>
-      <div class="appshot-text-col">
-        <div class="as-eyebrow">Écran 03 — Base</div>
-        <h3 class="as-h">Votre hub logistique.<br>Personnel et <span style="color:var(--gbr)">privé.</span></h3>
-        <p class="as-p">Gérez votre matériel, consultez vos cartes hors-ligne et suivez votre condition physique réelle. Zéro profil public, zéro donnée partagée — tout reste chiffré localement sur votre appareil.</p>
-        <ul class="as-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Score de préparation indexé sur Apple Santé</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Checklist équipement dynamique et intelligente</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Cartes offline pré-téléchargées par région</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Données 100% locales — chiffrées sur l'appareil</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════ COMPAGNON ══════ -->
-<section class="companion" id="securite">
-  <div class="w">
-    <div class="comp-grid">
-      <div class="r">
-        <span class="comp-badge">Mode compagnon — Premium</span>
-        <h2 class="comp-h">Vos proches savent<br>que vous êtes là.</h2>
-        <p class="comp-p">Partage de position, niveau de batterie et alertes de sécurité en tâche de fond vers vos contacts de confiance.</p>
-        <p class="comp-p">Aucune logique de réseau social. Aucun feed. Aucun profil public. Uniquement une réassurance qui fonctionne même hors-réseau.</p>
-        <div class="comp-note">
-          <div class="comp-note-h">
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l4 4 5-5"/></svg>
-            Surveillance passive automatique
-          </div>
-          <div class="comp-note-p">Immobilité prolongée · Sortie de trace · Météo dangereuse · Perte réseau → protocole SOS déclenché automatiquement.</div>
-        </div>
-        <!-- Live Activity iOS notification -->
-        <div class="live-activity-wrap r d2">
-          <div class="live-activity">
-            <div class="la-icon">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--gbr)" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="2.5"/><path d="M8 1v3M8 12v3M1 8h3M12 8h3"/></svg>
-            </div>
-            <div class="la-body">
-              <div class="la-app">Terratrails</div>
-              <div class="la-msg">Prochain point d'eau dans 800 m. Rythme nominal.</div>
-            </div>
-            <div class="la-right">
-              <span class="la-time">il y a 2 min</span>
-              <div class="la-prog-wrap">
-                <div class="la-prog-label"><span>Trajet</span><span>64%</span></div>
-                <div class="la-prog-bar"><div class="la-prog-fill" style="width:64%"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="r d1">
-        <div class="live-card">
-          <div class="live-hd"><div class="live-title">Suivi en direct</div><div class="live-badge"><span class="live-dot pulse-ring"></span>Actif</div></div>
-          <div class="live-person">
-            <div class="live-av">CP</div>
-            <div><div class="live-name">Clelia P.</div><div class="live-st">Progression · 64% · ETA 17h40</div></div>
-            <div class="live-bars">
-              <span class="live-bar" style="height:7px"></span>
-              <span class="live-bar" style="height:12px"></span>
-              <span class="live-bar" style="height:9px"></span>
-              <span class="live-bar" style="height:15px"></span>
-              <span class="live-bar" style="height:11px"></span>
-            </div>
-          </div>
-          <div class="live-sync"><span class="sync-dot"></span>Batterie 62% · Dernière sync il y a 4 min</div>
-          <div class="live-person dim">
-            <div class="live-av">JC</div>
-            <div><div class="live-name">Jules C.</div><div class="live-st">Hors ligne · Dernière position 11h22</div></div>
-          </div>
-          <div class="live-alert">
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" style="flex-shrink:0;margin-top:1px"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 4V7"/><circle cx="6.5" cy="9" r=".5" fill="currentColor" stroke="none"/></svg>
-            Immobilité détectée depuis 18 min · Vérification en cours
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ WAITLIST ══════ -->
-<section class="waitlist" id="waitlist">
-  <div class="wl-glow"></div>
-  <div class="w">
-    <div class="r">
-      <span class="wl-badge">Liste d'attente · Bêta Août 2026</span>
-      <h2 class="wl-h">Soyez parmi<br>les <em>500 premiers.</em></h2>
-      <div class="wl-benefit">Accès bêta exclusif + −50% à vie sur Premium<br>pour les 500 premières inscriptions</div>
-      <p class="wl-sub">0 inscrit pour le moment.<br>Inscrivez-vous maintenant, soyez notifié en premier.</p>
-      <div class="wl-wrap">
-        <input class="hp" type="text" name="website" id="hpField" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="wl-row" id="wlRow">
-          <input type="email" class="wl-in" id="wlEmail" placeholder="votre@email.com" autocomplete="email" inputmode="email" required>
-          <button class="wl-btn" id="wlBtn" type="button">
-            <svg class="spin" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,.25)" stroke-width="2.5"/><path d="M8 2a6 6 0 0 1 6 6" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
-            <span class="bl">Obtenir mon accès anticipé</span>
-          </button>
-        </div>
-        <div class="wl-status" id="wlStatus" role="status" aria-live="polite"></div>
-      </div>
-      <p class="wl-note">Pas de spam, pas de marketing · 1 mail par mois max · Uniquement les accès de développement</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ FAQ ══════ -->
-<section class="faq" id="faq">
-  <div class="w">
-    <div class="faq-head r">
-      <div class="sec-chip">Questions</div>
-      <h2 class="sec-h">Ce que vous<br>voulez savoir.</h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item r">
-        <button class="faq-q" aria-expanded="false">Comment fonctionne la génération d'itinéraire ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Terratrails n'analyse pas une carte statique. Notre système croise votre intention textuelle avec l'effort réel — chaleur, exposition, fatigue cumulative — et intègre dynamiquement les points critiques au bon moment. Résultat exportable GPX, compatible Garmin, Suunto, Coros.</div></div>
-      </div>
-      <div class="faq-item r d1">
-        <button class="faq-q" aria-expanded="false">L'application fonctionne-t-elle sans réseau ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Oui. L'intégralité du système de sécurité et des cartes est pré-téléchargée en local. Pas de requêtes serveur sur le terrain, pas de dépendance au réseau, même à 2800 m d'altitude. Le GPS natif fonctionne sans aucune connexion.</div></div>
-      </div>
-      <div class="faq-item r d2">
-        <button class="faq-q" aria-expanded="false">Qu'est-ce que le Mode Compagnon ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Une fonction passive de réassurance. Vos proches reçoivent votre progression et vos alertes de sécurité en tâche de fond. Aucun fil d'actualité, aucun réseau social — uniquement de la sécurité brute par SMS de secours si nécessaire.</div></div>
-      </div>
-      <div class="faq-item r d3">
-        <button class="faq-q" aria-expanded="false">Quelle différence avec Komoot ou AllTrails ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">Komoot et AllTrails cataloguent des itinéraires existants. Terratrails en génère un pour vous, adapté à votre condition physique du jour, la météo réelle et vos contraintes. La checklist est calculée automatiquement. L'itinéraire s'adapte si les conditions changent en route.</div></div>
-      </div>
-      <div class="faq-item r d4">
-        <button class="faq-q" aria-expanded="false">Quand sort la bêta et comment y accéder ?<span class="faq-ico"><svg width="11" height="11" fill="none" viewBox="0 0 11 11" stroke="var(--txt)" stroke-width="1.6" stroke-linecap="round"><path d="M5.5 2v7M2 5.5h7"/></svg></span></button>
-        <div class="faq-a" role="region"><div class="faq-a-inner">La bêta est prévue pour août 2026. Accès distribués par ordre d'inscription. Les 500 premiers bénéficient d'un accès prioritaire et de −50% à vie sur Premium. Inscrivez votre email ci-dessous — notification unique. Pas de spam.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ CONTACT ══════ -->
-<section class="contact" id="contact">
-  <div class="w">
-    <div class="contact-grid">
-      <!-- Info side -->
-      <div class="r">
-        <div class="sec-chip">Contact</div>
-        <h2 class="contact-h">Une question ?<br>Parlons-en <span>directement.</span></h2>
-        <p class="contact-p">Terratrails est en développement actif. Chaque retour compte. Pour un partenariat, une question sur la bêta ou simplement un mot d'encouragement — on répond.</p>
-        <a href="mailto:contact.terratrails@gmail.com" class="contact-email-card">
-          <div class="contact-email-ico">
-            <svg width="16" height="16" fill="none" viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="1" y="3.5" width="14" height="9" rx="2"/>
-              <path d="M1 5.5l7 4.5 7-4.5"/>
-            </svg>
-          </div>
-          <div>
-            <div class="contact-email-lbl">Email direct</div>
-            <div class="contact-email-addr">contact.terratrails@gmail.com</div>
-          </div>
-        </a>
-      </div>
-      <!-- Form side -->
-      <div class="r d1">
-        <form class="contact-form" id="contactForm" novalidate>
-          <div class="cf-group">
-            <label class="cf-label" for="cfName">Nom</label>
-            <input class="cf-input" type="text" id="cfName" name="name" placeholder="Votre prénom ou nom" autocomplete="name">
-          </div>
-          <div class="cf-group">
-            <label class="cf-label" for="cfEmail">Email</label>
-            <input class="cf-input" type="email" id="cfEmail" name="email" placeholder="votre@email.com" autocomplete="email" inputmode="email">
-          </div>
-          <div class="cf-group">
-            <label class="cf-label" for="cfMsg">Message</label>
-            <textarea class="cf-textarea" id="cfMsg" name="message" placeholder="Votre message…"></textarea>
-          </div>
-          <button type="submit" class="cf-submit" id="cfBtn">
-            <svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7.5h11M9 3.5l4 4-4 4"/></svg>
-            Envoyer le message
-          </button>
-          <div class="cf-status" id="cfStatus" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ FOOTER ══════ -->
-<footer>
-  <div class="w">
-    <!-- Grid principal 4 colonnes -->
-    <div class="foot-main">
-      <!-- Brand column -->
-      <div class="foot-brand r">
-        <a href="#" class="logo" aria-label="Terratrails">
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.3" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
-          <div class="logo-text"><span style="font-size:10px">TERRA</span><span style="font-size:10px">TRAILS</span></div>
-        </a>
-        <p class="foot-tagline">Décrire. Générer. Partir.<br>Le copilote outdoor qui supprime la planification.</p>
-        <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="foot-ig-pill">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          @terratrails.fr
-        </a>
-      </div>
-      <!-- Produit column -->
-      <div class="foot-col r d1">
-        <h4>Produit</h4>
-        <ul>
-          <li><a href="#phases">Le système</a></li>
-          <li><a href="#interface">L'Application</a></li>
-          <li><a href="#securite">Mode Compagnon</a></li>
-          <li><a href="#waitlist">Accès bêta</a></li>
-        </ul>
-      </div>
-      <!-- Philosophie column -->
-      <div class="foot-col r d2">
-        <h4>Philosophie</h4>
-        <ul>
-          <li><a href="#manifeste">Manifeste</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="mailto:contact.terratrails@gmail.com">Contact</a></li>
-        </ul>
-      </div>
-      <!-- Légal column -->
-      <div class="foot-col r d3">
-        <h4>Légal</h4>
-        <ul>
-          <li><a href="#" onclick="openModal('privacy');return false;">Politique de confidentialité</a></li>
-          <li><a href="#" onclick="openModal('terms');return false;">Conditions d'utilisation</a></li>
-          <li><a href="mailto:contact.terratrails@gmail.com">Nous contacter</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Disclaimers -->
-    <div class="foot-notes r">
-      <p class="foot-note">L'utilisation du GPS en arrière-plan peut impacter l'autonomie de la batterie selon l'appareil et les conditions terrain.</p>
-      <p class="foot-note">Le Mode Compagnon nécessite une couverture réseau minimale pour l'envoi des alertes SMS de secours. En zone blanche totale, le protocole SOS local reste actif.</p>
-      <p class="foot-note">Terratrails est un produit en développement actif. Certaines fonctionnalités décrites sont prévues pour la version bêta (août 2026).</p>
-    </div>
-
-    <!-- Barre du bas -->
-    <div class="foot-bar">
-      <span class="foot-copy">© 2026 Terratrails — Tous droits réservés</span>
-      <div class="foot-legal">
-        <a href="#" onclick="openModal('privacy');return false;">Confidentialité</a>
-        <a href="#" onclick="openModal('terms');return false;">Conditions</a>
-        <a href="mailto:contact.terratrails@gmail.com">Contact</a>
-      </div>
-    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Terratrails — Système d'exécution outdoor. Tous droits réservés.</p>
   </div>
 </footer>
 
-<!-- ══════ MODAL CONFIDENTIALITÉ ══════ -->
-<div class="legal-modal" id="modalPrivacy" role="dialog" aria-modal="true" aria-label="Politique de confidentialité">
-  <div class="legal-modal-inner">
-    <div class="legal-modal-header">
-      <div class="legal-modal-title">Politique de confidentialité</div>
-      <button class="legal-modal-close" onclick="closeModal()" aria-label="Fermer">
-        <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
-      </button>
-    </div>
-    <div class="legal-modal-body">
-      <p class="legal-date">Dernière mise à jour : mai 2026</p>
-
-      <h3>1. Collecte des données</h3>
-      <p>Terratrails collecte uniquement les données strictement nécessaires au fonctionnement du service : adresse email lors de l'inscription à la liste d'attente, données de position GPS pendant une sortie active (traitées localement sur l'appareil), préférences de randonnée renseignées par l'utilisateur.</p>
-
-      <h3>2. Traitement local et offline</h3>
-      <p>Les données de navigation GPS sont traitées en priorité sur l'appareil de l'utilisateur. Aucune donnée de position en temps réel n'est transmise à nos serveurs sans consentement explicite. Les cartes et itinéraires sont téléchargés en local et fonctionnent sans connexion réseau.</p>
-
-      <h3>3. Partage des données</h3>
-      <p>Terratrails ne vend, ne loue et ne cède aucune donnée personnelle à des tiers à des fins commerciales. Les données ne sont partagées qu'avec les contacts explicitement désignés par l'utilisateur via le Mode Compagnon, et uniquement avec son accord.</p>
-
-      <h3>4. Sécurité</h3>
-      <p>Les données transmises à nos serveurs sont chiffrées en transit (TLS 1.3) et au repos. Les données de liste d'attente sont stockées dans une base sécurisée avec accès restreint.</p>
-
-      <h3>5. Conservation</h3>
-      <p>Les données de la liste d'attente sont conservées jusqu'à la notification du lancement bêta, puis supprimées sur demande. Les données de sorties sont conservées localement sur l'appareil de l'utilisateur. Aucune durée de conservation excessive n'est appliquée.</p>
-
-      <h3>6. Droits de l'utilisateur</h3>
-      <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, de suppression et de portabilité de vos données. Pour toute demande : <a href="mailto:contact.terratrails@gmail.com">contact.terratrails@gmail.com</a>.</p>
-
-      <h3>7. Cookies</h3>
-      <p>Aucun cookie de tracking ou publicitaire n'est utilisé sur ce site. Seule la préférence de thème (clair/sombre) est stockée en local via <code>localStorage</code>, sans transmission à des tiers.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══════ MODAL CONDITIONS D'UTILISATION ══════ -->
-<div class="legal-modal" id="modalTerms" role="dialog" aria-modal="true" aria-label="Conditions d'utilisation">
-  <div class="legal-modal-inner">
-    <div class="legal-modal-header">
-      <div class="legal-modal-title">Conditions d'utilisation</div>
-      <button class="legal-modal-close" onclick="closeModal()" aria-label="Fermer">
-        <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
-      </button>
-    </div>
-    <div class="legal-modal-body">
-      <p class="legal-date">Dernière mise à jour : mai 2026</p>
-
-      <h3>1. Objet</h3>
-      <p>Les présentes conditions régissent l'utilisation du site terratrails.fr et de l'application Terratrails (en développement). En vous inscrivant à la liste d'attente, vous acceptez ces conditions.</p>
-
-      <h3>2. Accès bêta</h3>
-      <p>L'accès à la version bêta (prévue août 2026) est réservé aux inscrits sélectionnés. Terratrails se réserve le droit de modifier le nombre de places, les dates de lancement ou les fonctionnalités disponibles sans préavis.</p>
-
-      <h3>3. Responsabilité terrain</h3>
-      <p>Terratrails est un outil d'assistance à la planification et à la navigation. Il ne remplace pas le jugement personnel, la formation aux techniques de randonnée ni les équipements de sécurité adaptés. L'utilisateur reste seul responsable de ses décisions en milieu naturel.</p>
-
-      <h3>4. Fiabilité des données</h3>
-      <p>Les données terrain (météo, état des sentiers, points d'eau) sont fournies à titre indicatif. Terratrails ne garantit pas leur exactitude en temps réel. Vérifiez toujours les conditions auprès des autorités locales avant une sortie engagée.</p>
-
-      <h3>5. Propriété intellectuelle</h3>
-      <p>L'ensemble des éléments du service (interface, algorithmes, contenus) est la propriété exclusive de Terratrails. Toute reproduction ou utilisation commerciale est interdite sans autorisation écrite.</p>
-
-      <h3>6. Modification des conditions</h3>
-      <p>Terratrails se réserve le droit de modifier ces conditions à tout moment. Les utilisateurs inscrits seront notifiés par email lors de changements substantiels.</p>
-
-      <h3>7. Contact</h3>
-      <p>Pour toute question : <a href="mailto:contact.terratrails@gmail.com">contact.terratrails@gmail.com</a></p>
-    </div>
-  </div>
-</div>
-
-<!-- ══════ SCRIPTS ══════ -->
 <script>
-'use strict';
-
-/* ── Supabase ── */
-var SUPABASE_URL = '__SB_URL__';
-var SUPABASE_KEY = '__SB_KEY__';
-var sb = null;
-try {
-  sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  console.log('[TT] Supabase ready');
-} catch(e) {
-  console.warn('[TT] Supabase init failed:', e.message);
-}
-
-/* ── Nav scroll ── */
-var mainNav = document.getElementById('mainNav');
-window.addEventListener('scroll', function() {
-  mainNav.classList.toggle('on', window.scrollY > 40);
-}, { passive: true });
-
-/* ── Reveal on scroll ── */
-var revObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) { e.target.classList.add('in'); revObs.unobserve(e.target); }
+  const hamBtn = document.getElementById('hamBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  hamBtn.addEventListener('click', () => {
+    const open = mobMenu.classList.toggle('open');
+    hamBtn.setAttribute('aria-expanded', open);
   });
-}, { threshold: 0.07, rootMargin: '0px 0px -16px 0px' });
-document.querySelectorAll('.r').forEach(function(el) { revObs.observe(el); });
-
-/* ════════════════════════════════════════════
-   TYPEWRITER — bulletproof vanilla JS
-   Uses textContent (never innerHTML)
-   Cursor is a separate element
-════════════════════════════════════════════ */
-(function initTypewriter() {
-  var textEl   = document.getElementById('tw-text');
-  var cursorEl = document.getElementById('tw-cursor');
-  if (!textEl || !cursorEl) return;
-
-  /* Phrases — full Unicode, no escape issues */
-  var PHRASES = [
-    "J\u2019ai demain apr\u00e8s-midi libre autour d\u2019Annecy, je veux une randonn\u00e9e de 4h avec un lac o\u00f9 se baigner et un refuge pour manger.",
-    "Trail de 25\u00a0km dans les \u00c9crins, 1\u202f500\u00a0m D+, niveau interm\u00e9diaire, d\u00e9part \u00e0 7h.",
-    "Bivouac 2 jours dans le Vercors, autonomie compl\u00e8te, coucher de soleil depuis un sommet.",
-    "Randonn\u00e9e famille 3h autour de Chamonix, pas trop de d\u00e9nivel\u00e9, refuge pour d\u00e9jeuner."
-  ];
-
-  var chips = [
-    document.getElementById('chip0'),
-    document.getElementById('chip1'),
-    document.getElementById('chip2'),
-    document.getElementById('chip3')
-  ];
-
-  var pi = 0;        /* phrase index */
-  var ci = 0;        /* char index */
-  var deleting = false;
-  var timer = null;
-
-  function setChips(on) {
-    chips.forEach(function(c) {
-      if (!c) return;
-      if (on) { c.classList.add('on'); } else { c.classList.remove('on'); }
-    });
-  }
-
-  function tick() {
-    var phrase = PHRASES[pi];
-
-    if (!deleting) {
-      /* Typing forward */
-      ci += 1;
-      textEl.textContent = phrase.slice(0, ci);
-
-      if (ci >= phrase.length) {
-        /* Finished typing → activate chips, then start deleting after pause */
-        setChips(true);
-        deleting = true;
-        timer = setTimeout(tick, 3200);
-        return;
-      }
-      /* Typing speed: slower on first char, normal otherwise */
-      timer = setTimeout(tick, ci === 1 ? 700 : 38);
-
-    } else {
-      /* Deleting */
-      setChips(false);
-      ci -= 1;
-      textEl.textContent = phrase.slice(0, ci);
-
-      if (ci <= 0) {
-        /* Done deleting → next phrase */
-        deleting = false;
-        pi = (pi + 1) % PHRASES.length;
-        timer = setTimeout(tick, 500);
-        return;
-      }
-      timer = setTimeout(tick, 16);
-    }
-  }
-
-  /* Start after initial delay */
-  timer = setTimeout(tick, 1100);
-})();
-
-/* ════════════════════════════════════════════
-   THEME TOGGLE
-════════════════════════════════════════════ */
-(function initTheme() {
-  var html = document.documentElement;
-  var btn  = document.getElementById('themeBtn');
-  if (!btn) return;
-
-  /* Restore saved preference */
-  var saved = '';
-  try { saved = localStorage.getItem('tt-theme') || ''; } catch(e) {}
-  if (saved === 'light') { html.setAttribute('data-theme', 'light'); }
-  else { html.setAttribute('data-theme', 'dark'); }
-
-  btn.addEventListener('click', function() {
-    var isLight = html.getAttribute('data-theme') === 'light';
-    if (isLight) {
-      html.setAttribute('data-theme', 'dark');
-      try { localStorage.setItem('tt-theme', 'dark'); } catch(e) {}
-    } else {
-      html.setAttribute('data-theme', 'light');
-      try { localStorage.setItem('tt-theme', 'light'); } catch(e) {}
-    }
-  });
-})();
-
-/* ════════════════════════════════════════════
-   FAQ ACCORDION
-════════════════════════════════════════════ */
-document.querySelectorAll('.faq-q').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var item   = btn.closest('.faq-item');
-    var isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
-    document.querySelectorAll('.faq-q').forEach(function(b) { b.setAttribute('aria-expanded', 'false'); });
-    if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
-  });
-});
-
-/* ════════════════════════════════════════════
-   WAITLIST FORM + SUPABASE
-════════════════════════════════════════════ */
-(function initWaitlist() {
-  var emailIn  = document.getElementById('wlEmail');
-  var btn      = document.getElementById('wlBtn');
-  var statusEl = document.getElementById('wlStatus');
-  var hp       = document.getElementById('hpField');
-  if (!emailIn || !btn) return;
-
-  var t0 = Date.now();
-  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  function showStatus(msg, type) {
-    statusEl.textContent = msg;
-    statusEl.className   = 'wl-status show ' + type;
-  }
-
-  function setLoading(on) {
-    btn.disabled = on;
-    btn.classList.toggle('loading', on);
-  }
-
-  async function submit() {
-    var email = emailIn.value.trim().toLowerCase();
-
-    /* Anti-spam: honeypot */
-    if (hp && hp.value.trim() !== '') { console.warn('[TT] Bot detected'); return; }
-    /* Anti-spam: too fast */
-    if (Date.now() - t0 < 1800) { console.warn('[TT] Too fast'); return; }
-    /* Email validation */
-    if (!EMAIL_RE.test(email)) {
-      showStatus('Format invalide \u2014 exemple\u00a0: vous@domaine.com', 'err');
-      emailIn.focus(); return;
-    }
-
-    setLoading(true);
-    statusEl.className = 'wl-status';
-    console.log('[TT] Registering:', email);
-
-    if (sb) {
-      try {
-        var result = await sb.from('beta_users').insert({ email: email, source: 'landing_page' }).select();
-        if (result.error) {
-          if (result.error.code === '23505') {
-            console.info('[TT] Already exists:', email);
-            showStatus('Vous \u00eates d\u00e9j\u00e0 sur la liste \u2014 on vous contacte bient\u00f4t.', 'warn');
-          } else {
-            throw result.error;
-          }
-        } else {
-          console.info('[TT] Success:', email);
-          showStatus('\u2713 Inscrit \u2014 bienvenue. Notification en ao\u00fbt 2026.', 'ok');
-          emailIn.value = '';
-          btn.innerHTML = '<span class="bl">Inscrit \u2713</span>';
-          btn.style.background = 'var(--ghi)';
-        }
-      } catch(err) {
-        console.error('[TT] Supabase error:', err);
-        showStatus('Erreur r\u00e9seau \u2014 r\u00e9essayez dans quelques secondes.', 'err');
-      }
-    } else {
-      await new Promise(function(r) { setTimeout(r, 800); });
-      showStatus('\u2713 Inscrit (mode d\u00e9mo \u2014 Supabase non configur\u00e9).', 'ok');
-    }
-
-    setLoading(false);
-  }
-
-  btn.addEventListener('click', submit);
-  emailIn.addEventListener('keydown', function(e) { if (e.key === 'Enter') submit(); });
-})();
-
-/* ════════════════════════════════════════════
-   MOBILE HAMBURGER MENU
-════════════════════════════════════════════ */
-(function initMobMenu() {
-  var hamBtn  = document.getElementById('hamBtn');
-  var mobMenu = document.getElementById('mobMenu');
-  if (!hamBtn || !mobMenu) return;
-
-  function openMenu() {
-    document.body.classList.add('menu-open');
-    hamBtn.setAttribute('aria-expanded', 'true');
-    mobMenu.removeAttribute('aria-hidden');
-    document.addEventListener('keydown', onKey);
-  }
-
-  function closeMenu() {
-    document.body.classList.remove('menu-open');
-    hamBtn.setAttribute('aria-expanded', 'false');
-    mobMenu.setAttribute('aria-hidden', 'true');
-    document.removeEventListener('keydown', onKey);
-  }
-
-  function onKey(e) { if (e.key === 'Escape') closeMenu(); }
-
-  hamBtn.addEventListener('click', function() {
-    document.body.classList.contains('menu-open') ? closeMenu() : openMenu();
-  });
-
-  /* Close on overlay click (outside the link list) */
-  mobMenu.addEventListener('click', function(e) {
-    if (e.target === mobMenu) closeMenu();
-  });
-
-  /* Close when a link is tapped */
-  mobMenu.querySelectorAll('.mob-link').forEach(function(el) {
-    el.addEventListener('click', closeMenu);
-  });
-
-  /* Lock body scroll when open */
-  var origOverflow = '';
-  var observer = new MutationObserver(function() {
-    if (document.body.classList.contains('menu-open')) {
-      origOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = origOverflow;
-    }
-  });
-  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-})();
-/* ════════════════════════════════════════════
-   CONTACT FORM
-════════════════════════════════════════════ */
-(function initContact() {
-  var form    = document.getElementById('contactForm');
-  var nameIn  = document.getElementById('cfName');
-  var emailIn = document.getElementById('cfEmail');
-  var msgIn   = document.getElementById('cfMsg');
-  var btn     = document.getElementById('cfBtn');
-  var status  = document.getElementById('cfStatus');
-  if (!form) return;
-
-  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  function showStatus(msg, type) {
-    status.textContent = msg;
-    status.className = 'cf-status show ' + type;
-  }
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var name  = nameIn.value.trim();
-    var email = emailIn.value.trim().toLowerCase();
-    var msg   = msgIn.value.trim();
-
-    if (!name)  { showStatus('Merci d\'indiquer votre nom.', 'err'); nameIn.focus(); return; }
-    if (!EMAIL_RE.test(email)) { showStatus('Format d\'email invalide.', 'err'); emailIn.focus(); return; }
-    if (msg.length < 10) { showStatus('Votre message est trop court.', 'err'); msgIn.focus(); return; }
-
-    /* Build mailto link as graceful fallback */
-    var subject = encodeURIComponent('Message via terratrails.fr — ' + name);
-    var body    = encodeURIComponent('Nom : ' + name + '\nEmail : ' + email + '\n\n' + msg);
-    var mailto  = 'mailto:contact.terratrails@gmail.com?subject=' + subject + '&body=' + body;
-
-    btn.disabled = true;
-    window.location.href = mailto;
-
-    setTimeout(function() {
-      showStatus('✓ Votre client mail s\'est ouvert. Message prêt à envoyer.', 'ok');
-      form.reset();
-      btn.disabled = false;
-    }, 800);
-  });
-})();
-
-/* ════════════════════════════════════════════
-   LEGAL MODALS
-════════════════════════════════════════════ */
-function openModal(type) {
-  var id = type === 'privacy' ? 'modalPrivacy' : 'modalTerms';
-  var modal = document.getElementById(id);
-  if (!modal) return;
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  modal.addEventListener('click', function onBg(e) {
-    if (e.target === modal) { closeModal(); modal.removeEventListener('click', onBg); }
-  });
-  document.addEventListener('keydown', function onEsc(e) {
-    if (e.key === 'Escape') { closeModal(); document.removeEventListener('keydown', onEsc); }
-  });
-}
-function closeModal() {
-  document.querySelectorAll('.legal-modal.open').forEach(function(m) { m.classList.remove('open'); });
-  document.body.style.overflow = '';
-}
 </script>
 </body>
 </html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratrails Premium — IA illimitée, hors-ligne mondial, Mode Compagnon SMS. 4,99 € / mois.">
+  <title>Terratrails — Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Page hero ── */
+    .prem-hero { padding: 96px 0 80px; text-align: center; }
+    .prem-hero .display-xl { max-width: 900px; margin: 12px auto 0; }
+    .prem-hero .body-lg { max-width: 560px; margin: 20px auto 0; }
+
+    /* ── Price section ── */
+    .price-section { padding: var(--section-py) 0; }
+    .price-center { display: flex; flex-direction: column; align-items: center; }
+    .price-card-wrap { width: 100%; max-width: 440px; }
+
+    /* ── Companion section ── */
+    .companion-visual {
+      background: var(--bg2); border: 1px solid var(--bor2);
+      border-radius: 28px; overflow: hidden; padding: 36px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .alert-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px; border-radius: 14px;
+      border: 1px solid; font-size: 13px; line-height: 1.5;
+    }
+    .alert-warn { background: rgba(217,119,6,.07); border-color: rgba(217,119,6,.2); }
+    .alert-warn .alert-ico { color: #D97706; }
+    .alert-crit { background: rgba(185,40,40,.07); border-color: rgba(185,40,40,.25); }
+    .alert-crit .alert-ico { color: #ef4444; }
+    .alert-ok   { background: var(--grn-bg); border-color: var(--grn-bor); }
+    .alert-ok   .alert-ico { color: var(--grn-lit); }
+    .alert-ico  { flex-shrink: 0; margin-top: 1px; }
+    .alert-title { font-weight: 700; color: var(--txt); margin-bottom: 2px; }
+    .alert-body  { color: var(--txt2); }
+
+    /* ── Comparison table wrapper ── */
+    .cmp-wrap { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--bor2); }
+    .cmp-table .col-prem { font-weight: 600; }
+    .cmp-table thead tr { background: none; }
+    .cmp-table th.col-free { color: var(--txt3); }
+    .cmp-table th.col-prem { color: var(--grn-lit); }
+    .icon-check { display:inline-flex;align-items:center;color:var(--grn-lit) }
+    .icon-dash  { display:inline-flex;align-items:center;color:var(--txt3) }
+
+    /* ── CTA section ── */
+    .final-cta { text-align: center; padding: var(--section-py) 0; }
+    .final-cta .display-lg { margin-bottom: 28px; }
+    .store-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+    .store-btn-lg {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: var(--bg3); border: 1px solid var(--bor2); border-radius: 18px;
+      padding: 16px 26px; text-decoration: none; color: var(--txt);
+      transition: border-color .2s, background .2s, transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s;
+    }
+    .store-btn-lg:hover { border-color: var(--bor-grn); background: rgba(52,90,58,.1); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,.35); }
+    .store-btn-lg .lbl { display: flex; flex-direction: column; }
+    .store-btn-lg .lbl small { font-size: 10px; color: var(--txt3); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
+    .store-btn-lg .lbl strong { font-size: 17px; font-weight: 800; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22.37" fill="#0A0E0B"/>
+        <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
+        <polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="50" cy="79" r="4.32" fill="#345A3A"/>
+      </svg>
+      <div class="nav-logo-text">TERRA<span>TRAILS</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html" class="active">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#stores" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Télécharger</a>
+      <button class="ham-btn" id="hamBtn" aria-label="Menu"><span class="ham-line"></span><span class="ham-line"></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mob-overlay" id="mobMenu">
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="premium.html" class="active">Premium</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="mob-cta"><a href="#stores" class="btn btn-primary" style="width:100%;justify-content:center;">Télécharger</a></div>
+</div>
+
+<!-- HERO -->
+<section class="prem-hero">
+  <div class="wrap">
+    <span class="eyebrow r">Terratrails Premium</span>
+    <h1 class="display display-xl r d1">TERRAIN<br><span class="accent">SANS LIMITE.</span></h1>
+    <p class="body-lg r d2">IA illimitée. Offline mondial. Sécurité avancée. Tout ce qu'il faut pour aller plus loin — sans jamais se poser de question.</p>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="price-section">
+  <div class="wrap">
+    <div class="price-center">
+      <div class="price-card-wrap r">
+        <div class="price-card glass glass-green" style="margin:0 auto">
+          <div class="price-badge">Premier mois à 1 €</div>
+          <div class="price-amount">4<sub>,99 €</sub></div>
+          <p class="price-period">par mois · Sans engagement · Annulable à tout moment</p>
+          <hr style="border:none;border-top:1px solid var(--bor);margin:28px 0">
+          <a href="#stores" class="btn btn-primary" style="width:100%;justify-content:center;font-size:14px;padding:16px">Commencer à 1 € →</a>
+          <p class="body-sm" style="text-align:center;margin-top:14px">Puis 4,99 € / mois. Résiliation en un tap.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANION -->
+<section>
+  <div class="wrap">
+    <div class="companion-grid">
+      <div class="r">
+        <span class="eyebrow">Fonctionnalité phare</span>
+        <h2 class="display display-md">Mode<br><span class="accent">Compagnon.</span></h2>
+        <p class="body-lg" style="margin-top:18px">Un proche reçoit automatiquement votre progression, votre heure d'arrivée estimée et les alertes de sécurité — sans télécharger l'application.</p>
+        <ul class="cmp-feat-list">
+          <li class="cmp-feat-item r d1">
+            <div class="cmp-feat-ico">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="cmp-feat-text">
+              <strong>SMS cryptés automatiques</strong>
+              <span>Position, progression et batterie restante envoyés sans action de votre part.</span>
+            </div>
+          </li>
+          <li class="cmp-feat-item r d2">
+            <div class="cmp-feat-ico">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <div class="cmp-feat-text">
+              <strong>Alertes haptiques de danger</strong>
+              <span>Vibration codée sur iPhone et Apple Watch pour orage, sortie de trace ou immobilité anormale.</span>
+            </div>
+          </li>
+          <li class="cmp-feat-item r d3">
+            <div class="cmp-feat-ico">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="cmp-feat-text">
+              <strong>Bouton SOS intégré</strong>
+              <span>Déclenche un signal d'urgence avec position GPS et itinéraire de secours vers le refuge le plus proche.</span>
+            </div>
+          </li>
+          <li class="cmp-feat-item r d4">
+            <div class="cmp-feat-ico">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="cmp-feat-text">
+              <strong>Surveillance silencieuse</strong>
+              <span>Immobilité prolongée, météo dégradée, absence réseau — le système surveille sans créer d'anxiété.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="r d2">
+        <div class="companion-visual">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px">Alertes terrain actives</div>
+          <div class="alert-row alert-ok">
+            <div class="alert-ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="alert-title">Position synchronisée</div>
+              <div class="alert-body">Julien — Crête des Bauges · 1 624 m · Il y a 4 min</div>
+            </div>
+          </div>
+          <div class="alert-row alert-warn">
+            <div class="alert-ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="alert-title">Légère pluie prévue dans 2h</div>
+              <div class="alert-body">Pensez à votre veste imperméable · Refuge à 3,2 km</div>
+            </div>
+          </div>
+          <div class="alert-row alert-crit">
+            <div class="alert-ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div>
+              <div class="alert-title">Orage attendu dans 45 min</div>
+              <div class="alert-body" style="color:#ef4444;font-weight:500">Risque élevé · Mettez-vous à l'abri si possible</div>
+            </div>
+          </div>
+          <div class="alert-row alert-ok" style="margin-top:4px">
+            <div class="alert-ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="alert-title">SMS envoyé à Marie</div>
+              <div class="alert-body">Arrivée estimée : 17h30 · Batterie : 68 %</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section>
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">Comparaison</span>
+      <h2 class="display display-md">Gratuit<br>vs <span class="accent">Premium.</span></h2>
+      <p class="body-lg" style="max-width:480px;margin-top:16px">Sans ambiguïté. Voici exactement ce que chaque niveau débloque.</p>
+    </div>
+
+    <div class="cmp-wrap r d1">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th style="width:44%">Fonctionnalité</th>
+            <th class="col-free" style="width:28%">Gratuit</th>
+            <th class="col-prem" style="width:28%">Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Génération d'itinéraires IA</td>
+            <td class="dash">1 crédit / mois</td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Illimitée</td>
+          </tr>
+          <tr>
+            <td>Variantes d'itinéraires</td>
+            <td class="dash">Sur l'unique crédit</td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Illimitées</td>
+          </tr>
+          <tr>
+            <td>Cartes Offline</td>
+            <td class="dash">1 petite zone restreinte</td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Monde entier, illimitées</td>
+          </tr>
+          <tr>
+            <td>Navigation terrain</td>
+            <td class="dash">En ligne uniquement</td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Hors-ligne totale</td>
+          </tr>
+          <tr>
+            <td>Itinéraires multi-jours</td>
+            <td><span class="icon-dash"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="11" y2="7"/></svg></span></td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Inclus</td>
+          </tr>
+          <tr>
+            <td>Points d'intérêt détaillés<br><small style="color:var(--txt3)">Eau, refuges, bivouacs</small></td>
+            <td class="dash">Basique</td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Détaillés et vérifiés</td>
+          </tr>
+          <tr>
+            <td>Mode Compagnon SMS</td>
+            <td><span class="icon-dash"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="11" y2="7"/></svg></span></td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Inclus</td>
+          </tr>
+          <tr>
+            <td>Alertes haptiques & SOS</td>
+            <td><span class="icon-dash"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="11" y2="7"/></svg></span></td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Inclus</td>
+          </tr>
+          <tr>
+            <td>Équipement intelligent<br><small style="color:var(--txt3)">Lié à l'onglet Base</small></td>
+            <td><span class="icon-dash"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="11" y2="7"/></svg></span></td>
+            <td class="col-prem"><span class="icon-check"><svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg></span> Inclus</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="stores">
+  <div class="wrap">
+    <span class="eyebrow r">Prêt ?</span>
+    <h2 class="display display-lg r d1">PREMIER MOIS<br><span class="accent">À 1 €.</span></h2>
+    <p class="body-lg r d2" style="max-width:480px;margin:16px auto 0">Sans engagement. L'accès complet à Terratrails Premium dès le premier téléchargement.</p>
+    <div class="store-row r d3">
+      <a href="#" class="store-btn-lg glass">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--txt2)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div class="lbl"><small>Télécharger sur</small><strong>App Store</strong></div>
+      </a>
+      <a href="#" class="store-btn-lg glass">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--txt2)"><path d="m3.18 23.76 10.65-10.66L3.18.23C2.47.64 2 1.4 2 2.29v19.42c0 .89.47 1.65 1.18 2.05zM20.47 10.5l-2.79-1.6L14.82 12l2.86 2.86 2.79-1.6c.8-.46.8-1.7 0-2.16zM4.34.23l12.64 12.64-2.16 2.16-12.64-12.64z"/><path d="m4.34 23.77 12.64-12.64-2.16-2.16-12.64 12.64z" fill="var(--txt2)" opacity=".7"/></svg>
+        <div class="lbl"><small>Disponible sur</small><strong>Google Play</strong></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 100 100" fill="none" width="24" height="24"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Terratrails — Tous droits réservés.</p>
+  </div>
+</footer>
+
+<script>
+  const hamBtn = document.getElementById('hamBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  hamBtn.addEventListener('click', () => { const o = mobMenu.classList.toggle('open'); hamBtn.setAttribute('aria-expanded', o); });
+</script>
+</body>
+</html>

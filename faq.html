@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratrails — Manifeste et FAQ. Pourquoi nous refusons d'être un réseau social.">
+  <title>Terratrails — FAQ & Manifeste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Manifesto ── */
+    .manifesto-section { padding: var(--section-py) 0; }
+    .manifesto-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 100px; align-items: start; }
+    @media(max-width:860px) { .manifesto-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+    .manifesto-sticky { position: sticky; top: 88px; }
+
+    .manifesto-body p { margin-bottom: 22px; }
+    .manifesto-body p:last-child { margin-bottom: 0; }
+
+    .manifesto-rule {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 24px; margin-bottom: 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg2); border: 1px solid var(--bor);
+      transition: border-color .2s, background .2s;
+    }
+    .manifesto-rule:hover { border-color: var(--bor-grn); background: var(--bg3); }
+    .manifesto-rule-num {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: 28px; letter-spacing: -1px; color: var(--grn-lit);
+      opacity: .35; line-height: 1; flex-shrink: 0; width: 32px;
+    }
+    .manifesto-rule-txt strong { display: block; font-size: 14px; font-weight: 700; color: var(--txt); margin-bottom: 4px; }
+    .manifesto-rule-txt span { font-size: 13px; font-weight: 300; color: var(--txt2); line-height: 1.6; }
+
+    /* ── FAQ ── */
+    .faq-section { padding: var(--section-py) 0; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 100px; align-items: start; }
+    @media(max-width:860px) { .faq-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+    .faq-sidebar { position: sticky; top: 88px; }
+    .faq-cats { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 4px; }
+    .faq-cats li a {
+      display: block; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--txt3); text-decoration: none; padding: 9px 12px; border-radius: 8px;
+      border-left: 2px solid transparent; transition: color .2s, border-color .2s, background .2s;
+    }
+    .faq-cats li a:hover, .faq-cats li a.active { color: var(--grn-lit); border-color: var(--grn-lit); background: var(--grn-bg); }
+
+    .faq-group { margin-bottom: 56px; }
+    .faq-group:last-child { margin-bottom: 0; }
+    .faq-group-title {
+      font-size: 10px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--txt3); margin-bottom: 8px;
+      padding-bottom: 12px; border-bottom: 1px solid var(--bor);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22.37" fill="#0A0E0B"/>
+        <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
+        <polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="50" cy="79" r="4.32" fill="#345A3A"/>
+      </svg>
+      <div class="nav-logo-text">TERRA<span>TRAILS</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html" class="active">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="premium.html" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
+      <button class="ham-btn" id="hamBtn" aria-label="Menu"><span class="ham-line"></span><span class="ham-line"></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mob-overlay" id="mobMenu">
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="premium.html">Premium</a></li>
+    <li><a href="faq.html" class="active">FAQ</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="mob-cta"><a href="premium.html" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
+</div>
+
+<!-- ════════════ MANIFESTE ════════════ -->
+<section class="manifesto-section" id="manifeste">
+  <div class="wrap">
+    <div class="manifesto-grid">
+
+      <!-- Left: sticky title -->
+      <div class="manifesto-sticky r">
+        <span class="eyebrow">01 — Manifeste</span>
+        <h1 class="display display-lg">LE<br><span class="accent">REFUS.</span></h1>
+        <p class="body-md" style="margin-top:20px;max-width:320px">Ce que Terratrails refuse de faire — et pourquoi c'est une force, pas une faiblesse.</p>
+      </div>
+
+      <!-- Right: content -->
+      <div class="r d1">
+        <div class="manifesto-body">
+          <p>Terratrails est né d'une frustration simple : toutes les applications outdoor disponibles ressemblent à des réseaux sociaux déguisés en cartes. Des profils publics, des badges, des leaderboards, des fils d'actualité. Des mécanismes conçus pour créer de la dépendance, pas de l'autonomie.</p>
+          <p><strong>Nous avons fait le choix inverse.</strong></p>
+          <p>Terratrails est un outil d'exécution pur. Il existe pour vous aider à partir en montagne en sécurité, pas pour vous garder sur votre écran. Quand vous n'êtes pas en train de randonner, Terratrails n'a rien à vous vendre.</p>
+          <p>Cette philosophie a des conséquences architecturales directes : aucune donnée de santé ou de localisation n'est partagée à des tiers à des fins publicitaires. Vos données restent locales, chiffrées sur votre appareil. Le système de retours terrain sert uniquement à améliorer la fiabilité des sentiers — pas à construire un profil utilisateur monétisable.</p>
+        </div>
+
+        <div style="margin-top:40px;display:flex;flex-direction:column;gap:0">
+          <div class="manifesto-rule">
+            <div class="manifesto-rule-num">01</div>
+            <div class="manifesto-rule-txt">
+              <strong>Zéro système de likes ou de badges</strong>
+              <span>La valeur d'une sortie ne se mesure pas en applaudissements. Elle se mesure à votre expérience réelle, pas à sa validation sociale.</span>
+            </div>
+          </div>
+          <div class="manifesto-rule">
+            <div class="manifesto-rule-num">02</div>
+            <div class="manifesto-rule-txt">
+              <strong>Zéro réseau social</strong>
+              <span>Terratrails n'est pas Strava. Il n'y a pas de profil public, pas de followers, pas de fil d'actualité. Votre historique vous appartient.</span>
+            </div>
+          </div>
+          <div class="manifesto-rule">
+            <div class="manifesto-rule-num">03</div>
+            <div class="manifesto-rule-txt">
+              <strong>Zéro gamification inutile</strong>
+              <span>Les niveaux, les points et les défis hebdomadaires servent l'engagement de l'application, pas votre sécurité en montagne. Nous n'en avons pas.</span>
+            </div>
+          </div>
+          <div class="manifesto-rule">
+            <div class="manifesto-rule-num">04</div>
+            <div class="manifesto-rule-txt">
+              <strong>Zéro publicité contextuelle</strong>
+              <span>Les recommandations commerciales (équipement, refuges) sont contextuelles, secondaires et jamais dominantes. L'utilité passe avant la monétisation.</span>
+            </div>
+          </div>
+          <div class="manifesto-rule">
+            <div class="manifesto-rule-num">05</div>
+            <div class="manifesto-rule-txt">
+              <strong>Confidentialité totale par défaut</strong>
+              <span>Données GPS, données Apple Santé, historique de sortie — tout reste chiffré localement. Aucun partage avec des tiers à des fins publicitaires, jamais.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FAQ ════════════ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div class="faq-grid">
+
+      <!-- Left: sidebar -->
+      <div class="faq-sidebar r">
+        <span class="eyebrow">02 — FAQ</span>
+        <h2 class="display display-md">QUESTIONS<br><span class="accent">DIRECTES.</span></h2>
+        <ul class="faq-cats">
+          <li><a href="#faq-nav" class="active">Navigation</a></li>
+          <li><a href="#faq-ia">Intelligence IA</a></li>
+          <li><a href="#faq-priv">Confidentialité</a></li>
+          <li><a href="#faq-prem">Premium</a></li>
+        </ul>
+      </div>
+
+      <!-- Right: accordion -->
+      <div class="r d1">
+
+        <!-- Group: Navigation -->
+        <div class="faq-group" id="faq-nav">
+          <div class="faq-group-title">Navigation hors-ligne</div>
+
+          <div class="faq-item open">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Comment fonctionne la navigation 100 % hors-ligne ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Terratrails utilise des tuiles vectorielles pré-téléchargées sur votre appareil. Une fois les cartes téléchargées dans l'onglet Base, toute la navigation — position GPS, calcul d'itinéraire, alertes de sentier — fonctionne sans aucune connexion réseau. La résolution des cartes est identique en ligne et hors-ligne.</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Quelle est la taille des cartes hors-ligne à télécharger ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Une région de taille standard (ex : Alpes Grées, 120 km²) occupe entre 200 Mo et 600 Mo. Le téléchargement est intelligent : Terratrails pré-télécharge uniquement les tuiles nécessaires à l'itinéraire généré, plus une marge de sécurité configurée dans les réglages (par défaut : 15 km autour du tracé).</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              L'application fonctionne-t-elle avec Garmin ou Apple Watch ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">L'intégration Apple Watch est incluse — vous recevez les alertes haptiques critiques directement au poignet. L'export GPX vers les montres Garmin, Suunto et Coros est disponible depuis l'onglet Terrain. La synchronisation bidirectionnelle complète est en roadmap pour Q3 2026.</div>
+          </div>
+        </div>
+
+        <!-- Group: IA -->
+        <div class="faq-group" id="faq-ia">
+          <div class="faq-group-title">Intelligence artificielle</div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Comment l'IA calcule-t-elle la fatigue et l'effort réel ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Le moteur ne calcule pas seulement distance et dénivelé. Il intègre votre condition physique réelle (via Apple Santé : historique de sorties, moyenne de pas, fréquence cardiaque au repos), la chaleur et l'exposition solaire sur le tracé, la technicité du terrain, et la progression typique à votre niveau. Le résultat est une estimation de temps et de fatigue nettement plus précise qu'un calcul Tobler standard.</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Que signifie "itinéraire vivant" ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">L'itinéraire s'adapte en temps réel pendant votre sortie. Si votre rythme ralentit anormalement (fatigue), si la météo se dégrade, ou si vous sortez du tracé, le système recalcule automatiquement et propose — sans vous interrompre — un raccourci, une variante plus sûre, ou un retour optimisé vers le parking.</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Quelle est la précision des points d'eau et refuges ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Les points d'intérêt critiques (sources d'eau, refuges, zones bivouac) sont issus d'une base de données vérifiée manuellement et mise à jour par les retours terrain des utilisateurs Premium. Chaque point indique sa date de dernière vérification. Les données incertaines sont signalées explicitement — nous ne cachons jamais l'incertitude.</div>
+          </div>
+        </div>
+
+        <!-- Group: Confidentialité -->
+        <div class="faq-group" id="faq-priv">
+          <div class="faq-group-title">Confidentialité & données</div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Comment mes données GPS et de santé sont-elles protégées ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Toutes les données de l'onglet Base (historique de sorties, équipement, données Apple Santé) restent chiffrées localement sur votre appareil avec AES-256. Elles ne transitent jamais par nos serveurs. Les données de génération d'itinéraire (intention, localisation approximative) sont traitées et supprimées immédiatement après génération. Aucune donnée n'est vendue, partagée ou utilisée à des fins publicitaires.</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Les retours terrain sont-ils anonymisés ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Oui, totalement. Les retours terrain (état du sentier, eau disponible, affluence) sont agrégés et anonymisés avant d'alimenter la base de données. Il est impossible de relier un retour à un utilisateur identifié. Il n'existe pas de profil public, pas d'historique visible par d'autres utilisateurs.</div>
+          </div>
+        </div>
+
+        <!-- Group: Premium -->
+        <div class="faq-group" id="faq-prem">
+          <div class="faq-group-title">Abonnement Premium</div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Puis-je annuler mon abonnement à tout moment ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Oui. L'annulation se fait en un tap depuis les réglages de l'application ou directement depuis votre compte App Store. Aucune période d'engagement, aucuns frais de résiliation. Vous conservez l'accès Premium jusqu'à la fin de la période déjà payée.</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              Que se passe-t-il si je passe au plan Gratuit pendant une randonnée ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Les cartes hors-ligne déjà téléchargées sur votre appareil restent accessibles. La navigation de base continue de fonctionner. Les fonctionnalités Premium (Mode Compagnon, alertes haptiques, POI détaillés) se désactivent. La sécurité minimale est toujours garantie — nous ne coupons jamais la navigation en cours de sortie.</div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">
+              L'offre de lancement à 1 € est-elle vraiment sans condition ?
+              <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 12 12" stroke="var(--txt2)" stroke-width="2" stroke-linecap="round"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></div>
+            </button>
+            <div class="faq-a">Oui. Le premier mois est à 1 € pour tout nouvel abonné pendant la période de lancement bêta. Accès complet à toutes les fonctionnalités Premium. À partir du second mois, le tarif normal de 4,99 € / mois s'applique. Vous êtes informé 7 jours avant le renouvellement au tarif plein.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 100 100" fill="none" width="24" height="24"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Terratrails — Tous droits réservés.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const hamBtn = document.getElementById('hamBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  hamBtn.addEventListener('click', () => { const o = mobMenu.classList.toggle('open'); hamBtn.setAttribute('aria-expanded', o); });
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Active sidebar link on scroll
+  const groups = document.querySelectorAll('.faq-group[id]');
+  const catLinks = document.querySelectorAll('.faq-cats a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        catLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  groups.forEach(g => observer.observe(g));
+</script>
+</body>
+</html>

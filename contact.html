@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratrails — Contact, support et informations légales.">
+  <title>Terratrails — Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Contact layout ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 100px; align-items: start; }
+    @media(max-width:860px) { .contact-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+    .contact-sidebar { position: sticky; top: 88px; }
+    .contact-meta { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+    .contact-meta-item { display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px; border-radius: var(--radius-sm); background: var(--bg2); border: 1px solid var(--bor); }
+    .contact-meta-item .ico { width: 34px; height: 34px; border-radius: 10px; background: var(--grn-bg); border: 1px solid var(--grn-bor); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-meta-item .txt strong { display: block; font-size: 13px; font-weight: 700; color: var(--txt); margin-bottom: 3px; }
+    .contact-meta-item .txt span   { font-size: 12px; font-weight: 300; color: var(--txt2); line-height: 1.6; }
+
+    /* ── Form card ── */
+    .form-card { padding: 44px 40px; }
+    @media(max-width:480px) { .form-card { padding: 28px 22px; } }
+    .form-stack { display: flex; flex-direction: column; gap: 22px; }
+
+    /* ── Status message ── */
+    .form-status {
+      display: none; padding: 14px 18px; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500; margin-top: 8px;
+    }
+    .form-status.success { display: block; background: var(--grn-bg); border: 1px solid var(--grn-bor); color: var(--grn-lit); }
+    .form-status.error   { display: block; background: rgba(185,40,40,.07); border: 1px solid rgba(185,40,40,.2); color: #ef4444; }
+
+    /* ── Info section ── */
+    .info-section { padding: var(--section-py) 0; }
+
+    /* ── Legal accordion ── */
+    .legal-strip { padding: 64px 0 48px; }
+    .legal-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    @media(max-width:640px) { .legal-grid { grid-template-columns: 1fr; } }
+    .legal-card { padding: 24px 22px; }
+    .legal-card h4 { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--txt); margin-bottom: 10px; }
+    .legal-card p  { font-size: 13px; font-weight: 300; color: var(--txt3); line-height: 1.7; }
+    .legal-card a  { color: var(--grn-lit); text-decoration: none; }
+    .legal-card a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg class="logo-svg" viewBox="0 0 100 100" fill="none">
+        <rect width="100" height="100" rx="22.37" fill="#0A0E0B"/>
+        <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
+        <polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="50" cy="79" r="4.32" fill="#345A3A"/>
+      </svg>
+      <div class="nav-logo-text">TERRA<span>TRAILS</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="premium.html" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
+      <button class="ham-btn" id="hamBtn" aria-label="Menu"><span class="ham-line"></span><span class="ham-line"></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mob-overlay" id="mobMenu">
+  <ul>
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="premium.html">Premium</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="mob-cta"><a href="premium.html" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
+</div>
+
+<!-- ════════════ CONTACT ════════════ -->
+<section style="padding: 96px 0 var(--section-py)">
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <!-- Left: sidebar -->
+      <div class="contact-sidebar r">
+        <span class="eyebrow">Contact</span>
+        <h1 class="display display-lg">UN<br><span class="accent">MESSAGE.</span></h1>
+        <p class="body-md" style="margin-top:18px;max-width:320px">Questions, signalements techniques, retours terrain, presse. Nous lisons tout et répondons à chaque message.</p>
+
+        <div class="contact-meta">
+          <div class="contact-meta-item r d1">
+            <div class="ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="txt">
+              <strong>Support général</strong>
+              <span>hello@terratrails.app<br>Réponse sous 48h</span>
+            </div>
+          </div>
+          <div class="contact-meta-item r d2">
+            <div class="ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="txt">
+              <strong>Support Premium</strong>
+              <span>Prioritaire — réponse garantie<br>en moins de 24h</span>
+            </div>
+          </div>
+          <div class="contact-meta-item r d3">
+            <div class="ico">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <div class="txt">
+              <strong>Presse & Partenariats</strong>
+              <span>presse@terratrails.app</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="r d1">
+        <div class="form-card glass">
+          <div style="margin-bottom:32px">
+            <h2 class="display display-sm" style="margin-bottom:8px">ENVOYER UN<br><span class="accent">MESSAGE</span></h2>
+            <p class="body-sm">Tous les champs sont obligatoires. Votre adresse e-mail ne sera jamais partagée.</p>
+          </div>
+
+          <div class="form-stack" id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="name">Nom</label>
+              <input class="form-input" type="text" id="name" placeholder="Votre nom complet" autocomplete="name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Adresse e-mail</label>
+              <input class="form-input" type="email" id="email" placeholder="vous@exemple.com" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="subject">Sujet</label>
+              <select class="form-input" id="subject" style="cursor:pointer;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 12 12' stroke='%23E8E8E4' stroke-width='1.5'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px">
+                <option value="" style="background:#0A0E0B">Choisir un sujet…</option>
+                <option value="support" style="background:#0A0E0B">Support technique</option>
+                <option value="premium" style="background:#0A0E0B">Question Premium</option>
+                <option value="terrain" style="background:#0A0E0B">Retour terrain / signalement</option>
+                <option value="press" style="background:#0A0E0B">Presse & Partenariat</option>
+                <option value="other" style="background:#0A0E0B">Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" placeholder="Décrivez votre question ou retour en détail…" required></textarea>
+            </div>
+            <div>
+              <button class="btn btn-primary" onclick="handleSubmit(event)" style="width:100%;justify-content:center;padding:16px;font-size:14px">
+                Envoyer le message
+                <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7H2M8 3l4 4-4 4"/></svg>
+              </button>
+              <div class="form-status" id="formStatus"></div>
+              <p class="body-sm" style="margin-top:12px;text-align:center">En envoyant ce formulaire, vous acceptez que votre message soit traité par l'équipe Terratrails uniquement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ INFO SECTION ════════════ -->
+<section class="info-section">
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">Tout ce qu'il faut savoir</span>
+      <h2 class="display display-md">TRANSPARENT<br><span class="accent">PAR DESIGN.</span></h2>
+    </div>
+
+    <div class="info-grid r d1">
+      <div class="info-card glass">
+        <div class="info-ico">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Données GPS locales</h4>
+        <p>Votre position GPS ne quitte jamais votre appareil en dehors de la génération d'itinéraire. Elle n'est pas stockée sur nos serveurs, pas vendue, pas utilisée à des fins publicitaires. Jamais.</p>
+      </div>
+      <div class="info-card glass">
+        <div class="info-ico">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h4>Chiffrement AES-256</h4>
+        <p>L'ensemble des données de l'onglet Base (historique, santé, équipement) est chiffré localement avec AES-256. Sans votre code d'appareil, ces données sont illisibles, même par Terratrails.</p>
+      </div>
+      <div class="info-card glass">
+        <div class="info-ico">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h4>Support &lt; 24h Premium</h4>
+        <p>Les membres Premium bénéficient d'un support prioritaire avec un engagement de réponse en moins de 24 heures, 7j/7. Le support général est traité sous 48h.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ LEGAL ════════════ -->
+<section class="legal-strip">
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">Mentions légales</span>
+      <h2 class="display display-sm">INFORMATIONS<br><span class="accent">LÉGALES.</span></h2>
+    </div>
+    <div class="legal-grid r d1">
+      <div class="legal-card glass">
+        <h4>Éditeur</h4>
+        <p>Terratrails SAS — Capital 10 000 €<br>SIRET : En cours d'immatriculation<br>Siège social : France<br>Directeur de publication : Équipe Terratrails</p>
+      </div>
+      <div class="legal-card glass">
+        <h4>Hébergement</h4>
+        <p>Le site et les services cloud sont hébergés chez des prestataires certifiés RGPD établis dans l'Union Européenne. Les données ne transitent pas hors UE.</p>
+      </div>
+      <div class="legal-card glass">
+        <h4>Propriété intellectuelle</h4>
+        <p>L'ensemble des contenus (textes, visuels, code, marque Terratrails) est protégé. Toute reproduction sans autorisation écrite est interdite. Pour les demandes de licence : <a href="mailto:hello@terratrails.app">hello@terratrails.app</a></p>
+      </div>
+      <div class="legal-card glass">
+        <h4>RGPD & Droits</h4>
+        <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer vos droits : <a href="mailto:privacy@terratrails.app">privacy@terratrails.app</a>. Réponse sous 30 jours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 100 100" fill="none" width="24" height="24"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="premium.html">Premium</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Terratrails — Tous droits réservés.</p>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const hamBtn = document.getElementById('hamBtn');
+  const mobMenu = document.getElementById('mobMenu');
+  hamBtn.addEventListener('click', () => { const o = mobMenu.classList.toggle('open'); hamBtn.setAttribute('aria-expanded', o); });
+
+  // Form submit (demo)
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+    const status  = document.getElementById('formStatus');
+
+    if (!name || !email || !subject || !message) {
+      status.textContent = 'Tous les champs sont obligatoires.';
+      status.className = 'form-status error';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      status.textContent = 'Adresse e-mail invalide.';
+      status.className = 'form-status error';
+      return;
+    }
+
+    status.textContent = 'Message envoyé. Nous revenons vers vous dans les 48h.';
+    status.className = 'form-status success';
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('subject').value = '';
+    document.getElementById('message').value = '';
+  }
+</script>
+</body>
+</html>
