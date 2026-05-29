@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +55,7 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
       <svg class="logo-svg" viewBox="0 0 100 100" fill="none">
-        <rect width="100" height="100" rx="22.37" fill="#0A0E0B"/>
+        <rect class="logo-rect" width="100" height="100" rx="22.37"/>
         <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
         <polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <circle cx="50" cy="79" r="4.32" fill="#345A3A"/>
@@ -69,7 +69,11 @@
       <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="premium.html" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Thème">
+        <svg class="icon-moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="beta.html" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
       <button class="ham-btn" id="hamBtn" aria-label="Menu"><span class="ham-line"></span><span class="ham-line"></span></button>
     </div>
   </div>
@@ -81,7 +85,7 @@
     <li><a href="faq.html">FAQ</a></li>
     <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
-  <div class="mob-cta"><a href="premium.html" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
+  <div class="mob-cta"><a href="beta.html" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
 </div>
 
 <!-- ════════════ CONTACT ════════════ -->
@@ -102,7 +106,7 @@
             </div>
             <div class="txt">
               <strong>Support général</strong>
-              <span>hello@terratrails.app<br>Réponse sous 48h</span>
+              <span>contact.terratrails@gmail.com<br>Réponse sous 48h</span>
             </div>
           </div>
           <div class="contact-meta-item r d2">
@@ -120,7 +124,7 @@
             </div>
             <div class="txt">
               <strong>Presse & Partenariats</strong>
-              <span>presse@terratrails.app</span>
+              <span>contact.terratrails@gmail.com</span>
             </div>
           </div>
         </div>
@@ -134,18 +138,27 @@
             <p class="body-sm">Tous les champs sont obligatoires. Votre adresse e-mail ne sera jamais partagée.</p>
           </div>
 
-          <div class="form-stack" id="contactForm">
+          <form
+            action="https://formsubmit.co/contact.terratrails@gmail.com"
+            method="POST"
+            class="form-stack"
+            id="contactForm"
+            onsubmit="handleSubmit(event)"
+          >
+            <input type="hidden" name="_subject" value="[Terratrails] Nouveau message de contact">
+            <input type="hidden" name="_template" value="box">
+            <input type="hidden" name="_captcha" value="false">
             <div class="form-group">
               <label class="form-label" for="name">Nom</label>
-              <input class="form-input" type="text" id="name" placeholder="Votre nom complet" autocomplete="name" required>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Votre nom complet" autocomplete="name" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="email">Adresse e-mail</label>
-              <input class="form-input" type="email" id="email" placeholder="vous@exemple.com" autocomplete="email" required>
+              <input class="form-input" type="email" id="email" name="email" placeholder="vous@exemple.com" autocomplete="email" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="subject">Sujet</label>
-              <select class="form-input" id="subject" style="cursor:pointer;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 12 12' stroke='%23E8E8E4' stroke-width='1.5'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px">
+              <select class="form-input" id="subject" name="subject" style="cursor:pointer;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 12 12' stroke='%23E8E8E4' stroke-width='1.5'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px">
                 <option value="" style="background:#0A0E0B">Choisir un sujet…</option>
                 <option value="support" style="background:#0A0E0B">Support technique</option>
                 <option value="premium" style="background:#0A0E0B">Question Premium</option>
@@ -156,7 +169,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="message">Message</label>
-              <textarea class="form-textarea" id="message" placeholder="Décrivez votre question ou retour en détail…" required></textarea>
+              <textarea class="form-textarea" id="message" name="message" placeholder="Décrivez votre question ou retour en détail…" required></textarea>
             </div>
             <div>
               <button class="btn btn-primary" onclick="handleSubmit(event)" style="width:100%;justify-content:center;padding:16px;font-size:14px">
@@ -164,6 +177,7 @@
                 <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7H2M8 3l4 4-4 4"/></svg>
               </button>
               <div class="form-status" id="formStatus"></div>
+            </form>
               <p class="body-sm" style="margin-top:12px;text-align:center">En envoyant ce formulaire, vous acceptez que votre message soit traité par l'équipe Terratrails uniquement.</p>
             </div>
           </div>
@@ -226,11 +240,11 @@
       </div>
       <div class="legal-card glass">
         <h4>Propriété intellectuelle</h4>
-        <p>L'ensemble des contenus (textes, visuels, code, marque Terratrails) est protégé. Toute reproduction sans autorisation écrite est interdite. Pour les demandes de licence : <a href="mailto:hello@terratrails.app">hello@terratrails.app</a></p>
+        <p>L'ensemble des contenus (textes, visuels, code, marque Terratrails) est protégé. Toute reproduction sans autorisation écrite est interdite. Pour les demandes de licence : <a href="mailto:contact.terratrails@gmail.com">contact.terratrails@gmail.com</a></p>
       </div>
       <div class="legal-card glass">
         <h4>RGPD & Droits</h4>
-        <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer vos droits : <a href="mailto:privacy@terratrails.app">privacy@terratrails.app</a>. Réponse sous 30 jours.</p>
+        <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer vos droits : <a href="mailto:contact.terratrails@gmail.com">contact.terratrails@gmail.com</a>. Réponse sous 30 jours.</p>
       </div>
     </div>
   </div>
@@ -240,11 +254,12 @@
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-logo">
-      <svg viewBox="0 0 100 100" fill="none" width="24" height="24"><rect width="100" height="100" rx="22.37" fill="#0A0E0B"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
+      <svg viewBox="0 0 100 100" fill="none" width="24" height="24"><rect class="logo-rect" width="100" height="100" rx="22.37"/><line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/><polyline points="29.5,59.5 50,29.5 70.5,59.5" stroke="#E8E8E4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="50" cy="79" r="4.32" fill="#345A3A"/></svg>
       <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
     </div>
     <ul class="footer-links">
       <li><a href="index.html">Accueil</a></li>
+      <li><a href="beta.html">Bêta</a></li>
       <li><a href="premium.html">Premium</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -254,6 +269,16 @@
 </footer>
 
 <script>
+  // Mobile menu
+  // Theme
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  root.setAttribute('data-theme', localStorage.getItem('tt-theme') || 'dark');
+  toggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('tt-theme', next);
+  });
   // Mobile menu
   const hamBtn = document.getElementById('hamBtn');
   const mobMenu = document.getElementById('mobMenu');
