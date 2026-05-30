@@ -3,17 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Terratrails — Le premier système d'exécution outdoor par IA. Itinéraires complets, navigation hors-ligne, zéro friction.">
+  <meta name="description" content="Terratrails — Le premier système d'exécution outdoor par IA. Décrire. Générer. Partir.">
   <title>Terratrails — Outdoor sans friction</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='22.37' fill='%230A0E0B'/%3E%3Cline x1='50' y1='59.5' x2='50' y2='79' stroke='%23264848' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpolyline points='29.5,59.5 50,29.5 70.5,59.5' stroke='%23E8E8E4' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='79' r='4.32' fill='%23345A3A'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
   <style>
     /* ── Hero ── */
-    .hero { padding: 80px 0 100px; min-height: calc(100vh - 64px); display: flex; align-items: center; }
-    .hero-inner { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: center; }
-    @media(max-width:960px) { .hero-inner { grid-template-columns: 1fr; gap: 52px; } }
+    .hero {
+      padding: 72px 0 80px;
+      min-height: calc(100vh - 64px);
+      display: flex; align-items: center;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 64px; align-items: center;
+    }
+    @media(max-width:1000px) { .hero-inner { grid-template-columns: 1fr; gap: 48px; } }
 
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
@@ -22,37 +32,169 @@
       font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
       color: var(--grn-lit); margin-bottom: 24px;
     }
-    .hero-eyebrow::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--grn-lit); animation: pulseGrn 2s infinite; }
-
-    .hero-tagline {
-      font-family: 'Nunito', sans-serif; font-weight: 300;
-      font-size: clamp(16px, 1.8vw, 22px);
-      color: var(--grn-lit); letter-spacing: .18em;
-      margin: 20px 0 6px; text-transform: uppercase;
+    .hero-eyebrow::before {
+      content:''; width:6px; height:6px; border-radius:50%;
+      background: var(--grn-lit); animation: pulseGrn 2s infinite;
     }
+
+    /* ── Tagline: middle word green ── */
+    .hero-tagline {
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      font-size: clamp(15px, 1.9vw, 21px);
+      letter-spacing: .22em; margin: 22px 0 8px;
+      text-transform: uppercase; display: flex; gap: .6em; flex-wrap: wrap;
+    }
+    @media(max-width:1000px) { .hero-tagline { justify-content: center; } }
+    .tg-plain  { color: var(--txt); }
+    .tg-accent { color: var(--grn-lit); }
 
     .hero-sub {
-      font-size: clamp(15px, 1.8vw, 18px); font-weight: 300;
-      color: var(--txt2); line-height: 1.82; margin: 16px 0 36px; max-width: 480px;
+      font-size: clamp(15px, 1.6vw, 17px); font-weight: 300;
+      color: var(--txt2); line-height: 1.85; margin: 14px 0 36px; max-width: 460px;
     }
-    @media(max-width:960px) { .hero-sub { max-width: 100%; } }
+    @media(max-width:1000px) { .hero-sub { max-width:100%; text-align:center; } }
 
     .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    @media(max-width:1000px) { .hero-ctas { justify-content: center; } }
+    @media(max-width:1000px) { .hero-text-col { text-align: center; } }
 
-    /* Hero image — composite wide */
+    /* ── Hero visual: bigger, prominent ── */
     .hero-visual { position: relative; }
-    .hero-visual-img {
-      width: 100%; border-radius: 24px; display: block;
-      box-shadow: 0 40px 120px rgba(0,0,0,.65);
-      transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s;
-    }
-    .hero-visual-img:hover { transform: translateY(-6px) scale(1.008); box-shadow: 0 56px 140px rgba(0,0,0,.7); }
     .hero-glow {
-      position: absolute; inset: -40px; border-radius: 40px;
-      background: radial-gradient(ellipse at 50% 60%, rgba(52,90,58,.22) 0%, transparent 70%);
+      position: absolute; inset: -60px; border-radius: 40px;
+      background: radial-gradient(ellipse at 50% 55%, rgba(52,90,58,.25) 0%, transparent 68%);
       pointer-events: none; z-index: -1;
     }
-    @media(max-width:960px) { .hero-visual { order: -1; } }
+    .hero-visual-img {
+      width: 100%; border-radius: 28px; display: block;
+      box-shadow: 0 48px 140px rgba(0,0,0,.68);
+      transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s;
+    }
+    .hero-visual-img:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: 0 64px 160px rgba(0,0,0,.75);
+    }
+    @media(max-width:1000px) { .hero-visual { order: -1; } }
+
+    /* ══════════════════════════════════════
+       APPLE-STYLE PHONE MOCKUP FEATURE ROWS
+    ══════════════════════════════════════ */
+    .approw {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0; align-items: stretch;
+      margin-bottom: 16px;
+      border-radius: 32px; overflow: hidden;
+      border: 1px solid var(--bor2);
+      background: var(--bg2);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      transition: border-color .3s, box-shadow .3s;
+      position: relative;
+    }
+    .approw:last-child { margin-bottom: 0; }
+    .approw:hover { border-color: var(--bor-grn); box-shadow: 0 24px 72px var(--shadow); }
+
+    /* Phone column */
+    .approw-phone {
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      padding: 56px 48px;
+      position: relative; overflow: hidden;
+    }
+    .approw-phone::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(52,90,58,.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    [data-theme="light"] .approw-phone { background: #F0F2F0; }
+
+    /* The phone mockup frame */
+    .phone-mock {
+      position: relative; z-index: 1;
+      width: 240px; max-width: 100%;
+      border-radius: 40px;
+      background: #0E1310;
+      box-shadow:
+        0 0 0 10px #141a15,
+        0 0 0 11px rgba(255,255,255,.06),
+        0 40px 80px rgba(0,0,0,.6),
+        0 8px 24px rgba(0,0,0,.4);
+      overflow: hidden;
+      transition: transform .4s cubic-bezier(.22,1,.36,1);
+    }
+    .approw:hover .phone-mock { transform: translateY(-6px) rotate(-.8deg); }
+
+    /* Notch / Dynamic Island */
+    .phone-mock-notch {
+      position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 28px; background: #0E1310;
+      border-radius: 20px; z-index: 10;
+    }
+
+    /* The screenshot inside, cropped */
+    .phone-mock-screen {
+      width: 100%;
+      /* We show a portion of the image: aspect-ratio controls crop height */
+      aspect-ratio: 9 / 14;
+      overflow: hidden; position: relative;
+    }
+    .phone-mock-screen img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    /* Custom crop per screen */
+    .crop-explorer  { object-position: center 15%; }
+    .crop-terrain   { object-position: center 20%; }
+    .crop-base      { object-position: center 10%; }
+
+    /* Text column */
+    .approw-text {
+      padding: 60px 56px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid var(--bor);
+      transition: border-color .3s;
+    }
+    .approw:hover .approw-text { border-color: var(--bor-grn); }
+    /* Flipped: phone right, text left */
+    .approw.flip { }
+    .approw.flip .approw-phone { order: 2; border-left: 1px solid var(--bor); }
+    .approw.flip .approw-text  { order: 1; border-left: none; border-right: 1px solid var(--bor); }
+    .approw.flip:hover .approw-phone { border-color: var(--bor-grn); }
+    .approw.flip:hover .approw-text  { border-color: var(--bor-grn); }
+
+    @media(max-width:860px) {
+      .approw, .approw.flip { grid-template-columns: 1fr; }
+      .approw-phone { padding: 44px 36px; }
+      .approw.flip .approw-phone { order: 0; border-left: none; border-top: 1px solid var(--bor); }
+      .approw.flip .approw-text  { order: -1; border-right: none; }
+      .approw-text { border-left: none; border-top: 1px solid var(--bor); padding: 40px 32px; }
+    }
+    @media(max-width:480px) {
+      .approw-phone { padding: 32px 24px; }
+      .approw-text { padding: 32px 24px; }
+      .phone-mock { width: 200px; }
+    }
+
+    .ar-label { font-size: 9px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--grn-lit); margin-bottom: 14px; display: block; }
+    .ar-title {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      text-transform: uppercase; letter-spacing: 5px;
+      font-size: clamp(26px, 3.2vw, 40px);
+      color: var(--txt); margin-bottom: 16px; line-height: 1.0;
+    }
+    .ar-tagline {
+      font-size: 15px; font-weight: 300; color: var(--txt2); line-height: 1.8;
+      margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--bor);
+    }
+    .ar-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .ar-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; font-weight: 300; color: var(--txt2); line-height: 1.55;
+    }
+    .ar-list li svg { flex-shrink: 0; color: var(--grn-lit); margin-top: 2px; }
 
     /* Pricing teaser */
     .pricing-tease {
@@ -114,10 +256,15 @@
   <div class="wrap">
     <div class="hero-inner">
 
-      <div>
+      <div class="hero-text-col">
         <div class="hero-eyebrow r">Bêta — Accès limité</div>
         <h1 class="display display-xl r d1">TERRA<br><span class="accent">TRAILS</span></h1>
-        <p class="hero-tagline r d2">Décrire. Générer. Partir.</p>
+        <!-- Tagline: plain / green / plain -->
+        <p class="hero-tagline r d2">
+          <span class="tg-plain">Décrire.</span>
+          <span class="tg-accent">Générer.</span>
+          <span class="tg-plain">Partir.</span>
+        </p>
         <p class="hero-sub r d3">Le premier système d'exécution outdoor par IA. Énoncez une intention, obtenez un itinéraire complet, naviguez hors-ligne au sol. Sans friction.</p>
         <div class="hero-ctas r d4">
           <a href="beta.html" class="btn btn-primary">
@@ -128,7 +275,7 @@
         </div>
       </div>
 
-      <div class="hero-visual r d2">
+      <div class="hero-visual r d1">
         <div class="hero-glow"></div>
         <img src="decrire_generer.png" alt="Terratrails — Décrire. Générer. Partir." class="hero-visual-img">
       </div>
@@ -137,22 +284,22 @@
   </div>
 </section>
 
-<!-- ══ SYSTÈME (alternating rows) ══ -->
+<!-- ══ SYSTÈME — Apple Fitness+ style ══ -->
 <section id="systeme">
   <div class="wrap">
     <div class="sec-hd r">
       <span class="eyebrow">Le système</span>
       <h2 class="display display-md">Intention.<br><span class="accent">Itinéraire.</span><br>Terrain.</h2>
-      <p class="body-lg" style="max-width:500px;margin-top:18px">Trois onglets. Compréhensible en dix secondes. Fonctionnel hors-ligne total.</p>
+      <p class="body-lg" style="max-width:500px;margin-top:18px">Trois onglets. Compréhensible en dix secondes. Fonctionnel 100 % hors-ligne.</p>
     </div>
 
-    <!-- Row 1 — Explorer : texte gauche, image droite -->
-    <div class="feat-row r d1">
-      <div class="fr-text">
-        <span class="fr-label">Onglet 01</span>
-        <div class="fr-title">Explorer</div>
-        <p class="fr-tagline">Décrivez une intention en une phrase. L'IA construit immédiatement un itinéraire complet adapté à votre profil physique, la météo réelle et le terrain.</p>
-        <ul class="fr-list">
+    <!-- Row 1 — Explorer : texte gauche, phone droite -->
+    <div class="approw r d1">
+      <div class="approw-text">
+        <span class="ar-label">Onglet 01</span>
+        <div class="ar-title">Explorer</div>
+        <p class="ar-tagline">Décrivez une intention en une phrase. L'IA construit immédiatement un itinéraire complet adapté à votre profil physique, la météo réelle et le terrain.</p>
+        <ul class="ar-list">
           <li>
             <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
             Génération IA depuis une phrase naturelle
@@ -167,28 +314,30 @@
           </li>
         </ul>
       </div>
-      <div class="fr-img">
-        <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer — Génération d'itinéraire">
+      <div class="approw-phone">
+        <div class="phone-mock">
+          <div class="phone-mock-notch"></div>
+          <div class="phone-mock-screen">
+            <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer" class="crop-explorer">
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Row 2 — Terrain : image gauche, texte droite -->
-    <div class="feat-row flip r d2">
-      <div class="fr-img">
-        <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain — Navigation active">
-      </div>
-      <div class="fr-text">
-        <span class="fr-label">Onglet 02</span>
-        <div class="fr-title">Terrain</div>
-        <p class="fr-tagline">Interface de survie. Position, direction, temps restant. Le tracé vit et s'adapte — même sans réseau, même en plein effort physique.</p>
-        <ul class="fr-list">
+    <!-- Row 2 — Terrain : phone gauche, texte droite -->
+    <div class="approw flip r d2">
+      <div class="approw-text">
+        <span class="ar-label">Onglet 02</span>
+        <div class="ar-title">Terrain</div>
+        <p class="ar-tagline">Interface de survie. Position, direction, temps restant. Le tracé vit et s'adapte — même sans réseau, même en plein effort physique.</p>
+        <ul class="ar-list">
           <li>
             <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
             Navigation 100 % hors-ligne, cartes vectorielles
           </li>
           <li>
             <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Itinéraire vivant — raccourcis en temps réel
+            Itinéraire vivant — raccourcis et alertes en temps réel
           </li>
           <li>
             <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
@@ -196,15 +345,23 @@
           </li>
         </ul>
       </div>
+      <div class="approw-phone">
+        <div class="phone-mock">
+          <div class="phone-mock-notch"></div>
+          <div class="phone-mock-screen">
+            <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain" class="crop-terrain">
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Row 3 — Base : texte gauche, image droite -->
-    <div class="feat-row r d3">
-      <div class="fr-text">
-        <span class="fr-label">Onglet 03</span>
-        <div class="fr-title">Base</div>
-        <p class="fr-tagline">Hub logistique 100 % privé. Matériel, cartes, condition physique. Zéro profil public, zéro réseau social, zéro gamification.</p>
-        <ul class="fr-list">
+    <!-- Row 3 — Base : texte gauche, phone droite -->
+    <div class="approw r d3">
+      <div class="approw-text">
+        <span class="ar-label">Onglet 03</span>
+        <div class="ar-title">Base</div>
+        <p class="ar-tagline">Hub logistique 100 % privé. Matériel, cartes, condition physique. Zéro profil public, zéro réseau social, zéro gamification.</p>
+        <ul class="ar-list">
           <li>
             <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
             Checklist dynamique indexée sur météo et altitude
@@ -219,15 +376,20 @@
           </li>
         </ul>
       </div>
-      <div class="fr-img">
-        <img src="Ecran_3_BASE.png" alt="Écran Base — Hub logistique">
+      <div class="approw-phone">
+        <div class="phone-mock">
+          <div class="phone-mock-notch"></div>
+          <div class="phone-mock-screen">
+            <img src="Ecran_3_BASE.png" alt="Écran Base" class="crop-base">
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- ══ ACCÈS BÊTA TEASER ══ -->
+<!-- ══ BÊTA TEASER ══ -->
 <section>
   <div class="wrap">
     <div class="pricing-tease glass r">
@@ -262,28 +424,29 @@
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="footer-instagram" aria-label="Instagram Terratrails">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+      @terratrails.fr
+    </a>
     <p class="footer-copy">© 2026 Terratrails — Système d'exécution outdoor. iOS uniquement, bêta en cours.</p>
   </div>
 </footer>
 
 <script>
-  // ── Theme toggle ──
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('tt-theme') || 'dark';
-  root.setAttribute('data-theme', saved);
+  root.setAttribute('data-theme', localStorage.getItem('tt-theme') || 'dark');
   toggle.addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     localStorage.setItem('tt-theme', next);
   });
-
-  // ── Mobile menu ──
-  const hamBtn = document.getElementById('hamBtn');
-  const mobMenu = document.getElementById('mobMenu');
-  hamBtn.addEventListener('click', () => {
-    const open = mobMenu.classList.toggle('open');
-    hamBtn.setAttribute('aria-expanded', open);
+  document.getElementById('hamBtn').addEventListener('click', () => {
+    const o = document.getElementById('mobMenu').classList.toggle('open');
+    document.getElementById('hamBtn').setAttribute('aria-expanded', o);
   });
 </script>
 </body>

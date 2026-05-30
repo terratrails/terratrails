@@ -401,3 +401,18 @@ section + section { border-top: 1px solid var(--bor); }
   .stats-row { flex-direction: column; }
   .stat-item { border-right: none; border-bottom: 1px solid var(--bor); }
 }
+
+/* ── Instagram footer link ──────────────────────────── */
+.footer-instagram {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: .1em;
+  color: var(--txt3); text-decoration: none;
+  padding: 6px 14px; border-radius: 100px;
+  border: 1px solid var(--bor);
+  transition: color .2s, border-color .2s, background .2s;
+}
+.footer-instagram:hover {
+  color: var(--grn-lit);
+  border-color: var(--bor-grn);
+  background: var(--grn-bg);
+}
