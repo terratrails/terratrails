@@ -269,7 +269,18 @@ section+section{border-top:1px solid var(--bor)}
 .mob-overlay a:hover, .mob-overlay a.active { color:var(--grn-lit); }
 .mob-cta { margin-top:28px; }
 
-/* ── Logo SVG ── */
+
+/* ── Logo image (real PNG, theme-aware) ──────────────── */
+.logo-img { width:32px; height:32px; border-radius:9px; flex-shrink:0; display:block; }
+.logo-dark  { display:block; }
+.logo-light { display:none;  }
+[data-theme="light"] .logo-dark  { display:none;  }
+[data-theme="light"] .logo-light { display:block; }
+
+/* Footer logo smaller */
+.footer-logo .logo-img { width:28px; height:28px; }
+
+/* ── Logo SVG (inline fallback) ── */
 .logo-svg { width:32px; height:32px; flex-shrink:0; }
 .logo-rect { fill:#0A0E0B; transition:fill .3s; }
 [data-theme="light"] .logo-rect { fill:#E8EDE8; }
@@ -388,8 +399,8 @@ section+section{border-top:1px solid var(--bor)}
 [data-theme="light"] .approw-text { border-color: rgba(30,60,35,.08); }
 
 /* Flip variant */
-.approw.flip .approw-phone { order:2; border-left:1px solid var(--bor); }
-.approw.flip .approw-text  { order:1; border-left:none; border-right:1px solid var(--bor); }
+.approw.flip .approw-phone { order:0; border-left:none; border-right: none; }
+.approw.flip .approw-text  { order:1; border-left:none; border-right:none; border-left:1px solid var(--bor); }
 .approw.flip:hover .approw-phone,
 .approw.flip:hover .approw-text { border-color: var(--bor-grn); }
 [data-theme="light"] .approw.flip .approw-phone,
