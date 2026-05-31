@@ -3,209 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Terratrails — Le premier système d'exécution outdoor par IA. Décrire. Générer. Partir.">
+  <meta name="description" content="Terratrails — Décrire. Générer. Partir. Le premier système d'exécution outdoor par IA.">
   <title>Terratrails — Outdoor sans friction</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-  <!-- Favicon SVG -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='22.37' fill='%230A0E0B'/%3E%3Cline x1='50' y1='59.5' x2='50' y2='79' stroke='%23264848' stroke-width='1.4' stroke-linecap='round'/%3E%3Cpolyline points='29.5,59.5 50,29.5 70.5,59.5' stroke='%23E8E8E4' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='79' r='4.32' fill='%23345A3A'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ── Hero ── */
+    /* ── HERO ─────────────────────────────────────── */
     .hero {
-      padding: 72px 0 80px;
+      padding: 60px 0 80px;
       min-height: calc(100vh - 64px);
       display: flex; align-items: center;
     }
     .hero-inner {
       display: grid;
-      grid-template-columns: 5fr 7fr;
-      gap: 64px; align-items: center;
+      /* Text gets less space, image gets the stage */
+      grid-template-columns: 4fr 7fr;
+      gap: 48px; align-items: center;
     }
-    @media(max-width:1000px) { .hero-inner { grid-template-columns: 1fr; gap: 48px; } }
+    @media(max-width:960px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-text-col { text-align: center; }
+    }
 
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--grn-bg); border: 1px solid var(--grn-bor);
       border-radius: 100px; padding: 5px 14px;
-      font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--grn-lit); margin-bottom: 24px;
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--grn-lit); margin-bottom: 22px;
     }
     .hero-eyebrow::before {
       content:''; width:6px; height:6px; border-radius:50%;
-      background: var(--grn-lit); animation: pulseGrn 2s infinite;
+      background:var(--grn-lit); animation:pulseGrn 2s infinite;
     }
 
-    /* ── Tagline: middle word green ── */
+    /* Tagline — middle word green, others match body text */
     .hero-tagline {
+      display: flex; gap: .55em; flex-wrap: wrap;
       font-family: 'Nunito', sans-serif; font-weight: 700;
-      font-size: clamp(15px, 1.9vw, 21px);
-      letter-spacing: .22em; margin: 22px 0 8px;
-      text-transform: uppercase; display: flex; gap: .6em; flex-wrap: wrap;
+      font-size: clamp(14px, 1.8vw, 20px); letter-spacing: .22em;
+      text-transform: uppercase; margin: 20px 0 8px;
     }
-    @media(max-width:1000px) { .hero-tagline { justify-content: center; } }
+    @media(max-width:960px) { .hero-tagline { justify-content: center; } }
     .tg-plain  { color: var(--txt); }
     .tg-accent { color: var(--grn-lit); }
 
     .hero-sub {
-      font-size: clamp(15px, 1.6vw, 17px); font-weight: 300;
-      color: var(--txt2); line-height: 1.85; margin: 14px 0 36px; max-width: 460px;
+      font-size: clamp(14px, 1.6vw, 17px); font-weight: 300;
+      color: var(--txt2); line-height: 1.88;
+      margin: 12px 0 32px; max-width: 420px;
     }
-    @media(max-width:1000px) { .hero-sub { max-width:100%; text-align:center; } }
+    @media(max-width:960px) { .hero-sub { max-width: 100%; margin-inline: auto; } }
 
-    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    @media(max-width:1000px) { .hero-ctas { justify-content: center; } }
-    @media(max-width:1000px) { .hero-text-col { text-align: center; } }
+    .hero-ctas { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    @media(max-width:960px) { .hero-ctas { justify-content: center; } }
 
-    /* ── Hero visual: bigger, prominent ── */
-    .hero-visual { position: relative; }
+    /* ── Hero visual: no frame, transparent bg, big ── */
+    .hero-visual {
+      position: relative;
+      /* Overflow slightly for drama */
+      margin-right: -20px;
+    }
+    @media(max-width:960px) {
+      .hero-visual { order: -1; margin-right: 0; }
+    }
+
+    /* Glow behind the image */
     .hero-glow {
-      position: absolute; inset: -60px; border-radius: 40px;
-      background: radial-gradient(ellipse at 50% 55%, rgba(52,90,58,.25) 0%, transparent 68%);
-      pointer-events: none; z-index: -1;
+      position: absolute;
+      inset: -80px -40px;
+      background: radial-gradient(ellipse at 55% 55%,
+        rgba(52,90,58,.28) 0%,
+        rgba(38,72,72,.12) 40%,
+        transparent 68%);
+      pointer-events: none; z-index: 0;
     }
+    [data-theme="light"] .hero-glow {
+      background: radial-gradient(ellipse at 55% 55%,
+        rgba(30,124,48,.14) 0%,
+        rgba(26,64,64,.06) 40%,
+        transparent 68%);
+    }
+
+    /* The image itself — NO border-radius, NO box-shadow, transparent bg blends */
     .hero-visual-img {
-      width: 100%; border-radius: 28px; display: block;
-      box-shadow: 0 48px 140px rgba(0,0,0,.68);
-      transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s;
+      position: relative; z-index: 1;
+      width: 100%;
+      display: block;
+      /* Subtle transform on hover only */
+      transition: transform .6s cubic-bezier(.22,1,.36,1);
     }
     .hero-visual-img:hover {
-      transform: translateY(-8px) scale(1.01);
-      box-shadow: 0 64px 160px rgba(0,0,0,.75);
+      transform: translateY(-6px) scale(1.012);
     }
-    @media(max-width:1000px) { .hero-visual { order: -1; } }
 
-    /* ══════════════════════════════════════
-       APPLE-STYLE PHONE MOCKUP FEATURE ROWS
-    ══════════════════════════════════════ */
-    .approw {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0; align-items: stretch;
-      margin-bottom: 16px;
-      border-radius: 32px; overflow: hidden;
-      border: 1px solid var(--bor2);
-      background: var(--bg2);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      transition: border-color .3s, box-shadow .3s;
-      position: relative;
+    /* ── Premium tunnel banner ───────────────────── */
+    .prem-tunnel {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; padding: 24px 32px;
+      background: linear-gradient(135deg, rgba(52,90,58,.08), rgba(38,72,72,.07));
+      border: 1px solid var(--bor-grn); border-radius: 20px;
+      margin-bottom: 0; flex-wrap: wrap;
     }
-    .approw:last-child { margin-bottom: 0; }
-    .approw:hover { border-color: var(--bor-grn); box-shadow: 0 24px 72px var(--shadow); }
-
-    /* Phone column */
-    .approw-phone {
-      background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      padding: 56px 48px;
-      position: relative; overflow: hidden;
-    }
-    .approw-phone::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(52,90,58,.1) 0%, transparent 60%);
+    .prem-tunnel::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(95,168,104,.3), transparent);
       pointer-events: none;
     }
-    [data-theme="light"] .approw-phone { background: #F0F2F0; }
+    [data-theme="light"] .prem-tunnel {
+      background: rgba(255,255,255,.6);
+      box-shadow: 0 4px 24px rgba(30,124,48,.08);
+    }
+    .prem-tunnel-text { flex: 1; min-width: 200px; }
+    .prem-tunnel-label { font-size:9px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--grn-lit);margin-bottom:4px;display:block; }
+    .prem-tunnel-msg { font-size:14px;font-weight:300;color:var(--txt2);line-height:1.6; }
+    .prem-tunnel-msg strong { color:var(--txt);font-weight:700; }
 
-    /* The phone mockup frame */
-    .phone-mock {
-      position: relative; z-index: 1;
-      width: 240px; max-width: 100%;
-      border-radius: 40px;
-      background: #0E1310;
-      box-shadow:
-        0 0 0 10px #141a15,
-        0 0 0 11px rgba(255,255,255,.06),
-        0 40px 80px rgba(0,0,0,.6),
-        0 8px 24px rgba(0,0,0,.4);
-      overflow: hidden;
-      transition: transform .4s cubic-bezier(.22,1,.36,1);
-    }
-    .approw:hover .phone-mock { transform: translateY(-6px) rotate(-.8deg); }
-
-    /* Notch / Dynamic Island */
-    .phone-mock-notch {
-      position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
-      width: 90px; height: 28px; background: #0E1310;
-      border-radius: 20px; z-index: 10;
-    }
-
-    /* The screenshot inside, cropped */
-    .phone-mock-screen {
-      width: 100%;
-      /* We show a portion of the image: aspect-ratio controls crop height */
-      aspect-ratio: 9 / 14;
-      overflow: hidden; position: relative;
-    }
-    .phone-mock-screen img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-    /* Custom crop per screen */
-    .crop-explorer  { object-position: center 15%; }
-    .crop-terrain   { object-position: center 20%; }
-    .crop-base      { object-position: center 10%; }
-
-    /* Text column */
-    .approw-text {
-      padding: 60px 56px;
-      display: flex; flex-direction: column; justify-content: center;
-      border-left: 1px solid var(--bor);
-      transition: border-color .3s;
-    }
-    .approw:hover .approw-text { border-color: var(--bor-grn); }
-    /* Flipped: phone right, text left */
-    .approw.flip { }
-    .approw.flip .approw-phone { order: 2; border-left: 1px solid var(--bor); }
-    .approw.flip .approw-text  { order: 1; border-left: none; border-right: 1px solid var(--bor); }
-    .approw.flip:hover .approw-phone { border-color: var(--bor-grn); }
-    .approw.flip:hover .approw-text  { border-color: var(--bor-grn); }
-
-    @media(max-width:860px) {
-      .approw, .approw.flip { grid-template-columns: 1fr; }
-      .approw-phone { padding: 44px 36px; }
-      .approw.flip .approw-phone { order: 0; border-left: none; border-top: 1px solid var(--bor); }
-      .approw.flip .approw-text  { order: -1; border-right: none; }
-      .approw-text { border-left: none; border-top: 1px solid var(--bor); padding: 40px 32px; }
-    }
-    @media(max-width:480px) {
-      .approw-phone { padding: 32px 24px; }
-      .approw-text { padding: 32px 24px; }
-      .phone-mock { width: 200px; }
-    }
-
-    .ar-label { font-size: 9px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--grn-lit); margin-bottom: 14px; display: block; }
-    .ar-title {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      text-transform: uppercase; letter-spacing: 5px;
-      font-size: clamp(26px, 3.2vw, 40px);
-      color: var(--txt); margin-bottom: 16px; line-height: 1.0;
-    }
-    .ar-tagline {
-      font-size: 15px; font-weight: 300; color: var(--txt2); line-height: 1.8;
-      margin-bottom: 26px; padding-bottom: 26px; border-bottom: 1px solid var(--bor);
-    }
-    .ar-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .ar-list li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; font-weight: 300; color: var(--txt2); line-height: 1.55;
-    }
-    .ar-list li svg { flex-shrink: 0; color: var(--grn-lit); margin-top: 2px; }
-
-    /* Pricing teaser */
-    .pricing-tease {
+    /* ── Accès bêta teaser ───────────────────────── */
+    .beta-tease {
       background: linear-gradient(135deg, rgba(52,90,58,.06), rgba(38,72,72,.06));
       border: 1px solid var(--bor-grn); border-radius: var(--radius);
       display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 32px;
       padding: 36px 40px; position: relative; overflow: hidden;
     }
-    .pricing-tease::before { background: linear-gradient(90deg, transparent, rgba(95,168,104,.18), transparent); }
-    @media(max-width:640px) { .pricing-tease { grid-template-columns: 1fr; gap: 20px; } }
-    .pt-sub { font-size: 13px; font-weight: 300; color: var(--txt2); margin-top: 8px; line-height: 1.72; }
+    .beta-tease::before { background: linear-gradient(90deg, transparent, rgba(95,168,104,.18), transparent); }
+    @media(max-width:640px) { .beta-tease { grid-template-columns: 1fr; gap: 20px; } }
+    .bt-sub { font-size:13px;font-weight:300;color:var(--txt2);margin-top:8px;line-height:1.72; }
+    [data-theme="light"] .beta-tease {
+      background: rgba(255,255,255,.6);
+      box-shadow: 0 4px 32px rgba(30,124,48,.08);
+    }
   </style>
 </head>
 <body>
@@ -213,7 +143,7 @@
 <!-- ══ NAV ══ -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
+    <a href="./" class="nav-logo">
       <svg class="logo-svg" viewBox="0 0 100 100" fill="none">
         <rect class="logo-rect" width="100" height="100" rx="22.37"/>
         <line x1="50" y1="59.5" x2="50" y2="79" stroke="#264848" stroke-width="1.4" stroke-linecap="round"/>
@@ -223,7 +153,7 @@
       <div class="nav-logo-text">TERRA<span>TRAILS</span></div>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="./" class="active">Accueil</a></li>
       <li><a href="premium.html">Premium</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -233,7 +163,7 @@
         <svg class="icon-moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="icon-sun"  width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
-      <a href="beta.html" class="btn btn-primary" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
+      <a href="beta.html" class="btn btn-primary always-show" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
       <button class="ham-btn" id="hamBtn" aria-label="Menu">
         <span class="ham-line"></span><span class="ham-line"></span>
       </button>
@@ -243,7 +173,7 @@
 
 <div class="mob-overlay" id="mobMenu">
   <ul>
-    <li><a href="index.html" class="active">Accueil</a></li>
+    <li><a href="./" class="active">Accueil</a></li>
     <li><a href="premium.html">Premium</a></li>
     <li><a href="faq.html">FAQ</a></li>
     <li><a href="contact.html">Contact</a></li>
@@ -259,7 +189,6 @@
       <div class="hero-text-col">
         <div class="hero-eyebrow r">Bêta — Accès limité</div>
         <h1 class="display display-xl r d1">TERRA<br><span class="accent">TRAILS</span></h1>
-        <!-- Tagline: plain / green / plain -->
         <p class="hero-tagline r d2">
           <span class="tg-plain">Décrire.</span>
           <span class="tg-accent">Générer.</span>
@@ -275,16 +204,21 @@
         </div>
       </div>
 
+      <!-- Hero image: no frame, no shadow, transparent bg blends naturally -->
       <div class="hero-visual r d1">
         <div class="hero-glow"></div>
-        <img src="decrire_generer.png" alt="Terratrails — Décrire. Générer. Partir." class="hero-visual-img">
+        <img
+          src="decrire_generer.png"
+          alt="Terratrails — interface application"
+          class="hero-visual-img"
+        >
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ══ SYSTÈME — Apple Fitness+ style ══ -->
+<!-- ══ SYSTÈME — Cards Liquid Glass alternées ══ -->
 <section id="systeme">
   <div class="wrap">
     <div class="sec-hd r">
@@ -293,25 +227,16 @@
       <p class="body-lg" style="max-width:500px;margin-top:18px">Trois onglets. Compréhensible en dix secondes. Fonctionnel 100 % hors-ligne.</p>
     </div>
 
-    <!-- Row 1 — Explorer : texte gauche, phone droite -->
+    <!-- Card 1 — Explorer : texte gauche, phone droite -->
     <div class="approw r d1">
       <div class="approw-text">
         <span class="ar-label">Onglet 01</span>
         <div class="ar-title">Explorer</div>
         <p class="ar-tagline">Décrivez une intention en une phrase. L'IA construit immédiatement un itinéraire complet adapté à votre profil physique, la météo réelle et le terrain.</p>
         <ul class="ar-list">
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Génération IA depuis une phrase naturelle
-          </li>
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            3 variantes — Directe, Panoramique, Sportive
-          </li>
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Eau, refuges et bivouacs intégrés automatiquement
-          </li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Génération IA depuis une phrase naturelle</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>3 variantes — Directe, Panoramique, Sportive</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Eau, refuges et bivouacs intégrés automatiquement</li>
         </ul>
       </div>
       <div class="approw-phone">
@@ -324,25 +249,16 @@
       </div>
     </div>
 
-    <!-- Row 2 — Terrain : phone gauche, texte droite -->
+    <!-- Card 2 — Terrain : phone gauche, texte droite -->
     <div class="approw flip r d2">
       <div class="approw-text">
         <span class="ar-label">Onglet 02</span>
         <div class="ar-title">Terrain</div>
         <p class="ar-tagline">Interface de survie. Position, direction, temps restant. Le tracé vit et s'adapte — même sans réseau, même en plein effort physique.</p>
         <ul class="ar-list">
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Navigation 100 % hors-ligne, cartes vectorielles
-          </li>
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Itinéraire vivant — raccourcis et alertes en temps réel
-          </li>
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Alertes haptiques critiques : orage, sortie de trace, SOS
-          </li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Navigation 100 % hors-ligne, cartes vectorielles</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Itinéraire vivant — raccourcis et alertes en temps réel</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Alertes haptiques : orage, sortie de trace, SOS</li>
         </ul>
       </div>
       <div class="approw-phone">
@@ -355,25 +271,16 @@
       </div>
     </div>
 
-    <!-- Row 3 — Base : texte gauche, phone droite -->
+    <!-- Card 3 — Base : texte gauche, phone droite -->
     <div class="approw r d3">
       <div class="approw-text">
         <span class="ar-label">Onglet 03</span>
         <div class="ar-title">Base</div>
         <p class="ar-tagline">Hub logistique 100 % privé. Matériel, cartes, condition physique. Zéro profil public, zéro réseau social, zéro gamification.</p>
         <ul class="ar-list">
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Checklist dynamique indexée sur météo et altitude
-          </li>
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Score de préparation via Apple Santé
-          </li>
-          <li>
-            <svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>
-            Données chiffrées — 100 % locales sur l'appareil
-          </li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Checklist dynamique indexée sur météo et altitude</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Score de préparation via Apple Santé</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Données chiffrées — 100 % locales sur l'appareil</li>
         </ul>
       </div>
       <div class="approw-phone">
@@ -389,14 +296,33 @@
   </div>
 </section>
 
+<!-- ══ TUNNEL PREMIUM (avant la section bêta) ══ -->
+<section>
+  <div class="wrap">
+    <div class="prem-tunnel r" style="position:relative;overflow:hidden">
+      <div class="prem-tunnel-text">
+        <span class="prem-tunnel-label">Terratrails Premium</span>
+        <p class="prem-tunnel-msg">
+          <strong>Système complet à 4,99 € / mois.</strong>
+          Découvrez le Mode Compagnon, la navigation offline mondiale et les alertes haptiques de danger.
+        </p>
+      </div>
+      <a href="premium.html" class="btn btn-outline" style="flex-shrink:0">
+        Voir l'offre Premium
+        <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ══ BÊTA TEASER ══ -->
 <section>
   <div class="wrap">
-    <div class="pricing-tease glass r">
+    <div class="beta-tease glass r">
       <div>
         <span class="eyebrow">Accès anticipé</span>
         <h3 class="display display-sm">Rejoignez la bêta.<br><span class="accent">En avant-première.</span></h3>
-        <p class="pt-sub">Terratrails est en développement actif. Inscrivez-vous pour être parmi les premiers testeurs et façonner le produit. Disponible sur iOS, App Store uniquement.</p>
+        <p class="bt-sub">Terratrails est en développement actif. Inscrivez-vous pour être parmi les premiers testeurs et façonner le produit. Disponible sur iOS, App Store uniquement.</p>
       </div>
       <div style="flex-shrink:0">
         <a href="beta.html" class="btn btn-primary">S'inscrire à la Bêta →</a>
@@ -418,17 +344,14 @@
       <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
     </div>
     <ul class="footer-links">
-      <li><a href="index.html">Accueil</a></li>
+      <li><a href="./">Accueil</a></li>
       <li><a href="beta.html">Bêta</a></li>
       <li><a href="premium.html">Premium</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <!-- Instagram -->
     <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="footer-instagram" aria-label="Instagram Terratrails">
-      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-      </svg>
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
       @terratrails.fr
     </a>
     <p class="footer-copy">© 2026 Terratrails — Système d'exécution outdoor. iOS uniquement, bêta en cours.</p>
@@ -445,8 +368,7 @@
     localStorage.setItem('tt-theme', next);
   });
   document.getElementById('hamBtn').addEventListener('click', () => {
-    const o = document.getElementById('mobMenu').classList.toggle('open');
-    document.getElementById('hamBtn').setAttribute('aria-expanded', o);
+    document.getElementById('mobMenu').classList.toggle('open');
   });
 </script>
 </body>
