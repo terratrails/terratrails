@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Terratrails — Toutes les fonctionnalités. Gratuit vs Premium.">
+  <title>Terratrails — Fonctionnalités</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="v1_dark_1024.png" type="image/png">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ══════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════ */
+    .feat-hero { padding: 88px 0 72px; text-align: center; }
+    .feat-hero .display-xl { max-width: 860px; margin: 12px auto 0; }
+    .feat-hero .body-lg    { max-width: 520px; margin: 20px auto 0; }
+
+    /* ══════════════════════════════════════
+       PLAN HEADER CARDS
+    ══════════════════════════════════════ */
+    .plan-header-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 64px;
+    }
+    @media(max-width:640px) { .plan-header-grid { grid-template-columns: 1fr; } }
+
+    .plan-card {
+      padding: 28px 32px; border-radius: 24px;
+      display: flex; flex-direction: column; gap: 6px;
+      transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s;
+    }
+    .plan-card:hover { transform: translateY(-3px); }
+    .plan-card-free  { background: var(--bg3); border: 1px solid var(--bor2); }
+    .plan-card-prem  {
+      background: linear-gradient(135deg, rgba(52,90,58,.14) 0%, rgba(38,72,72,.10) 100%);
+      border: 1px solid var(--bor-grn);
+      position: relative; overflow: hidden;
+    }
+    .plan-card-prem::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(95,168,104,.5), transparent);
+    }
+    [data-theme="light"] .plan-card-free { background: rgba(255,255,255,.72); }
+    [data-theme="light"] .plan-card-prem { background: rgba(255,255,255,.72); box-shadow: 0 4px 32px rgba(30,124,48,.1); }
+
+    .plan-name {
+      font-size: 9px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase;
+      color: var(--txt3); margin-bottom: 8px;
+    }
+    .plan-card-prem .plan-name { color: #5FA868; }
+    .plan-price {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(36px, 5vw, 52px); letter-spacing: -2px; color: var(--txt); line-height: 1;
+    }
+    .plan-price sub { font-size: 16px; letter-spacing: 0; font-weight: 300; color: var(--txt2); }
+    .plan-sub { font-size: 12px; font-weight: 300; color: var(--txt3); margin-top: 4px; }
+    .plan-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--grn-bg); border: 1px solid var(--grn-bor);
+      border-radius: 100px; padding: 3px 10px;
+      font-size: 11px; font-weight: 600; color: #5FA868;
+      margin-top: 8px; align-self: flex-start;
+    }
+    .plan-badge::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: #5FA868; animation: pulseGrn 2s infinite;
+    }
+
+    /* ══════════════════════════════════════
+       FEATURE TABLE
+    ══════════════════════════════════════ */
+    .feat-table-wrap {
+      border-radius: 24px; overflow: hidden;
+      border: 1px solid var(--bor2);
+      background: var(--card-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    [data-theme="light"] .feat-table-wrap {
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 4px 40px rgba(13,26,14,.07);
+    }
+
+    /* Table header row */
+    .ftab-head {
+      display: grid; grid-template-columns: 1fr 200px 200px;
+      background: var(--bg3); border-bottom: 1px solid var(--bor2);
+    }
+    @media(max-width:720px) { .ftab-head { grid-template-columns: 1fr 100px 100px; } }
+    @media(max-width:480px) { .ftab-head { grid-template-columns: 1fr 88px 88px; } }
+
+    .ftab-hcell {
+      padding: 14px 20px;
+      font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--txt3);
+      border-left: 1px solid var(--bor);
+    }
+    .ftab-hcell:first-child { border-left: none; color: var(--txt2); font-size: 10px; }
+    .ftab-hcell.prem-col { color: #5FA868; display: flex; align-items: center; gap: 6px; }
+
+    /* Category separator */
+    .ftab-cat {
+      padding: 12px 20px;
+      font-size: 9px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase;
+      color: var(--txt3); background: var(--bg2);
+      border-top: 1px solid var(--bor); border-bottom: 1px solid var(--bor);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .ftab-cat-icon {
+      width: 22px; height: 22px; border-radius: 7px;
+      background: var(--grn-bg); border: 1px solid var(--grn-bor);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    /* Feature row */
+    .ftab-row {
+      display: grid; grid-template-columns: 1fr 200px 200px;
+      border-bottom: 1px solid var(--bor);
+      transition: background .15s;
+    }
+    .ftab-row:last-child { border-bottom: none; }
+    .ftab-row:hover { background: var(--bg3); }
+    @media(max-width:720px) { .ftab-row { grid-template-columns: 1fr 100px 100px; } }
+    @media(max-width:480px) { .ftab-row { grid-template-columns: 1fr 88px 88px; } }
+
+    .ftab-name {
+      padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .ftab-name-title { font-size: 14px; font-weight: 600; color: var(--txt); }
+    .ftab-name-desc  { font-size: 12px; font-weight: 300; color: var(--txt3); line-height: 1.5; }
+
+    .ftab-cell {
+      padding: 18px 20px; border-left: 1px solid var(--bor);
+      display: flex; align-items: center;
+      font-size: 13px; font-weight: 300; color: var(--txt2);
+    }
+    .ftab-cell.free-cell  {}
+    .ftab-cell.prem-cell  { flex-direction: column; align-items: flex-start; gap: 5px; }
+
+    /* Value chips inside cells */
+    .val-yes {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600; color: #5FA868;
+    }
+    .val-no {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 400; color: var(--txt3);
+    }
+    .val-limited {
+      font-size: 12px; font-weight: 300; color: var(--txt2);
+    }
+
+    /* Premium badge pill */
+    .prem-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, rgba(52,90,58,.22), rgba(38,72,72,.16));
+      border: 1px solid var(--grn-bor);
+      border-radius: 100px; padding: 2px 8px;
+      font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+      color: #5FA868; flex-shrink: 0;
+    }
+    .prem-badge svg { flex-shrink: 0; }
+
+    .prem-val {
+      font-size: 12px; font-weight: 600; color: var(--txt);
+    }
+    .prem-desc {
+      font-size: 11px; font-weight: 300; color: var(--txt2); line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════
+       FEATURE CARDS (visual detail cards)
+    ══════════════════════════════════════ */
+    .feat-detail-section { padding: var(--section-py) 0; }
+
+    .feat-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px; margin-top: 48px;
+    }
+    @media(max-width:900px) { .feat-detail-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:560px) { .feat-detail-grid { grid-template-columns: 1fr; } }
+
+    .fdet-card {
+      padding: 28px 24px; border-radius: 22px;
+      background: var(--card-bg); border: 1px solid var(--card-bor);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; overflow: hidden;
+      transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .25s, box-shadow .3s;
+    }
+    .fdet-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+    }
+    .fdet-card:hover { transform: translateY(-4px); border-color: var(--bor-grn); box-shadow: 0 20px 60px var(--shadow); }
+    [data-theme="light"] .fdet-card { background: rgba(255,255,255,.75); box-shadow: 0 2px 20px rgba(13,26,14,.06); }
+    [data-theme="light"] .fdet-card::before { background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent); }
+
+    /* Premium card variant */
+    .fdet-card.is-prem {
+      background: linear-gradient(145deg, rgba(52,90,58,.10) 0%, rgba(38,72,72,.07) 100%);
+      border-color: var(--grn-bor);
+    }
+    .fdet-card.is-prem::before { background: linear-gradient(90deg, transparent, rgba(95,168,104,.3), transparent); }
+    [data-theme="light"] .fdet-card.is-prem { background: rgba(255,255,255,.8); box-shadow: 0 4px 32px rgba(30,124,48,.08); }
+
+    .fdet-ico {
+      width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
+      background: var(--grn-bg); border: 1px solid var(--grn-bor);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .fdet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .fdet-title { font-size: 15px; font-weight: 700; color: var(--txt); line-height: 1.3; flex: 1; }
+    .fdet-body  { font-size: 13px; font-weight: 300; color: var(--txt2); line-height: 1.72; }
+    .fdet-badge-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+
+    /* ══════════════════════════════════════
+       CTA FOOTER STRIP
+    ══════════════════════════════════════ */
+    .feat-cta-strip {
+      border-radius: var(--radius); overflow: hidden;
+      background: linear-gradient(135deg, rgba(52,90,58,.10), rgba(38,72,72,.08));
+      border: 1px solid var(--bor-grn);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+      flex-wrap: wrap; position: relative;
+    }
+    .feat-cta-strip::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(95,168,104,.4), transparent);
+    }
+    [data-theme="light"] .feat-cta-strip { background: rgba(255,255,255,.6); box-shadow: 0 4px 32px rgba(30,124,48,.1); }
+    @media(max-width:640px) { .feat-cta-strip { padding: 28px 24px; } }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="./" class="nav-logo">
+      <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails">
+      <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails">
+      <div class="nav-logo-text"><span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="./">Accueil</a></li>
+      <li><a href="/features" class="active">Fonctionnalités</a></li>
+      <li><a href="/premium">Premium</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Thème">
+        <svg class="icon-moon" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun"  width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="var(--txt2)" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="/beta" class="btn btn-primary always-show" style="font-size:11px;padding:10px 20px;">Accès Bêta</a>
+      <button class="ham-btn" id="hamBtn" aria-label="Menu"><span class="ham-line"></span><span class="ham-line"></span></button>
+    </div>
+  </div>
+</nav>
+<div class="mob-overlay" id="mobMenu">
+  <ul>
+    <li><a href="./">Accueil</a></li>
+    <li><a href="/features" class="active">Fonctionnalités</a></li>
+    <li><a href="/premium">Premium</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+  <div class="mob-cta"><a href="/beta" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="feat-hero">
+  <div class="wrap">
+    <span class="eyebrow r">Fonctionnalités</span>
+    <h1 class="display display-xl r d1">TOUT CE QUE<br><span class="accent">TERRATRAILS</span><br>FAIT POUR VOUS.</h1>
+    <p class="body-lg r d2">Deux niveaux, un seul objectif : vous emmener plus loin, plus simplement, plus en sécurité.</p>
+  </div>
+</section>
+
+<!-- ══ PLAN CARDS ══ -->
+<section style="padding-top:0; padding-bottom: 0; border-top: none;">
+  <div class="wrap">
+    <div class="plan-header-grid r">
+      <div class="plan-card plan-card-free">
+        <span class="plan-name">Gratuit</span>
+        <div class="plan-price">0 €</div>
+        <p class="plan-sub">Pour découvrir l'approche Terratrails</p>
+        <ul style="list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ 1 crédit IA / mois</li>
+          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ Navigation en ligne</li>
+          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ 1 zone offline limitée</li>
+        </ul>
+      </div>
+      <div class="plan-card plan-card-prem">
+        <span class="plan-name">Premium</span>
+        <div class="plan-price">4<sub>,99 € / mois</sub></div>
+        <p class="plan-sub">Premier mois à 1 € · Sans engagement</p>
+        <span class="plan-badge">Accès anticipé</span>
+        <ul style="list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px">
+          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ IA illimitée + multi-jours</li>
+          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ Offline monde entier</li>
+          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ Mode Compagnon + SOS</li>
+        </ul>
+        <a href="/premium" class="btn btn-primary" style="margin-top:20px;font-size:12px;padding:11px 22px;align-self:flex-start">Voir l'offre →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURE TABLE ══ -->
+<section>
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">Comparaison</span>
+      <h2 class="display display-md">Gratuit<br>vs <span class="accent">Premium.</span></h2>
+      <p class="body-lg" style="max-width:440px;margin-top:16px">Sans ambiguïté. Voici exactement ce que chaque niveau débloque.</p>
+    </div>
+
+    <div class="feat-table-wrap r d1">
+      <!-- Table header -->
+      <div class="ftab-head">
+        <div class="ftab-hcell">Fonctionnalité</div>
+        <div class="ftab-hcell">Gratuit</div>
+        <div class="ftab-hcell prem-col">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Premium
+        </div>
+      </div>
+
+      <!-- ── GÉNÉRATION IA ── -->
+      <div class="ftab-cat">
+        <div class="ftab-cat-icon">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        Intelligence artificielle
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Génération d'itinéraires IA</span>
+          <span class="ftab-name-desc">Depuis une phrase naturelle — durée, difficulté, envie de lac ou refuge</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-limited">1 crédit / mois</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Illimitée</span>
+        </div>
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Variantes d'itinéraires</span>
+          <span class="ftab-name-desc">Directe / Panoramique / Sportive générées en une fois</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-yes"><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Sur l'unique crédit</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Illimitées</span>
+        </div>
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Itinéraires multi-jours</span>
+          <span class="ftab-name-desc">Treks de 2 jours et plus avec logistique et refuges</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-no">— Non inclus</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Inclus</span>
+        </div>
+      </div>
+
+      <!-- ── NAVIGATION ── -->
+      <div class="ftab-cat">
+        <div class="ftab-cat-icon">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        </div>
+        Navigation terrain
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Navigation terrain de base</span>
+          <span class="ftab-name-desc">Position GPS, direction, temps restant en temps réel</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-limited">En ligne uniquement</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Hors-ligne totale</span>
+        </div>
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Cartes Offline</span>
+          <span class="ftab-name-desc">Tuiles vectorielles téléchargées sur l'appareil</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-limited">1 petite zone</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Monde entier, illimitées</span>
+        </div>
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Points d'intérêt détaillés</span>
+          <span class="ftab-name-desc">Sources d'eau, refuges, spots bivouac, zones baignade</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-limited">Basique</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Détaillés & vérifiés</span>
+          <span class="prem-desc">Eau · Refuges · Bivouacs · Baignade</span>
+        </div>
+      </div>
+
+      <!-- ── LOGISTIQUE ── -->
+      <div class="ftab-cat">
+        <div class="ftab-cat-icon">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        Préparation & logistique
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Équipement intelligent</span>
+          <span class="ftab-name-desc">Checklist dynamique selon météo, altitude, durée et terrain</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-no">— Non inclus</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Inclus</span>
+          <span class="prem-desc">Liaison dynamique avec l'onglet Base</span>
+        </div>
+      </div>
+
+      <!-- ── SÉCURITÉ ── -->
+      <div class="ftab-cat">
+        <div class="ftab-cat-icon">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        Sécurité
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Mode Compagnon SMS</span>
+          <span class="ftab-name-desc">Envoi automatique à un proche — position, ETA, batterie</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-no">— Non inclus</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Inclus</span>
+          <span class="prem-desc">Sans app nécessaire pour le destinataire</span>
+        </div>
+      </div>
+
+      <div class="ftab-row">
+        <div class="ftab-name">
+          <span class="ftab-name-title">Sécurité avancée & SOS</span>
+          <span class="ftab-name-desc">Alertes haptiques de danger + bouton SOS avec position GPS</span>
+        </div>
+        <div class="ftab-cell free-cell"><span class="val-no">— Non inclus</span></div>
+        <div class="ftab-cell prem-cell">
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <span class="prem-val">Inclus</span>
+          <span class="prem-desc">Alertes haptiques · SOS terrain</span>
+        </div>
+      </div>
+
+    </div><!-- end table-wrap -->
+  </div>
+</section>
+
+<!-- ══ FEATURE DETAIL CARDS ══ -->
+<section class="feat-detail-section">
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">En détail</span>
+      <h2 class="display display-md">Chaque<br><span class="accent">fonctionnalité</span><br>compte.</h2>
+    </div>
+    <div class="feat-detail-grid">
+
+      <!-- IA illimitée -->
+      <div class="fdet-card is-prem r d1">
+        <div class="fdet-head">
+          <div class="fdet-ico">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+        </div>
+        <div class="fdet-title">IA illimitée</div>
+        <p class="fdet-body">Générez autant d'itinéraires que vous le souhaitez. Affinez, recommencez, comparez — sans jamais craindre d'épuiser un quota.</p>
+      </div>
+
+      <!-- Offline mondial -->
+      <div class="fdet-card is-prem r d2">
+        <div class="fdet-head">
+          <div class="fdet-ico">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+        </div>
+        <div class="fdet-title">Offline mondial</div>
+        <p class="fdet-body">Cartes vectorielles du monde entier. Alpes, Pyrénées, Dolomites — téléchargées une fois, accessibles sans réseau pour toujours.</p>
+      </div>
+
+      <!-- Mode Compagnon -->
+      <div class="fdet-card is-prem r d3">
+        <div class="fdet-head">
+          <div class="fdet-ico">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+        </div>
+        <div class="fdet-title">Mode Compagnon SMS</div>
+        <p class="fdet-body">Un proche reçoit automatiquement votre progression, ETA et batterie restante — sans télécharger l'application. Silencieux, automatique, rassurant.</p>
+      </div>
+
+      <!-- Alertes haptiques -->
+      <div class="fdet-card is-prem r d1">
+        <div class="fdet-head">
+          <div class="fdet-ico">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+        </div>
+        <div class="fdet-title">Alertes haptiques & SOS</div>
+        <p class="fdet-body">Orage imminent, sortie de trace, immobilité anormale — l'alerte arrive directement au poignet via Apple Watch. Le bouton SOS envoie votre position exacte.</p>
+      </div>
+
+      <!-- Équipement intelligent -->
+      <div class="fdet-card is-prem r d2">
+        <div class="fdet-head">
+          <div class="fdet-ico">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+        </div>
+        <div class="fdet-title">Équipement intelligent</div>
+        <p class="fdet-body">La checklist s'adapte automatiquement à la météo, l'altitude, la durée et vos équipements déjà enregistrés dans l'onglet Base. Zéro oubli possible.</p>
+      </div>
+
+      <!-- POI détaillés -->
+      <div class="fdet-card is-prem r d3">
+        <div class="fdet-head">
+          <div class="fdet-ico">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+        </div>
+        <div class="fdet-title">Points d'intérêt vérifiés</div>
+        <p class="fdet-body">Sources d'eau fiables, refuges avec horaires et numéros, bivouacs autorisés, lacs baignables — chaque point est horodaté et vérifié par la communauté.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA STRIP ══ -->
+<section style="padding-top:0; border-top:none">
+  <div class="wrap">
+    <div class="feat-cta-strip r">
+      <div>
+        <span class="eyebrow" style="margin-bottom:8px">Accès anticipé</span>
+        <h3 class="display display-sm">Premier mois à <span class="accent">1 €.</span></h3>
+        <p class="body-md" style="margin-top:10px;max-width:440px">Tout Premium débloqué dès le premier téléchargement. Sans engagement, iOS uniquement. Annulable en un tap.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0">
+        <a href="/beta" class="btn btn-primary">Rejoindre la bêta →</a>
+        <a href="/premium" class="btn btn-outline" style="text-align:center">Voir tous les détails</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
+      <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:5px">
+        <span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span>
+      </span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="./">Accueil</a></li>
+      <li><a href="/beta">Bêta</a></li>
+      <li><a href="/features">Fonctionnalités</a></li>
+      <li><a href="/premium">Premium</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="footer-instagram">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      @terratrails.fr
+    </a>
+    <p class="footer-copy">© 2026 Terratrails — Système d'exécution outdoor. iOS uniquement, bêta en cours.</p>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  root.setAttribute('data-theme', localStorage.getItem('tt-theme') || 'dark');
+  toggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('tt-theme', next);
+  });
+  document.getElementById('hamBtn').addEventListener('click', () => {
+    document.getElementById('mobMenu').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

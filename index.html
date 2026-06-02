@@ -11,20 +11,20 @@
   <link rel="icon" href="v1_dark_1024.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ── HERO ─────────────────────────────── */
+    /* ═══════ HERO ═══════ */
     .hero {
-      padding: 60px 0 80px;
+      padding: 56px 0 72px;
       min-height: calc(100vh - 64px);
       display: flex; align-items: center;
     }
     .hero-inner {
       display: grid;
-      grid-template-columns: 4fr 7fr;
+      grid-template-columns: 3fr 7fr;
       gap: 48px; align-items: center;
     }
-    @media(max-width:960px) {
-      .hero-inner { grid-template-columns:1fr; gap:40px; }
-      .hero-text-col { text-align:center; }
+    @media(max-width:960px){
+      .hero-inner{ grid-template-columns:1fr; gap:40px; }
+      .hero-text-col{ text-align:center; }
     }
 
     .hero-eyebrow {
@@ -38,7 +38,6 @@
       content:''; width:6px; height:6px; border-radius:50%;
       background:var(--grn-lit); animation:pulseGrn 2s infinite;
     }
-
     .hero-tagline {
       display:flex; gap:.55em; flex-wrap:wrap;
       font-family:'Nunito',sans-serif; font-weight:700;
@@ -47,68 +46,132 @@
     }
     @media(max-width:960px){ .hero-tagline{ justify-content:center; } }
     .tg-plain  { color:var(--txt); }
-    .tg-accent { color:var(--grn-lit); }
-
+    .tg-accent { color:#5FA868; }
     .hero-sub {
       font-size:clamp(14px,1.6vw,17px); font-weight:300;
       color:var(--txt2); line-height:1.88;
-      margin:12px 0 32px; max-width:420px;
+      margin:12px 0 32px; max-width:400px;
     }
     @media(max-width:960px){ .hero-sub{ max-width:100%; margin-inline:auto; } }
-
-    .hero-ctas { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
     @media(max-width:960px){ .hero-ctas{ justify-content:center; } }
 
-    .hero-visual { position:relative; margin-right:-20px; }
+    /* Hero visual — big, no frame, transparent bg */
+    .hero-visual{ position:relative; margin-right:-28px; }
     @media(max-width:960px){ .hero-visual{ order:-1; margin-right:0; } }
-
     .hero-glow {
-      position:absolute; inset:-80px -40px;
-      background:radial-gradient(ellipse at 55% 55%,rgba(52,90,58,.28) 0%,rgba(38,72,72,.12) 40%,transparent 68%);
+      position:absolute; inset:-100px -60px;
+      background:
+        radial-gradient(ellipse at 55% 50%, rgba(52,90,58,.32) 0%, rgba(38,72,72,.14) 42%, transparent 68%),
+        radial-gradient(ellipse at 20% 80%, rgba(38,72,72,.12) 0%, transparent 55%);
       pointer-events:none; z-index:0;
     }
     [data-theme="light"] .hero-glow {
-      background:radial-gradient(ellipse at 55% 55%,rgba(30,124,48,.14) 0%,rgba(26,64,64,.06) 40%,transparent 68%);
+      background:radial-gradient(ellipse at 55% 50%, rgba(30,124,48,.15) 0%, rgba(26,64,64,.07) 42%, transparent 68%);
     }
     .hero-visual-img {
       position:relative; z-index:1; width:100%; display:block;
-      transition:transform .6s cubic-bezier(.22,1,.36,1);
+      transition:transform .65s cubic-bezier(.22,1,.36,1);
+      filter:drop-shadow(0 40px 80px rgba(0,0,0,.45));
     }
-    .hero-visual-img:hover { transform:translateY(-6px) scale(1.012); }
+    [data-theme="light"] .hero-visual-img {
+      filter:drop-shadow(0 30px 60px rgba(13,26,14,.18));
+    }
+    .hero-visual-img:hover{ transform:translateY(-8px) scale(1.012); }
 
-    /* ── Premium tunnel ── */
+    /* ═══════ PREMIUM TUNNEL — riche & engageant ═══════ */
     .prem-tunnel {
-      display:flex; align-items:center; justify-content:space-between;
-      gap:24px; padding:24px 32px;
-      background:linear-gradient(135deg,rgba(52,90,58,.08),rgba(38,72,72,.07));
-      border:1px solid var(--bor-grn); border-radius:20px; flex-wrap:wrap;
-      position:relative; overflow:hidden;
+      border-radius:28px; overflow:hidden;
+      border:1px solid var(--bor-grn);
+      position:relative;
+      background:linear-gradient(135deg, rgba(52,90,58,.10) 0%, rgba(38,72,72,.08) 60%, rgba(52,90,58,.04) 100%);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
     }
     .prem-tunnel::before {
       content:''; position:absolute; top:0; left:0; right:0; height:1px;
-      background:linear-gradient(90deg,transparent,rgba(95,168,104,.3),transparent);
+      background:linear-gradient(90deg,transparent,rgba(95,168,104,.4),transparent);
     }
-    [data-theme="light"] .prem-tunnel { background:rgba(255,255,255,.6); box-shadow:0 4px 24px rgba(30,124,48,.08); }
-    .prem-tunnel-label { font-size:9px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--grn-lit);margin-bottom:4px;display:block; }
-    .prem-tunnel-msg { font-size:14px;font-weight:300;color:var(--txt2);line-height:1.6; flex:1; min-width:200px; }
-    .prem-tunnel-msg strong { color:var(--txt);font-weight:700; }
+    [data-theme="light"] .prem-tunnel {
+      background:rgba(255,255,255,.68);
+      box-shadow:0 8px 40px rgba(30,124,48,.1);
+    }
+    .pt-header {
+      display:flex; align-items:center; justify-content:space-between; gap:24px;
+      padding:32px 40px 28px; flex-wrap:wrap;
+      border-bottom:1px solid var(--bor);
+    }
+    .pt-price-block { display:flex; align-items:baseline; gap:6px; }
+    .pt-price-num {
+      font-family:'Nunito',sans-serif; font-weight:900;
+      font-size:clamp(40px,5vw,60px); letter-spacing:-2px;
+      color:var(--txt); line-height:1;
+    }
+    .pt-price-unit { font-size:14px; font-weight:300; color:var(--txt2); }
+    .pt-intro-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      background:var(--grn-bg); border:1px solid var(--grn-bor);
+      border-radius:100px; padding:4px 12px;
+      font-size:11px; font-weight:700; color:#5FA868;
+      white-space:nowrap;
+    }
+    .pt-intro-badge::before {
+      content:''; width:5px; height:5px; border-radius:50%;
+      background:#5FA868; animation:pulseGrn 2s infinite;
+    }
+    .pt-features-row {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:0;
+    }
+    @media(max-width:780px){ .pt-features-row{ grid-template-columns:1fr; } }
+    .pt-feat {
+      padding:24px 32px;
+      border-right:1px solid var(--bor);
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .pt-feat:last-child{ border-right:none; }
+    @media(max-width:780px){ .pt-feat{ border-right:none; border-bottom:1px solid var(--bor); } }
+    @media(max-width:780px){ .pt-feat:last-child{ border-bottom:none; } }
+    .pt-feat-ico {
+      width:36px; height:36px; border-radius:10px;
+      background:var(--grn-bg); border:1px solid var(--grn-bor);
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .pt-feat-title{ font-size:13px; font-weight:700; color:var(--txt); }
+    .pt-feat-desc { font-size:12px; font-weight:300; color:var(--txt2); line-height:1.6; }
+    .pt-footer {
+      padding:20px 40px; display:flex; align-items:center; justify-content:space-between;
+      gap:16px; flex-wrap:wrap;
+      border-top:1px solid var(--bor);
+    }
+    .pt-footer-note{ font-size:12px; font-weight:300; color:var(--txt3); }
 
-    /* ── Bêta teaser ── */
+    /* ═══════ BÊTA TEASER ═══════ */
     .beta-tease {
       background:linear-gradient(135deg,rgba(52,90,58,.06),rgba(38,72,72,.06));
       border:1px solid var(--bor-grn); border-radius:var(--radius);
       display:grid; grid-template-columns:1fr auto; align-items:center; gap:32px;
       padding:36px 40px; position:relative; overflow:hidden;
     }
-    .beta-tease::before { background:linear-gradient(90deg,transparent,rgba(95,168,104,.18),transparent); }
+    .beta-tease::before{ background:linear-gradient(90deg,transparent,rgba(95,168,104,.18),transparent); }
     @media(max-width:640px){ .beta-tease{ grid-template-columns:1fr; gap:20px; } }
-    .bt-sub { font-size:13px;font-weight:300;color:var(--txt2);margin-top:8px;line-height:1.72; }
-    [data-theme="light"] .beta-tease { background:rgba(255,255,255,.6); box-shadow:0 4px 32px rgba(30,124,48,.08); }
+    .bt-sub{ font-size:13px;font-weight:300;color:var(--txt2);margin-top:8px;line-height:1.72; }
+    [data-theme="light"] .beta-tease{ background:rgba(255,255,255,.6); box-shadow:0 4px 32px rgba(30,124,48,.08); }
 
-    /* ── "Ils parlent de nous" section ── */
+    /* ═══════ MANIFESTE LINK ═══════ */
+    .manifeste-link {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:13px; font-weight:500; color:#5FA868;
+      text-decoration:none; margin-top:20px;
+      padding:8px 0; border-bottom:1px solid rgba(95,168,104,.25);
+      transition:gap .2s, border-color .2s;
+    }
+    .manifeste-link:hover{ gap:12px; border-color:rgba(95,168,104,.6); }
+
+    /* ═══════ PRESS ═══════ */
     .press-grid {
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
       gap:16px; margin-top:48px;
     }
     .press-embed {
@@ -119,24 +182,21 @@
       transition:border-color .25s, box-shadow .25s, transform .3s cubic-bezier(.22,1,.36,1);
       min-height:480px; display:flex; flex-direction:column;
     }
-    .press-embed:hover { border-color:var(--bor-grn); box-shadow:0 16px 56px var(--shadow); transform:translateY(-4px); }
-    [data-theme="light"] .press-embed { background:rgba(255,255,255,.75); box-shadow:0 2px 20px rgba(13,26,14,.06); }
-
-    /* Instagram iframe wrapper */
-    .press-embed iframe { flex:1; border:none; min-height:480px; display:block; width:100%; }
-    /* Fallback card when embed is not accessible */
+    .press-embed:hover{ border-color:var(--bor-grn); box-shadow:0 16px 56px var(--shadow); transform:translateY(-4px); }
+    [data-theme="light"] .press-embed{ background:rgba(255,255,255,.75); box-shadow:0 2px 20px rgba(13,26,14,.06); }
+    .press-embed iframe{ flex:1;border:none;min-height:480px;display:block;width:100%; }
     .press-card-fallback {
-      flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
-      gap:14px; padding:32px 24px; text-align:center;
+      flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:14px;padding:32px 24px;text-align:center;
     }
     .press-card-fallback .pc-icon {
-      width:52px; height:52px; border-radius:16px; display:flex; align-items:center; justify-content:center;
-      background: linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
+      width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);
     }
-    .press-card-fallback .pc-label { font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3); }
-    .press-card-fallback .pc-title { font-size:14px;font-weight:600;color:var(--txt);line-height:1.5; }
-    .press-card-fallback .pc-meta  { font-size:12px;font-weight:300;color:var(--txt3); }
-    .press-card-fallback a { margin-top:8px; }
+    .press-card-fallback .pc-label{ font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3); }
+    .press-card-fallback .pc-title{ font-size:14px;font-weight:600;color:var(--txt);line-height:1.5; }
+    .press-card-fallback .pc-meta { font-size:12px;font-weight:300;color:var(--txt3); }
+    .press-card-fallback a{ margin-top:8px; }
   </style>
 </head>
 <body>
@@ -147,10 +207,14 @@
     <a href="./" class="nav-logo">
       <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails">
       <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails">
-      <div class="nav-logo-text">TERRA<span>TRAILS</span></div>
+      <!-- TERRA = #E8E8E4 · TRAILS = #345A3A — spec stricte -->
+      <div class="nav-logo-text">
+        <span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span>
+      </div>
     </a>
     <ul class="nav-links">
       <li><a href="./" class="active">Accueil</a></li>
+      <li><a href="/features">Fonctionnalités</a></li>
       <li><a href="/premium">Premium</a></li>
       <li><a href="/faq">FAQ</a></li>
       <li><a href="/contact">Contact</a></li>
@@ -171,6 +235,7 @@
 <div class="mob-overlay" id="mobMenu">
   <ul>
     <li><a href="./" class="active">Accueil</a></li>
+    <li><a href="/features">Fonctionnalités</a></li>
     <li><a href="/premium">Premium</a></li>
     <li><a href="/faq">FAQ</a></li>
     <li><a href="/contact">Contact</a></li>
@@ -184,7 +249,9 @@
     <div class="hero-inner">
       <div class="hero-text-col">
         <div class="hero-eyebrow r">Bêta — Accès limité</div>
-        <h1 class="display display-xl r d1">TERRA<br><span class="accent">TRAILS</span></h1>
+        <h1 class="display display-xl r d1">
+          <span class="wm-terra">TERRA</span><br><span class="wm-trails">TRAILS</span>
+        </h1>
         <p class="hero-tagline r d2">
           <span class="tg-plain">Décrire.</span>
           <span class="tg-accent">Générer.</span>
@@ -207,7 +274,7 @@
   </div>
 </section>
 
-<!-- ══ SYSTÈME ══ -->
+<!-- ══ SYSTÈME — 3 cards Liquid Glass alternées ══ -->
 <section id="systeme">
   <div class="wrap">
     <div class="sec-hd r">
@@ -216,12 +283,17 @@
       <p class="body-lg" style="max-width:500px;margin-top:18px">Trois onglets. Compréhensible en dix secondes. Fonctionnel 100 % hors-ligne.</p>
     </div>
 
-    <!-- Row 1 — Explorer : texte GAUCHE, phone DROITE -->
+    <!-- ── Card 01 : Explorer — texte GAUCHE · phone DROITE ── -->
     <div class="approw r d1">
       <div class="approw-text">
-        <span class="ar-label">Onglet 01</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C7 8 5 11 5 14a7 7 0 0 0 14 0c0-3-2-6-7-11z"/><circle cx="12" cy="14" r="2.5"/></svg>
+          </div>
+          <span class="ar-label" style="margin-bottom:0">Onglet 01</span>
+        </div>
         <div class="ar-title">Explorer</div>
-        <p class="ar-tagline">Décrivez une intention en une phrase. L'IA construit immédiatement un itinéraire adapté à votre profil physique, la météo réelle et le terrain.</p>
+        <p class="ar-tagline">Décrivez votre intention en une phrase — durée, niveau, envie de baignade, refuge. L'IA génère immédiatement un itinéraire complet adapté à votre profil physique, à la météo réelle et au terrain.</p>
         <ul class="ar-list">
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Génération IA depuis une phrase naturelle</li>
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>3 variantes — Directe, Panoramique, Sportive</li>
@@ -232,18 +304,23 @@
         <div class="phone-mock">
           <div class="phone-mock-notch"></div>
           <div class="phone-mock-screen">
-            <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer" class="crop-explorer">
+            <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer — Génération IA" class="crop-explorer">
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Row 2 — Terrain : phone GAUCHE, texte DROITE (flip) -->
+    <!-- ── Card 02 : Terrain — phone GAUCHE · texte DROITE ── -->
     <div class="approw flip r d2">
       <div class="approw-text">
-        <span class="ar-label">Onglet 02</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20L9 8l5 7 4-5 3 10"/></svg>
+          </div>
+          <span class="ar-label" style="margin-bottom:0">Onglet 02</span>
+        </div>
         <div class="ar-title">Terrain</div>
-        <p class="ar-tagline">Interface de survie. Position, direction, temps restant. Le tracé s'adapte en temps réel — sans réseau, en plein effort, en toutes conditions.</p>
+        <p class="ar-tagline">Interface de survie. Position, direction, temps restant. Conçue pour être lisible sous les reflets du soleil ou en plein effort physique. Le tracé vit et s'adapte — même sans réseau, même en conditions difficiles.</p>
         <ul class="ar-list">
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Navigation 100 % hors-ligne, cartes vectorielles</li>
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Itinéraire vivant — raccourcis et alertes en temps réel</li>
@@ -254,29 +331,39 @@
         <div class="phone-mock">
           <div class="phone-mock-notch"></div>
           <div class="phone-mock-screen">
-            <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain" class="crop-terrain">
+            <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain — Navigation" class="crop-terrain">
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Row 3 — Base : texte GAUCHE, phone DROITE -->
+    <!-- ── Card 03 : Base — texte GAUCHE · phone DROITE ── -->
     <div class="approw r d3">
       <div class="approw-text">
-        <span class="ar-label">Onglet 03</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <span class="ar-label" style="margin-bottom:0">Onglet 03</span>
+        </div>
         <div class="ar-title">Base</div>
-        <p class="ar-tagline">Hub logistique 100 % privé. Matériel, cartes, condition physique. Zéro profil public, zéro réseau social, zéro gamification.</p>
+        <p class="ar-tagline">Hub logistique 100 % privé. Gérez votre matériel, consultez votre historique et téléchargez vos cartes hors-ligne. Zéro profil public, zéro réseau social, zéro gamification.</p>
         <ul class="ar-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Checklist dynamique indexée sur météo et altitude</li>
+          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Checklist équipement dynamique — météo & altitude</li>
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Score de préparation via Apple Santé</li>
           <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Données chiffrées — 100 % locales sur l'appareil</li>
         </ul>
+        <!-- Lien Manifeste -->
+        <a href="/faq" class="manifeste-link">
+          Pourquoi nous refusons d'être un réseau social — Lire notre Manifeste
+          <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
       </div>
       <div class="approw-phone">
         <div class="phone-mock">
           <div class="phone-mock-notch"></div>
           <div class="phone-mock-screen">
-            <img src="Ecran_3_BASE.png" alt="Écran Base" class="crop-base">
+            <img src="Ecran_3_BASE.png" alt="Écran Base — Hub logistique" class="crop-base">
           </div>
         </div>
       </div>
@@ -285,19 +372,54 @@
   </div>
 </section>
 
-<!-- ══ TUNNEL PREMIUM ══ -->
+<!-- ══ TUNNEL PREMIUM — riche & engageant ══ -->
 <section>
   <div class="wrap">
     <div class="prem-tunnel r">
-      <div class="prem-tunnel-msg">
-        <span class="prem-tunnel-label">Terratrails Premium</span>
-        <strong>Système complet à 4,99 € / mois.</strong>
-        Découvrez le Mode Compagnon, la navigation offline mondiale et les alertes haptiques de danger.
+      <div class="pt-header">
+        <div>
+          <span class="eyebrow" style="margin-bottom:8px">Terratrails Premium</span>
+          <h3 class="display display-sm" style="margin-bottom:0">
+            Terrain complet.<br><span style="color:#5FA868">Sans compromis.</span>
+          </h3>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0">
+          <div class="pt-price-block">
+            <span class="pt-price-num">4,99</span>
+            <span class="pt-price-unit">€ / mois</span>
+          </div>
+          <span class="pt-intro-badge">Premier mois à 1 €</span>
+        </div>
       </div>
-      <a href="/premium" class="btn btn-outline" style="flex-shrink:0">
-        Voir l'offre Premium
-        <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
-      </a>
+      <div class="pt-features-row">
+        <div class="pt-feat">
+          <div class="pt-feat-ico">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <span class="pt-feat-title">Offline mondial</span>
+          <p class="pt-feat-desc">Cartes vectorielles du monde entier. Fonctionnel sans réseau, partout et pour toujours.</p>
+        </div>
+        <div class="pt-feat">
+          <div class="pt-feat-ico">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <span class="pt-feat-title">Mode Compagnon</span>
+          <p class="pt-feat-desc">SMS automatiques à vos proches — position, ETA, batterie. Aucune app nécessaire pour eux.</p>
+        </div>
+        <div class="pt-feat">
+          <div class="pt-feat-ico">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <span class="pt-feat-title">Alertes haptiques & SOS</span>
+          <p class="pt-feat-desc">Orage, sortie de trace, immobilité anormale. Alerte au poignet + bouton SOS intégré.</p>
+        </div>
+      </div>
+      <div class="pt-footer">
+        <span class="pt-footer-note">IA illimitée · Multi-jours · POI détaillés · Équipement intelligent</span>
+        <a href="/premium" class="btn btn-primary" style="font-size:12px;padding:12px 24px">
+          Découvrir l'offre complète →
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -309,7 +431,7 @@
       <div>
         <span class="eyebrow">Accès anticipé</span>
         <h3 class="display display-sm">Rejoignez la bêta.<br><span class="accent">En avant-première.</span></h3>
-        <p class="bt-sub">Terratrails est en développement actif. Inscrivez-vous pour être parmi les premiers testeurs. Disponible sur iOS, App Store uniquement.</p>
+        <p class="bt-sub">Terratrails est en développement actif. Inscrivez-vous pour être parmi les premiers testeurs. Disponible sur iOS uniquement.</p>
       </div>
       <div style="flex-shrink:0">
         <a href="/beta" class="btn btn-primary">S'inscrire à la Bêta →</a>
@@ -326,53 +448,36 @@
       <h2 class="display display-md">Ils parlent<br><span class="accent">de nous.</span></h2>
       <p class="body-lg" style="max-width:480px;margin-top:18px">Publications, stories et vidéos de la communauté outdoor qui suit l'aventure Terratrails.</p>
     </div>
-
     <div class="press-grid r d1">
-
-      <!-- Post Instagram #1 -->
       <div class="press-embed">
-        <blockquote
-          class="instagram-media"
+        <blockquote class="instagram-media"
           data-instgrm-permalink="https://www.instagram.com/p/DY2xS2tshLl/"
           data-instgrm-version="14"
           style="background:transparent;border:0;margin:0;padding:0;width:100%;min-width:100%">
         </blockquote>
       </div>
-
-      <!-- Placeholder card 2 — prochains posts -->
       <div class="press-embed">
         <div class="press-card-fallback">
           <div class="pc-icon">
-            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-            </svg>
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </div>
           <span class="pc-label">Instagram · @terratrails.fr</span>
           <p class="pc-title">Suivez l'aventure en direct sur notre compte Instagram.</p>
-          <p class="pc-meta">Sorties, coulisses, bêta-test et previews app.</p>
-          <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="btn btn-outline" style="padding:10px 22px;font-size:12px">
-            Voir le compte →
-          </a>
+          <p class="pc-meta">Sorties terrain, coulisses, bêta-test et previews app.</p>
+          <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="btn btn-outline" style="padding:10px 22px;font-size:12px">Voir le compte →</a>
         </div>
       </div>
-
-      <!-- Placeholder card 3 — prochaines vidéos -->
       <div class="press-embed">
         <div class="press-card-fallback">
           <div class="pc-icon" style="background:linear-gradient(135deg,#FF0000,#cc0000)">
-            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="5 3 19 12 5 21 5 3"/>
-            </svg>
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </div>
-          <span class="pc-label">Contenu vidéo</span>
-          <p class="pc-title">Des vidéos terrain de l'application arrivent prochainement.</p>
-          <p class="pc-meta">Reviews, tutoriels et sorties filmées en conditions réelles.</p>
-          <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="btn btn-outline" style="padding:10px 22px;font-size:12px">
-            Suivre les annonces →
-          </a>
+          <span class="pc-label">Vidéos terrain</span>
+          <p class="pc-title">Des vidéos de l'application en conditions réelles arrivent prochainement.</p>
+          <p class="pc-meta">Reviews, tutoriels et sorties filmées en montagne.</p>
+          <a href="https://www.instagram.com/terratrails.fr/" target="_blank" rel="noopener" class="btn btn-outline" style="padding:10px 22px;font-size:12px">Suivre les annonces →</a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -383,11 +488,14 @@
     <div class="footer-logo">
       <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
       <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
-      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--txt)">TERRA<span style="color:var(--grn-lit)">TRAILS</span></span>
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:5px">
+        <span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span>
+      </span>
     </div>
     <ul class="footer-links">
       <li><a href="./">Accueil</a></li>
       <li><a href="/beta">Bêta</a></li>
+      <li><a href="/features">Fonctionnalités</a></li>
       <li><a href="/premium">Premium</a></li>
       <li><a href="/faq">FAQ</a></li>
       <li><a href="/contact">Contact</a></li>
@@ -400,9 +508,7 @@
   </div>
 </footer>
 
-<!-- Instagram embed script -->
 <script async src="//www.instagram.com/embed.js"></script>
-
 <script>
   const root = document.documentElement;
   const toggle = document.getElementById('themeToggle');

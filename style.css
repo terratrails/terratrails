@@ -209,12 +209,19 @@ section+section{border-top:1px solid var(--bor)}
 }
 .nav-inner { max-width: var(--w); width:100%; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
 .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+
+/* ── Wordmark strict colors: TERRA=#E8E8E4 · TRAILS=#345A3A ── */
+.wm-terra  { color: #E8E8E4; }
+.wm-trails { color: #345A3A; }
+[data-theme="light"] .wm-terra  { color: #0A0E0B; }
+[data-theme="light"] .wm-trails { color: #345A3A; }
 .nav-logo-text {
   font-family: 'Nunito', sans-serif; font-weight: 900;
   font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
-  color: var(--txt); line-height: 1;
+  line-height: 1; display:flex; gap:0;
   transition: color .3s;
 }
+
 .nav-logo-text span { color: var(--grn-lit); display: block; }
 .nav-links { display:flex; align-items:center; gap:6px; list-style:none; }
 .nav-links a {
@@ -399,8 +406,9 @@ section+section{border-top:1px solid var(--bor)}
 [data-theme="light"] .approw-text { border-color: rgba(30,60,35,.08); }
 
 /* Flip variant */
-.approw.flip .approw-phone { order:0; border-left:none; border-right: none; }
-.approw.flip .approw-text  { order:1; border-left:none; border-right:none; border-left:1px solid var(--bor); }
+/* flip: phone → left col, text → right col */
+.approw.flip .approw-phone { order:0; border-left:none; border-right:none; }
+.approw.flip .approw-text  { order:1; border-left:1px solid var(--bor); border-right:none; }
 .approw.flip:hover .approw-phone,
 .approw.flip:hover .approw-text { border-color: var(--bor-grn); }
 [data-theme="light"] .approw.flip .approw-phone,
