@@ -59,16 +59,6 @@
     /* Hero visual — big, no frame, transparent bg */
     .hero-visual{ position:relative; margin-right:-28px; }
     @media(max-width:960px){ .hero-visual{ order:-1; margin-right:0; } }
-    .hero-glow {
-      position:absolute; inset:-100px -60px;
-      background:
-        radial-gradient(ellipse at 55% 50%, rgba(52,90,58,.32) 0%, rgba(38,72,72,.14) 42%, transparent 68%),
-        radial-gradient(ellipse at 20% 80%, rgba(38,72,72,.12) 0%, transparent 55%);
-      pointer-events:none; z-index:0;
-    }
-    [data-theme="light"] .hero-glow {
-      background:radial-gradient(ellipse at 55% 50%, rgba(30,124,48,.15) 0%, rgba(26,64,64,.07) 42%, transparent 68%);
-    }
     .hero-visual-img {
       position:relative; z-index:1; width:100%; display:block;
       transition:transform .65s cubic-bezier(.22,1,.36,1);
@@ -267,7 +257,6 @@
         </div>
       </div>
       <div class="hero-visual r d1">
-        <div class="hero-glow"></div>
         <img src="decrire_generer.png" alt="Terratrails — interface application" class="hero-visual-img">
       </div>
     </div>

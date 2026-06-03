@@ -45,15 +45,15 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
    LIGHT THEME — redesigned for beauty
 ══════════════════════════════════════════ */
 [data-theme="light"] {
-  --bg:          #F1F4F1;
-  --bg2:         rgba(255,255,255,.65);
-  --bg3:         rgba(255,255,255,.85);
-  --bor:         rgba(30,60,35,.08);
-  --bor2:        rgba(30,60,35,.12);
-  --bor-grn:     rgba(30,100,50,.22);
-  --txt:         #0D1A0E;
-  --txt2:        rgba(13,26,14,.56);
-  --txt3:        rgba(13,26,14,.36);
+  --bg:          #F0F3F0;
+  --bg2:         rgba(255,255,255,.78);
+  --bg3:         rgba(255,255,255,.92);
+  --bor:         rgba(13,26,14,.10);
+  --bor2:        rgba(13,26,14,.15);
+  --bor-grn:     rgba(30,100,50,.28);
+  --txt:         #0A0E0B;
+  --txt2:        #3A4A3C;
+  --txt3:        #6B7B6C;
   --grn:         #1E5C28;
   --grn2:        #1A4040;
   --grn-lit:     #1E7A30;
@@ -211,10 +211,17 @@ section+section{border-top:1px solid var(--bor)}
 .nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
 
 /* ── Wordmark strict colors: TERRA=#E8E8E4 · TRAILS=#345A3A ── */
-.wm-terra  { color: #E8E8E4; }
-.wm-trails { color: #345A3A; }
-[data-theme="light"] .wm-terra  { color: #0A0E0B; }
-[data-theme="light"] .wm-trails { color: #345A3A; }
+/* Wordmark strict colors — TERRA white-off, TRAILS forest-green */
+.wm-terra,
+.nav-logo-text .wm-terra,
+.footer-inner  .wm-terra  { color: #E8E8E4 !important; }
+.wm-trails,
+.nav-logo-text .wm-trails,
+.footer-inner  .wm-trails { color: #345A3A !important; }
+[data-theme="light"] .wm-terra,
+[data-theme="light"] .nav-logo-text .wm-terra  { color: #0D1A0E !important; }
+[data-theme="light"] .wm-trails,
+[data-theme="light"] .nav-logo-text .wm-trails { color: #1E5C28 !important; }
 .nav-logo-text {
   font-family: 'Nunito', sans-serif; font-weight: 900;
   font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
@@ -222,7 +229,7 @@ section+section{border-top:1px solid var(--bor)}
   transition: color .3s;
 }
 
-.nav-logo-text span { color: var(--grn-lit); display: block; }
+/* .nav-logo-text span — intentionally removed; use .wm-terra / .wm-trails instead */
 .nav-links { display:flex; align-items:center; gap:6px; list-style:none; }
 .nav-links a {
   font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
