@@ -8,245 +8,122 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="icon" href="v1_dark_1024.png" type="image/png">
+  <link rel="icon" href="icon_dark.png" type="image/png">
   <link rel="stylesheet" href="style.css">
-
   <style>
-    /* ══════════════════════════════════════
-       PAGE HERO
-    ══════════════════════════════════════ */
-    .feat-hero { padding: 88px 0 72px; text-align: center; }
-    .feat-hero .display-xl { max-width: 860px; margin: 12px auto 0; }
-    .feat-hero .body-lg    { max-width: 520px; margin: 20px auto 0; }
+    .feat-hero { padding:88px 0 64px; text-align:center; }
+    .feat-hero .body-lg { max-width:520px; margin:20px auto 0; }
 
-    /* ══════════════════════════════════════
-       PLAN HEADER CARDS
-    ══════════════════════════════════════ */
-    .plan-header-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px; margin-bottom: 64px;
-    }
-    @media(max-width:640px) { .plan-header-grid { grid-template-columns: 1fr; } }
+    /* ── Plan cards ── */
+    .plan-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:72px; }
+    @media(max-width:600px){ .plan-grid{ grid-template-columns:1fr; } }
 
-    .plan-card {
-      padding: 28px 32px; border-radius: 24px;
-      display: flex; flex-direction: column; gap: 6px;
-      transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s;
+    .plan-card { padding:28px 28px 24px; border-radius:22px; display:flex; flex-direction:column; gap:5px; }
+    .plan-free { background:var(--bg3); border:1px solid var(--bor2); }
+    .plan-prem {
+      background:linear-gradient(135deg,rgba(52,90,58,.14),rgba(38,72,72,.10));
+      border:1px solid var(--bor-grn); position:relative; overflow:hidden;
     }
-    .plan-card:hover { transform: translateY(-3px); }
-    .plan-card-free  { background: var(--bg3); border: 1px solid var(--bor2); }
-    .plan-card-prem  {
-      background: linear-gradient(135deg, rgba(52,90,58,.14) 0%, rgba(38,72,72,.10) 100%);
-      border: 1px solid var(--bor-grn);
-      position: relative; overflow: hidden;
-    }
-    .plan-card-prem::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(95,168,104,.5), transparent);
-    }
-    [data-theme="light"] .plan-card-free { background: rgba(255,255,255,.72); }
-    [data-theme="light"] .plan-card-prem { background: rgba(255,255,255,.72); box-shadow: 0 4px 32px rgba(30,124,48,.1); }
+    .plan-prem::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(95,168,104,.5),transparent); }
+    [data-theme="light"] .plan-free { background:rgba(255,255,255,.8); box-shadow:0 2px 16px rgba(13,26,14,.06); }
+    [data-theme="light"] .plan-prem { background:rgba(255,255,255,.8); box-shadow:0 4px 28px rgba(30,124,48,.1); }
+    .plan-name-tag { font-size:9px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;display:block; }
+    .plan-prem .plan-name-tag { color:#5FA868; }
+    .plan-price-big { font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(38px,6vw,54px);letter-spacing:-2px;color:var(--txt);line-height:1; }
+    .plan-price-big sub { font-size:15px;letter-spacing:0;font-weight:300;color:var(--txt2); }
+    .plan-price-note { font-size:12px;font-weight:300;color:var(--txt3);margin-bottom:10px; }
+    .plan-badge-pill { display:inline-flex;align-items:center;gap:5px;background:var(--grn-bg);border:1px solid var(--grn-bor);border-radius:100px;padding:3px 10px;font-size:10px;font-weight:600;color:#5FA868;margin-bottom:12px;align-self:flex-start; }
+    .plan-badge-pill::before { content:'';width:5px;height:5px;border-radius:50%;background:#5FA868;animation:pulseGrn 2s infinite; }
+    .plan-features-list { list-style:none;display:flex;flex-direction:column;gap:8px; }
+    .plan-features-list li { display:flex;align-items:center;gap:8px;font-size:13px;font-weight:300;color:var(--txt2); }
+    .plan-features-list li svg { flex-shrink:0;color:var(--grn-lit); }
 
-    .plan-name {
-      font-size: 9px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase;
-      color: var(--txt3); margin-bottom: 8px;
-    }
-    .plan-card-prem .plan-name { color: #5FA868; }
-    .plan-price {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(36px, 5vw, 52px); letter-spacing: -2px; color: var(--txt); line-height: 1;
-    }
-    .plan-price sub { font-size: 16px; letter-spacing: 0; font-weight: 300; color: var(--txt2); }
-    .plan-sub { font-size: 12px; font-weight: 300; color: var(--txt3); margin-top: 4px; }
-    .plan-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--grn-bg); border: 1px solid var(--grn-bor);
-      border-radius: 100px; padding: 3px 10px;
-      font-size: 11px; font-weight: 600; color: #5FA868;
-      margin-top: 8px; align-self: flex-start;
-    }
-    .plan-badge::before {
-      content: ''; width: 5px; height: 5px; border-radius: 50%;
-      background: #5FA868; animation: pulseGrn 2s infinite;
-    }
-
-    /* ══════════════════════════════════════
-       FEATURE TABLE
-    ══════════════════════════════════════ */
-    .feat-table-wrap {
-      border-radius: 24px; overflow: hidden;
-      border: 1px solid var(--bor2);
-      background: var(--card-bg);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    }
-    [data-theme="light"] .feat-table-wrap {
-      background: rgba(255,255,255,.72);
-      box-shadow: 0 4px 40px rgba(13,26,14,.07);
-    }
-
-    /* Table header row */
-    .ftab-head {
-      display: grid; grid-template-columns: 1fr 200px 200px;
-      background: var(--bg3); border-bottom: 1px solid var(--bor2);
-    }
-    @media(max-width:720px) { .ftab-head { grid-template-columns: 1fr 100px 100px; } }
-    @media(max-width:480px) { .ftab-head { grid-template-columns: 1fr 88px 88px; } }
-
-    .ftab-hcell {
-      padding: 14px 20px;
-      font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--txt3);
-      border-left: 1px solid var(--bor);
-    }
-    .ftab-hcell:first-child { border-left: none; color: var(--txt2); font-size: 10px; }
-    .ftab-hcell.prem-col { color: #5FA868; display: flex; align-items: center; gap: 6px; }
-
-    /* Category separator */
-    .ftab-cat {
-      padding: 12px 20px;
-      font-size: 9px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase;
-      color: var(--txt3); background: var(--bg2);
-      border-top: 1px solid var(--bor); border-bottom: 1px solid var(--bor);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .ftab-cat-icon {
-      width: 22px; height: 22px; border-radius: 7px;
-      background: var(--grn-bg); border: 1px solid var(--grn-bor);
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-
-    /* Feature row */
-    .ftab-row {
-      display: grid; grid-template-columns: 1fr 200px 200px;
-      border-bottom: 1px solid var(--bor);
-      transition: background .15s;
-    }
-    .ftab-row:last-child { border-bottom: none; }
-    .ftab-row:hover { background: var(--bg3); }
-    @media(max-width:720px) { .ftab-row { grid-template-columns: 1fr 100px 100px; } }
-    @media(max-width:480px) { .ftab-row { grid-template-columns: 1fr 88px 88px; } }
-
-    .ftab-name {
-      padding: 18px 20px;
-      display: flex; flex-direction: column; gap: 3px;
-    }
-    .ftab-name-title { font-size: 14px; font-weight: 600; color: var(--txt); }
-    .ftab-name-desc  { font-size: 12px; font-weight: 300; color: var(--txt3); line-height: 1.5; }
-
-    .ftab-cell {
-      padding: 18px 20px; border-left: 1px solid var(--bor);
-      display: flex; align-items: center;
-      font-size: 13px; font-weight: 300; color: var(--txt2);
-    }
-    .ftab-cell.free-cell  {}
-    .ftab-cell.prem-cell  { flex-direction: column; align-items: flex-start; gap: 5px; }
-
-    /* Value chips inside cells */
-    .val-yes {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 12px; font-weight: 600; color: #5FA868;
-    }
-    .val-no {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 12px; font-weight: 400; color: var(--txt3);
-    }
-    .val-limited {
-      font-size: 12px; font-weight: 300; color: var(--txt2);
-    }
-
-    /* Premium badge pill */
-    .prem-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      background: linear-gradient(135deg, rgba(52,90,58,.22), rgba(38,72,72,.16));
-      border: 1px solid var(--grn-bor);
-      border-radius: 100px; padding: 2px 8px;
-      font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-      color: #5FA868; flex-shrink: 0;
-    }
-    .prem-badge svg { flex-shrink: 0; }
-
-    .prem-val {
-      font-size: 12px; font-weight: 600; color: var(--txt);
-    }
-    .prem-desc {
-      font-size: 11px; font-weight: 300; color: var(--txt2); line-height: 1.5;
-    }
-
-    /* ══════════════════════════════════════
-       FEATURE CARDS (visual detail cards)
-    ══════════════════════════════════════ */
-    .feat-detail-section { padding: var(--section-py) 0; }
-
-    .feat-detail-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px; margin-top: 48px;
-    }
-    @media(max-width:900px) { .feat-detail-grid { grid-template-columns: 1fr 1fr; } }
-    @media(max-width:560px) { .feat-detail-grid { grid-template-columns: 1fr; } }
+    /* ── Detail cards grid ── */
+    .fdet-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+    @media(max-width:900px){ .fdet-grid{ grid-template-columns:1fr 1fr; } }
+    @media(max-width:560px){ .fdet-grid{ grid-template-columns:1fr; } }
 
     .fdet-card {
-      padding: 28px 24px; border-radius: 22px;
-      background: var(--card-bg); border: 1px solid var(--card-bor);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      display: flex; flex-direction: column; gap: 14px;
-      position: relative; overflow: hidden;
-      transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .25s, box-shadow .3s;
+      padding:24px 22px; border-radius:20px;
+      background:var(--card-bg); border:1px solid var(--card-bor);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      display:flex; flex-direction:column; gap:12px;
+      position:relative; overflow:hidden;
+      transition:transform .3s cubic-bezier(.22,1,.36,1), border-color .25s, box-shadow .3s;
     }
-    .fdet-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
-    }
-    .fdet-card:hover { transform: translateY(-4px); border-color: var(--bor-grn); box-shadow: 0 20px 60px var(--shadow); }
-    [data-theme="light"] .fdet-card { background: rgba(255,255,255,.75); box-shadow: 0 2px 20px rgba(13,26,14,.06); }
-    [data-theme="light"] .fdet-card::before { background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent); }
+    .fdet-card::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent); }
+    .fdet-card:hover { transform:translateY(-4px); border-color:var(--bor-grn); box-shadow:0 18px 56px var(--shadow); }
+    [data-theme="light"] .fdet-card { background:rgba(255,255,255,.75); box-shadow:0 2px 16px rgba(13,26,14,.06); }
+    [data-theme="light"] .fdet-card::before { background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent); }
 
-    /* Premium card variant */
     .fdet-card.is-prem {
-      background: linear-gradient(145deg, rgba(52,90,58,.10) 0%, rgba(38,72,72,.07) 100%);
-      border-color: var(--grn-bor);
+      background:linear-gradient(145deg,rgba(52,90,58,.10),rgba(38,72,72,.07));
+      border-color:var(--grn-bor);
     }
-    .fdet-card.is-prem::before { background: linear-gradient(90deg, transparent, rgba(95,168,104,.3), transparent); }
-    [data-theme="light"] .fdet-card.is-prem { background: rgba(255,255,255,.8); box-shadow: 0 4px 32px rgba(30,124,48,.08); }
+    .fdet-card.is-prem::before { background:linear-gradient(90deg,transparent,rgba(95,168,104,.3),transparent); }
+    [data-theme="light"] .fdet-card.is-prem { background:rgba(255,255,255,.82); box-shadow:0 4px 28px rgba(30,124,48,.09); }
 
-    .fdet-ico {
-      width: 44px; height: 44px; border-radius: 13px; flex-shrink: 0;
-      background: var(--grn-bg); border: 1px solid var(--grn-bor);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .fdet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-    .fdet-title { font-size: 15px; font-weight: 700; color: var(--txt); line-height: 1.3; flex: 1; }
-    .fdet-body  { font-size: 13px; font-weight: 300; color: var(--txt2); line-height: 1.72; }
-    .fdet-badge-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .fdet-head { display:flex;align-items:flex-start;justify-content:space-between;gap:8px; }
+    .fdet-ico  { width:42px;height:42px;border-radius:12px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .fdet-prem-icon { width:26px;height:26px;flex-shrink:0; object-fit:contain; }
+    .fdet-title { font-size:14px;font-weight:700;color:var(--txt);line-height:1.3;margin-top:2px; }
+    .fdet-body  { font-size:13px;font-weight:300;color:var(--txt2);line-height:1.68; }
+    .free-tag { font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--txt3);align-self:flex-start; }
 
-    /* ══════════════════════════════════════
-       CTA FOOTER STRIP
-    ══════════════════════════════════════ */
-    .feat-cta-strip {
-      border-radius: var(--radius); overflow: hidden;
-      background: linear-gradient(135deg, rgba(52,90,58,.10), rgba(38,72,72,.08));
-      border: 1px solid var(--bor-grn);
-      padding: 40px 48px;
-      display: flex; align-items: center; justify-content: space-between; gap: 32px;
-      flex-wrap: wrap; position: relative;
+    /* ── Comparison table ── */
+    .cmp-wrap { border-radius:22px;overflow:hidden;border:1px solid var(--bor2);background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px); }
+    [data-theme="light"] .cmp-wrap { background:rgba(255,255,255,.72);box-shadow:0 4px 32px rgba(13,26,14,.07); }
+
+    .cmp-thead { display:grid;grid-template-columns:2fr 1fr 1fr;background:var(--bg3);border-bottom:1px solid var(--bor2); }
+    .cmp-th { padding:16px 18px;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);border-left:1px solid var(--bor); }
+    .cmp-th:first-child { border-left:none;font-size:10px;color:var(--txt2); }
+    .cmp-th.col-prem { color:#5FA868;display:flex;align-items:center;gap:6px; }
+
+    .cmp-cat { padding:10px 18px;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--grn-lit);background:var(--bg2);border-top:1px solid var(--bor);border-bottom:1px solid var(--bor); }
+
+    .cmp-row { display:grid;grid-template-columns:2fr 1fr 1fr;border-bottom:1px solid var(--bor);transition:background .15s; }
+    .cmp-row:last-child { border-bottom:none; }
+    .cmp-row:hover { background:var(--bg3); }
+
+    .cmp-feat { padding:16px 18px;display:flex;flex-direction:column;gap:2px; }
+    .cmp-feat-name { font-size:14px;font-weight:500;color:var(--txt); }
+    .cmp-feat-desc { font-size:11px;font-weight:300;color:var(--txt3);line-height:1.4; }
+
+    .cmp-cell { padding:16px 14px;border-left:1px solid var(--bor);display:flex;align-items:center;font-size:12px;font-weight:300;color:var(--txt2); }
+    .cmp-cell.prem { flex-direction:column;align-items:flex-start;gap:4px; }
+    .cval-yes  { font-size:12px;font-weight:600;color:#5FA868;display:flex;align-items:center;gap:4px; }
+    .cval-lim  { font-size:12px;font-weight:300;color:var(--txt2); }
+    .cval-no   { font-size:12px;color:var(--txt3); }
+    .cval-prem { font-size:12px;font-weight:600;color:var(--txt); }
+    .cval-sub  { font-size:11px;font-weight:300;color:var(--txt3);line-height:1.4; }
+    .prem-pill { display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(52,90,58,.22),rgba(38,72,72,.16));border:1px solid var(--grn-bor);border-radius:100px;padding:2px 7px;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#5FA868;flex-shrink:0; }
+
+    @media(max-width:700px){
+      .cmp-thead,.cmp-row { grid-template-columns:1fr 80px 80px; }
+      .cmp-feat-desc { display:none; }
+      .cmp-th,.cmp-feat-name { font-size:12px; }
+      .cval-sub { display:none; }
     }
-    .feat-cta-strip::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(95,168,104,.4), transparent);
+    @media(max-width:420px){
+      .cmp-thead,.cmp-row { grid-template-columns:1fr 68px 68px; }
+      .cmp-cell,.cmp-feat { padding:12px 8px; }
     }
-    [data-theme="light"] .feat-cta-strip { background: rgba(255,255,255,.6); box-shadow: 0 4px 32px rgba(30,124,48,.1); }
-    @media(max-width:640px) { .feat-cta-strip { padding: 28px 24px; } }
+
+    /* CTA */
+    .feat-cta { border-radius:var(--radius);background:linear-gradient(135deg,rgba(52,90,58,.08),rgba(38,72,72,.06));border:1px solid var(--bor-grn);padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;position:relative;overflow:hidden; }
+    .feat-cta::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(95,168,104,.4),transparent); }
+    [data-theme="light"] .feat-cta { background:rgba(255,255,255,.6);box-shadow:0 4px 28px rgba(30,124,48,.1); }
+    @media(max-width:600px){ .feat-cta{ padding:28px 22px; flex-direction:column; } }
   </style>
 </head>
 <body>
 
-<!-- ══ NAV ══ -->
+<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="./" class="nav-logo">
-      <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails">
-      <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails">
+      <img src="icon_dark.png"  class="logo-img logo-dark"  alt="Terratrails">
+      <img src="icon_light.png" class="logo-img logo-light" alt="Terratrails">
       <div class="nav-logo-text"><span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span></div>
     </a>
     <ul class="nav-links">
@@ -277,156 +154,265 @@
   <div class="mob-cta"><a href="/beta" class="btn btn-primary" style="width:100%;justify-content:center;">Accès Bêta</a></div>
 </div>
 
-<!-- ══ HERO ══ -->
+<!-- HERO -->
 <section class="feat-hero">
   <div class="wrap">
     <span class="eyebrow r">Fonctionnalités</span>
     <h1 class="display display-xl r d1">TOUT CE QUE<br><span class="accent">TERRATRAILS</span><br>FAIT POUR VOUS.</h1>
-    <p class="body-lg r d2">Deux niveaux, un seul objectif : vous emmener plus loin, plus simplement, plus en sécurité.</p>
+    <p class="body-lg r d2">Deux niveaux, un objectif : vous emmener plus loin, plus simplement, plus en sécurité.</p>
   </div>
 </section>
 
-<!-- ══ FEATURE DETAIL CARDS ══ -->
-<section class="feat-detail-section">
+<!-- EN DÉTAIL -->
+<section>
   <div class="wrap">
     <div class="sec-hd r">
       <span class="eyebrow">En détail</span>
       <h2 class="display display-md">Chaque<br><span class="accent">fonctionnalité</span><br>compte.</h2>
+      <p class="body-lg" style="max-width:480px;margin-top:16px">Les fonctionnalités de base sont incluses dès le téléchargement. Les fonctionnalités <img src="icon_transparent_premium_dark.png" style="width:16px;height:16px;vertical-align:middle;margin:0 2px"> Premium débloquent le système complet.</p>
     </div>
-    <div class="feat-detail-grid">
 
-      <!-- IA illimitée -->
+    <div class="fdet-grid">
+
+      <!-- ── FREE features ── -->
+      <div class="fdet-card r d1">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <span class="free-tag">Gratuit</span>
+        </div>
+        <div class="fdet-title">Génération IA (1 crédit/mois)</div>
+        <p class="fdet-body">Formulez une intention en langage naturel. L'IA génère un itinéraire complet avec distance, dénivelé, temps réel et profil d'effort — une fois par mois.</p>
+      </div>
+
+      <div class="fdet-card r d2">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+          <span class="free-tag">Gratuit</span>
+        </div>
+        <div class="fdet-title">3 variantes d'itinéraires</div>
+        <p class="fdet-body">Directe, Panoramique et Sportive — trois propositions distinctes à chaque génération pour choisir ce qui correspond le mieux à votre journée.</p>
+      </div>
+
+      <div class="fdet-card r d3">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <span class="free-tag">Gratuit</span>
+        </div>
+        <div class="fdet-title">Navigation terrain en ligne</div>
+        <p class="fdet-body">Position GPS en temps réel sur le sentier, direction, distance et temps restants estimés avec précision. Nécessite une connexion réseau.</p>
+      </div>
+
+      <div class="fdet-card r d1">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"/></svg></div>
+          <span class="free-tag">Gratuit</span>
+        </div>
+        <div class="fdet-title">1 carte offline (zone restreinte)</div>
+        <p class="fdet-body">Téléchargez une zone géographique limitée pour une utilisation sans réseau. Idéal pour découvrir le fonctionnement avant de passer à l'offline illimité.</p>
+      </div>
+
+      <div class="fdet-card r d2">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <span class="free-tag">Gratuit</span>
+        </div>
+        <div class="fdet-title">Points d'intérêt basiques</div>
+        <p class="fdet-body">Refuges et points d'eau principaux identifiés sur le tracé. Données standards issues des bases de données publiques.</p>
+      </div>
+
+      <div class="fdet-card r d3">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <span class="free-tag">Gratuit</span>
+        </div>
+        <div class="fdet-title">Score de préparation Apple Santé</div>
+        <p class="fdet-body">Connexion à Apple Santé pour analyser votre historique d'activité et afficher un score de préparation réaliste avant chaque sortie.</p>
+      </div>
+
+      <!-- ── PREMIUM features ── -->
       <div class="fdet-card is-prem r d1">
         <div class="fdet-head">
-          <div class="fdet-ico">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          </div>
-          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
         </div>
         <div class="fdet-title">IA illimitée</div>
-        <p class="fdet-body">Générez autant d'itinéraires que vous le souhaitez. Affinez, recommencez, comparez — sans jamais craindre d'épuiser un quota.</p>
+        <p class="fdet-body">Générez autant d'itinéraires que vous le souhaitez. Affinez, recommencez, comparez des variantes — sans jamais craindre d'épuiser un quota.</p>
       </div>
 
-      <!-- Offline mondial -->
       <div class="fdet-card is-prem r d2">
         <div class="fdet-head">
-          <div class="fdet-ico">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10z"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
         </div>
-        <div class="fdet-title">Offline mondial</div>
-        <p class="fdet-body">Cartes vectorielles du monde entier. Alpes, Pyrénées, Dolomites — téléchargées une fois, accessibles sans réseau pour toujours.</p>
+        <div class="fdet-title">Offline mondial illimité</div>
+        <p class="fdet-body">Alpes, Pyrénées, Dolomites, Atlas — téléchargez les cartes vectorielles du monde entier. Naviguez sans réseau, partout, pour toujours.</p>
       </div>
 
-      <!-- Mode Compagnon -->
       <div class="fdet-card is-prem r d3">
         <div class="fdet-head">
-          <div class="fdet-ico">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
         </div>
-        <div class="fdet-title">Mode Compagnon SMS</div>
-        <p class="fdet-body">Un proche reçoit automatiquement votre progression, ETA et batterie restante — sans télécharger l'application. Silencieux, automatique, rassurant.</p>
+        <div class="fdet-title">Itinéraires multi-jours</div>
+        <p class="fdet-body">Planifiez des treks de 2 jours et plus. Refuges, bivouacs autorisés, hébergements et logistique intégrés sur l'ensemble du parcours.</p>
       </div>
 
-      <!-- Alertes haptiques -->
       <div class="fdet-card is-prem r d1">
         <div class="fdet-head">
-          <div class="fdet-ico">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
-        </div>
-        <div class="fdet-title">Alertes haptiques & SOS</div>
-        <p class="fdet-body">Orage imminent, sortie de trace, immobilité anormale — l'alerte arrive directement au poignet via Apple Watch. Le bouton SOS envoie votre position exacte.</p>
-      </div>
-
-      <!-- Équipement intelligent -->
-      <div class="fdet-card is-prem r d2">
-        <div class="fdet-head">
-          <div class="fdet-ico">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </div>
-          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
-        </div>
-        <div class="fdet-title">Équipement intelligent</div>
-        <p class="fdet-body">La checklist s'adapte automatiquement à la météo, l'altitude, la durée et vos équipements déjà enregistrés dans l'onglet Base. Zéro oubli possible.</p>
-      </div>
-
-      <!-- POI détaillés -->
-      <div class="fdet-card is-prem r d3">
-        <div class="fdet-head">
-          <div class="fdet-ico">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          </div>
-          <span class="prem-badge"><svg width="8" height="8" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</span>
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
         </div>
         <div class="fdet-title">Points d'intérêt vérifiés</div>
-        <p class="fdet-body">Sources d'eau fiables, refuges avec horaires et numéros, bivouacs autorisés, lacs baignables — chaque point est horodaté et vérifié par la communauté.</p>
+        <p class="fdet-body">Sources d'eau fiables, refuges avec horaires, bivouacs autorisés, lacs baignables — chaque point est horodaté et vérifié par la communauté terrain.</p>
+      </div>
+
+      <div class="fdet-card is-prem r d2">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
+        </div>
+        <div class="fdet-title">Équipement intelligent</div>
+        <p class="fdet-body">Checklist dynamique liée à l'onglet Base : adaptée en temps réel selon la météo, l'altitude, la durée et vos équipements déjà enregistrés.</p>
+      </div>
+
+      <div class="fdet-card is-prem r d3">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
+        </div>
+        <div class="fdet-title">Mode Compagnon SMS</div>
+        <p class="fdet-body">Envoi automatique à un proche — position GPS, progression, ETA et batterie — sans que le destinataire n'ait besoin de l'application.</p>
+      </div>
+
+      <div class="fdet-card is-prem r d1">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
+        </div>
+        <div class="fdet-title">Alertes haptiques & SOS</div>
+        <p class="fdet-body">Vibration codée sur iPhone et Apple Watch pour orage imminent, sortie de trace ou immobilité anormale. Bouton SOS envoie la position exacte.</p>
+      </div>
+
+      <div class="fdet-card is-prem r d2">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"/><path d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
+        </div>
+        <div class="fdet-title">Météo segmentée par tronçon</div>
+        <p class="fdet-body">Prévisions météo détaillées par segment du tracé — vent, précipitations, température et indice UV heure par heure sur tout le parcours.</p>
+      </div>
+
+      <div class="fdet-card is-prem r d3">
+        <div class="fdet-head">
+          <div class="fdet-ico"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--grn-lit)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <img src="icon_transparent_premium_dark.png" class="fdet-prem-icon" alt="Premium">
+        </div>
+        <div class="fdet-title">Sécurité silencieuse avancée</div>
+        <p class="fdet-body">Surveillance passive permanente : immobilité prolongée, météo dégradée, perte d'altitude anormale. Le système agit avant que vous n'ayez besoin de le faire.</p>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ══ PLAN CARDS ══ -->
-<section style="padding-top:0; padding-bottom: 0; border-top: none;">
+<!-- PLANS -->
+<section>
   <div class="wrap">
-    <div class="plan-header-grid r">
-      <div class="plan-card plan-card-free">
-        <span class="plan-name">Gratuit</span>
-        <div class="plan-price">0 €</div>
-        <p class="plan-sub">Pour découvrir l'approche Terratrails</p>
-        <ul style="list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px">
-          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ 1 crédit IA / mois</li>
-          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ Navigation en ligne</li>
-          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ 1 zone offline limitée</li>
+    <div class="sec-hd r">
+      <span class="eyebrow">Les offres</span>
+      <h2 class="display display-md">Gratuit<br>ou <span class="accent">Premium.</span></h2>
+    </div>
+    <div class="plan-grid r d1">
+      <div class="plan-card plan-free">
+        <span class="plan-name-tag">Gratuit</span>
+        <div class="plan-price-big">0 €</div>
+        <p class="plan-price-note">Pour découvrir l'approche Terratrails</p>
+        <ul class="plan-features-list" style="margin-top:14px">
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>1 crédit IA / mois</li>
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Navigation en ligne</li>
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>1 zone offline limitée</li>
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>POI basiques · Score Apple Santé</li>
         </ul>
       </div>
-      <div class="plan-card plan-card-prem">
-        <span class="plan-name">Premium</span>
-        <div class="plan-price">4<sub>,99 € / mois</sub></div>
-        <p class="plan-sub">Premier mois à 1 € · Sans engagement</p>
-        <span class="plan-badge">Accès anticipé</span>
-        <ul style="list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:8px">
-          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ IA illimitée + multi-jours</li>
-          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ Offline monde entier</li>
-          <li style="font-size:13px;font-weight:300;color:var(--txt2)">✓ Mode Compagnon + SOS</li>
+      <div class="plan-card plan-prem">
+        <span class="plan-name-tag">Premium</span>
+        <div class="plan-price-big">4<sub>,99 € / mois</sub></div>
+        <p class="plan-price-note">Premier mois à 1 € · Sans engagement</p>
+        <span class="plan-badge-pill">Accès anticipé</span>
+        <ul class="plan-features-list">
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>IA illimitée + multi-jours</li>
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Offline monde entier</li>
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Mode Compagnon + SOS</li>
+          <li><svg width="12" height="12" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Équipement intelligent · Météo détaillée</li>
         </ul>
-        <a href="/premium" class="btn btn-primary" style="margin-top:20px;font-size:12px;padding:11px 22px;align-self:flex-start">Voir l'offre →</a>
+        <a href="/premium" class="btn btn-primary" style="margin-top:18px;font-size:12px;padding:11px 22px;align-self:flex-start">Voir l'offre →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ CTA STRIP ══ -->
-<section style="padding-top:0; border-top:none">
+<!-- COMPARISON TABLE -->
+<section>
   <div class="wrap">
-    <div class="feat-cta-strip r">
+    <div class="sec-hd r">
+      <span class="eyebrow">Comparaison</span>
+      <h2 class="display display-md">Gratuit<br>vs <span class="accent">Premium.</span></h2>
+      <p class="body-lg" style="max-width:440px;margin-top:14px">Sans ambiguïté. Voici exactement ce que chaque niveau débloque.</p>
+    </div>
+    <div class="cmp-wrap r d1">
+      <div class="cmp-thead">
+        <div class="cmp-th">Fonctionnalité</div>
+        <div class="cmp-th">Gratuit</div>
+        <div class="cmp-th col-prem"><svg width="11" height="11" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</div>
+      </div>
+
+      <div class="cmp-cat">Intelligence artificielle</div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Génération IA</span><span class="cmp-feat-desc">Depuis une intention en langage naturel</span></div><div class="cmp-cell"><span class="cval-lim">1 crédit/mois</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Illimitée</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Variantes d'itinéraires</span><span class="cmp-feat-desc">Directe, Panoramique, Sportive</span></div><div class="cmp-cell"><span class="cval-yes"><svg width="11" height="11" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Sur le crédit</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Illimitées</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Itinéraires multi-jours</span><span class="cmp-feat-desc">Treks 2 jours et plus</span></div><div class="cmp-cell"><span class="cval-no">—</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div></div>
+
+      <div class="cmp-cat">Navigation</div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Navigation terrain</span><span class="cmp-feat-desc">Position GPS, direction, temps restant</span></div><div class="cmp-cell"><span class="cval-lim">En ligne seul.</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Hors-ligne totale</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Cartes Offline</span><span class="cmp-feat-desc">Tuiles vectorielles sur l'appareil</span></div><div class="cmp-cell"><span class="cval-lim">1 zone limitée</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Monde entier</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Points d'intérêt</span><span class="cmp-feat-desc">Eau, refuges, bivouacs, baignade</span></div><div class="cmp-cell"><span class="cval-lim">Basique</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Détaillés & vérifiés</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Météo segmentée</span><span class="cmp-feat-desc">Par tronçon, heure par heure</span></div><div class="cmp-cell"><span class="cval-no">—</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Incluse</span></div></div>
+
+      <div class="cmp-cat">Préparation</div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Score Apple Santé</span><span class="cmp-feat-desc">Préparation physique réelle</span></div><div class="cmp-cell"><span class="cval-yes"><svg width="11" height="11" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Inclus</span></div><div class="cmp-cell"><span class="cval-yes"><svg width="11" height="11" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Inclus</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Équipement intelligent</span><span class="cmp-feat-desc">Checklist liée à Base + météo</span></div><div class="cmp-cell"><span class="cval-no">—</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div></div>
+
+      <div class="cmp-cat">Sécurité</div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Mode Compagnon SMS</span><span class="cmp-feat-desc">Position + ETA → proche sans app</span></div><div class="cmp-cell"><span class="cval-no">—</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Alertes haptiques & SOS</span><span class="cmp-feat-desc">Orage, sortie de trace, immobilité</span></div><div class="cmp-cell"><span class="cval-no">—</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div></div>
+      <div class="cmp-row"><div class="cmp-feat"><span class="cmp-feat-name">Surveillance silencieuse</span><span class="cmp-feat-desc">Détection passive des anomalies</span></div><div class="cmp-cell"><span class="cval-no">—</span></div><div class="cmp-cell prem"><span class="prem-pill">★ Premium</span><span class="cval-prem">Incluse</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0;border-top:none">
+  <div class="wrap">
+    <div class="feat-cta r">
       <div>
         <span class="eyebrow" style="margin-bottom:8px">Accès anticipé</span>
         <h3 class="display display-sm">Premier mois à <span class="accent">1 €.</span></h3>
-        <p class="body-md" style="margin-top:10px;max-width:440px">Tout Premium débloqué dès le premier téléchargement. Sans engagement, iOS uniquement. Annulable en un tap.</p>
+        <p class="body-md" style="margin-top:10px;max-width:400px">Tout Premium débloqué dès le premier téléchargement. iOS uniquement. Annulable en un tap.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px;flex-shrink:0">
         <a href="/beta" class="btn btn-primary">Rejoindre la bêta →</a>
-        <a href="/premium" class="btn btn-outline" style="text-align:center">Voir tous les détails</a>
+        <a href="/premium" class="btn btn-outline" style="text-align:center">Détails Premium</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-logo">
-      <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
-      <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
-      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:5px">
-        <span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span>
-      </span>
+      <img src="icon_dark.png"  class="logo-img logo-dark"  alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
+      <img src="icon_light.png" class="logo-img logo-light" alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
+      <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:5px"><span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span></span>
     </div>
     <ul class="footer-links">
       <li><a href="./">Accueil</a></li>

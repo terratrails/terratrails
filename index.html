@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="icon" href="v1_dark_1024.png" type="image/png">
+  <link rel="icon" href="icon_dark.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <style>
     /* ═══════ HERO ═══════ */
@@ -195,8 +195,8 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="./" class="nav-logo">
-      <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails">
-      <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails">
+      <img src="icon_dark.png"  class="logo-img logo-dark"  alt="Terratrails">
+      <img src="icon_light.png" class="logo-img logo-light" alt="Terratrails">
       <!-- TERRA = #E8E8E4 · TRAILS = #345A3A — spec stricte -->
       <div class="nav-logo-text">
         <span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span>
@@ -263,98 +263,67 @@
   </div>
 </section>
 
-<!-- ══ SYSTÈME — 3 cards Liquid Glass alternées ══ -->
+<!-- ══ SYSTÈME ══ -->
 <section id="systeme">
   <div class="wrap">
     <div class="sec-hd r">
       <span class="eyebrow">Le système</span>
       <h2 class="display display-md">Intention.<br><span class="accent">Itinéraire.</span><br>Terrain.</h2>
-      <p class="body-lg" style="max-width:500px;margin-top:18px">Trois onglets. Compréhensible en dix secondes. Fonctionnel 100 % hors-ligne.</p>
+      <p class="body-lg" style="max-width:500px;margin-top:18px">Trois onglets. Compréhensible en dix secondes. Fonctionnel 100&nbsp;% hors-ligne.</p>
     </div>
 
-    <!-- ── Card 01 : Explorer — texte GAUCHE · phone DROITE ── -->
-    <div class="approw r d1">
-      <div class="approw-text">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <div style="width:36px;height:36px;border-radius:10px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C7 8 5 11 5 14a7 7 0 0 0 14 0c0-3-2-6-7-11z"/><circle cx="12" cy="14" r="2.5"/></svg>
-          </div>
-          <span class="ar-label" style="margin-bottom:0">Onglet 01</span>
-        </div>
-        <div class="ar-title">Explorer</div>
-        <p class="ar-tagline">Décrivez votre intention en une phrase — durée, niveau, envie de baignade, refuge. L'IA génère immédiatement un itinéraire complet adapté à votre profil physique, à la météo réelle et au terrain.</p>
-        <ul class="ar-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Génération IA depuis une phrase naturelle</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>3 variantes — Directe, Panoramique, Sportive</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Eau, refuges et bivouacs intégrés automatiquement</li>
+    <!-- Row 1 — Explorer : texte gauche, image droite -->
+    <div class="sysrow r d1">
+      <div class="sysrow-text">
+        <span class="sysrow-eyebrow">Onglet 01 — Explorer</span>
+        <h3 class="sysrow-title">Explorer</h3>
+        <p class="sysrow-body">Décrivez une intention en une phrase. L'IA construit immédiatement un itinéraire complet adapté à votre profil physique, la météo réelle et le terrain. Zéro menu, zéro friction.</p>
+        <ul class="sysrow-list">
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Génération IA depuis une phrase naturelle</li>
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>3 variantes — Directe, Panoramique, Sportive</li>
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Eau, refuges et bivouacs intégrés automatiquement</li>
         </ul>
       </div>
-      <div class="approw-phone">
-        <div class="phone-mock">
-          <div class="phone-mock-notch"></div>
-          <div class="phone-mock-screen">
-            <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer — Génération IA" class="crop-explorer">
-          </div>
-        </div>
+      <div class="sysrow-img">
+        <img src="Ecran_1_EXPLORER.png" alt="Écran Explorer — Génération IA">
       </div>
     </div>
 
-    <!-- ── Card 02 : Terrain — phone GAUCHE · texte DROITE ── -->
-    <div class="approw flip r d2">
-      <div class="approw-text">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <div style="width:36px;height:36px;border-radius:10px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20L9 8l5 7 4-5 3 10"/></svg>
-          </div>
-          <span class="ar-label" style="margin-bottom:0">Onglet 02</span>
-        </div>
-        <div class="ar-title">Terrain</div>
-        <p class="ar-tagline">Interface de survie. Position, direction, temps restant. Conçue pour être lisible sous les reflets du soleil ou en plein effort physique. Le tracé vit et s'adapte — même sans réseau, même en conditions difficiles.</p>
-        <ul class="ar-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Navigation 100 % hors-ligne, cartes vectorielles</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Itinéraire vivant — raccourcis et alertes en temps réel</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Alertes haptiques : orage, sortie de trace, SOS</li>
+    <!-- Row 2 — Terrain : image gauche, texte droite -->
+    <div class="sysrow flip r d2">
+      <div class="sysrow-text">
+        <span class="sysrow-eyebrow">Onglet 02 — Terrain</span>
+        <h3 class="sysrow-title">Terrain</h3>
+        <p class="sysrow-body">Interface de survie. Position, direction, temps restant. Le tracé s'adapte en temps réel — sans réseau, en plein effort physique, même sous un soleil intense.</p>
+        <ul class="sysrow-list">
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Navigation 100&nbsp;% hors-ligne, cartes vectorielles</li>
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Itinéraire vivant — raccourcis et alertes en temps réel</li>
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Alertes haptiques : orage, sortie de trace, SOS</li>
         </ul>
       </div>
-      <div class="approw-phone">
-        <div class="phone-mock">
-          <div class="phone-mock-notch"></div>
-          <div class="phone-mock-screen">
-            <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain — Navigation" class="crop-terrain">
-          </div>
-        </div>
+      <div class="sysrow-img">
+        <img src="Ecran_2_TERRAIN.png" alt="Écran Terrain — Navigation active">
       </div>
     </div>
 
-    <!-- ── Card 03 : Base — texte GAUCHE · phone DROITE ── -->
-    <div class="approw r d3">
-      <div class="approw-text">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <div style="width:36px;height:36px;border-radius:10px;background:var(--grn-bg);border:1px solid var(--grn-bor);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#5FA868" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          </div>
-          <span class="ar-label" style="margin-bottom:0">Onglet 03</span>
-        </div>
-        <div class="ar-title">Base</div>
-        <p class="ar-tagline">Hub logistique 100 % privé. Gérez votre matériel, consultez votre historique et téléchargez vos cartes hors-ligne. Zéro profil public, zéro réseau social, zéro gamification.</p>
-        <ul class="ar-list">
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Checklist équipement dynamique — météo & altitude</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Score de préparation via Apple Santé</li>
-          <li><svg width="13" height="13" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Données chiffrées — 100 % locales sur l'appareil</li>
+    <!-- Row 3 — Base : texte gauche, image droite -->
+    <div class="sysrow r d3">
+      <div class="sysrow-text">
+        <span class="sysrow-eyebrow">Onglet 03 — Base</span>
+        <h3 class="sysrow-title">Base</h3>
+        <p class="sysrow-body">Hub logistique 100&nbsp;% privé. Matériel, cartes, condition physique. Zéro profil public, zéro réseau social, zéro gamification.</p>
+        <ul class="sysrow-list">
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Checklist dynamique indexée sur météo et altitude</li>
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Score de préparation via Apple Santé</li>
+          <li><svg width="15" height="15" fill="none" viewBox="0 0 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3.5 3.5 7-7"/></svg>Données 100&nbsp;% locales, chiffrées sur l'appareil</li>
         </ul>
-        <!-- Lien Manifeste -->
-        <a href="/faq" class="manifeste-link">
+        <a href="/faq" class="sysrow-manifesto-link">
           Pourquoi nous refusons d'être un réseau social — Lire notre Manifeste
           <svg width="14" height="14" fill="none" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
         </a>
       </div>
-      <div class="approw-phone">
-        <div class="phone-mock">
-          <div class="phone-mock-notch"></div>
-          <div class="phone-mock-screen">
-            <img src="Ecran_3_BASE.png" alt="Écran Base — Hub logistique" class="crop-base">
-          </div>
-        </div>
+      <div class="sysrow-img">
+        <img src="Ecran_3_BASE.png" alt="Écran Base — Hub logistique">
       </div>
     </div>
 
@@ -475,8 +444,8 @@
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-logo">
-      <img src="v1_dark_1024.png"  class="logo-img logo-dark"  alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
-      <img src="v1_white_1024.png" class="logo-img logo-light" alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
+      <img src="icon_dark.png"  class="logo-img logo-dark"  alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
+      <img src="icon_light.png" class="logo-img logo-light" alt="Terratrails" style="width:28px;height:28px;border-radius:8px">
       <span style="font-family:'Nunito',sans-serif;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:5px">
         <span class="wm-terra">TERRA</span><span class="wm-trails">TRAILS</span>
       </span>
