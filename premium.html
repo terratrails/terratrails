@@ -43,8 +43,8 @@
     .alert-title { font-weight: 700; color: var(--txt); margin-bottom: 2px; }
     .alert-body  { color: var(--txt2); }
 
-    /* ── Comparison table wrapper ── */
-    .cmp-wrap { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--bor2); }
+
+
     .cmp-table .col-prem { font-weight: 600; }
     .cmp-table thead tr { background: none; }
     .cmp-table th.col-free { color: var(--txt3); }
@@ -88,6 +88,31 @@
     
     
     
+
+    /* ── Working comparison table ── */
+    .cmp-wrap { border-radius:22px;overflow:hidden;border:1px solid var(--bor2);background:var(--card-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px); }
+    [data-theme="light"] .cmp-wrap { background:rgba(255,255,255,.72);box-shadow:0 4px 32px rgba(13,26,14,.07); }
+    .cmp-thead { display:grid;grid-template-columns:2fr 1fr 1fr;background:var(--bg3);border-bottom:1px solid var(--bor2); }
+    .cmp-th { padding:16px 18px;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);border-left:1px solid var(--bor); }
+    .cmp-th:first-child { border-left:none;font-size:10px;color:var(--txt2); }
+    .cmp-th.col-prem { color:#5FA868;display:flex;align-items:center;gap:6px; }
+    .cmp-cat { padding:10px 18px;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--grn-lit);background:var(--bg2);border-top:1px solid var(--bor);border-bottom:1px solid var(--bor); }
+    .cmp-row { display:grid;grid-template-columns:2fr 1fr 1fr;border-bottom:1px solid var(--bor);transition:background .15s; }
+    .cmp-row:last-child { border-bottom:none; }
+    .cmp-row:hover { background:var(--bg3); }
+    .cmp-feat { padding:16px 18px;display:flex;flex-direction:column;gap:3px; }
+    .cmp-feat-name { font-size:14px;font-weight:500;color:var(--txt); }
+    .cmp-feat-desc { font-size:11px;font-weight:300;color:var(--txt3);line-height:1.4; }
+    .cmp-cell { padding:16px 14px;border-left:1px solid var(--bor);display:flex;align-items:flex-start;flex-direction:column;gap:4px;font-size:12px;font-weight:300;color:var(--txt2); }
+    .cval-yes  { font-size:12px;font-weight:600;color:#5FA868;display:flex;align-items:center;gap:4px; }
+    .cval-lim  { font-size:12px;font-weight:300;color:var(--txt2); }
+    .cval-no   { font-size:12px;color:var(--txt3); }
+    .cval-prem { font-size:12px;font-weight:600;color:var(--txt); }
+    .cval-sub  { font-size:11px;font-weight:300;color:var(--txt3);line-height:1.4; }
+    .prem-pill { display:inline-flex;align-items:center;gap:3px;background:linear-gradient(135deg,rgba(52,90,58,.22),rgba(38,72,72,.16));border:1px solid var(--grn-bor);border-radius:100px;padding:2px 7px;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#5FA868;flex-shrink:0; }
+    @media(max-width:700px){ .cmp-thead,.cmp-row { grid-template-columns:1fr 88px 88px; } .cmp-feat-desc { display:none; } }
+    @media(max-width:420px){ .cmp-thead,.cmp-row { grid-template-columns:1fr 72px 72px; } .cmp-cell,.cmp-feat { padding:12px 8px; } .cmp-feat-name { font-size:13px; } }
+
   </style>
 </head>
 <body>
@@ -387,6 +412,87 @@
       </div>
 
     </div><!-- end table-wrap -->
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section>
+  <div class="wrap">
+    <div class="sec-hd r">
+      <span class="eyebrow">Comparaison</span>
+      <h2 class="display display-md">Gratuit<br>vs <span class="accent">Premium.</span></h2>
+      <p class="body-lg" style="max-width:440px;margin-top:14px">Sans ambiguïté. Voici exactement ce que chaque niveau débloque.</p>
+    </div>
+    <div class="cmp-wrap r d1">
+      <div class="cmp-thead">
+        <div class="cmp-th">Fonctionnalité</div>
+        <div class="cmp-th">Gratuit</div>
+        <div class="cmp-th col-prem"><svg width="11" height="11" viewBox="0 0 24 24" fill="#5FA868"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Premium</div>
+      </div>
+      <div class="cmp-cat">Intelligence artificielle</div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Génération IA</span><span class="cmp-feat-desc">Depuis une intention en langage naturel</span></div>
+        <div class="cmp-cell"><span class="cval-lim">1 crédit/mois</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Illimitée</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Variantes d'itinéraires</span><span class="cmp-feat-desc">Directe, Panoramique, Sportive</span></div>
+        <div class="cmp-cell"><span class="cval-yes"><svg width="11" height="11" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Sur le crédit</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Illimitées</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Itinéraires multi-jours</span><span class="cmp-feat-desc">Treks 2 jours et plus</span></div>
+        <div class="cmp-cell"><span class="cval-no">—</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div>
+      </div>
+      <div class="cmp-cat">Navigation</div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Navigation terrain</span><span class="cmp-feat-desc">Position GPS, direction, temps restant</span></div>
+        <div class="cmp-cell"><span class="cval-lim">En ligne uniquement</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Hors-ligne totale</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Cartes Offline</span><span class="cmp-feat-desc">Tuiles vectorielles sur l'appareil</span></div>
+        <div class="cmp-cell"><span class="cval-lim">1 zone limitée</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Monde entier</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Points d'intérêt</span><span class="cmp-feat-desc">Eau, refuges, bivouacs, baignade</span></div>
+        <div class="cmp-cell"><span class="cval-lim">Basique</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Détaillés & vérifiés</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Météo segmentée</span><span class="cmp-feat-desc">Par tronçon, heure par heure</span></div>
+        <div class="cmp-cell"><span class="cval-no">—</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Incluse</span></div>
+      </div>
+      <div class="cmp-cat">Préparation & Sécurité</div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Score Apple Santé</span><span class="cmp-feat-desc">Préparation physique réelle</span></div>
+        <div class="cmp-cell"><span class="cval-yes"><svg width="11" height="11" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Inclus</span></div>
+        <div class="cmp-cell"><span class="cval-yes"><svg width="11" height="11" fill="none" viewBox="0 0 13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l3 3 6-6"/></svg>Inclus</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Équipement intelligent</span><span class="cmp-feat-desc">Checklist dynamique liée à Base</span></div>
+        <div class="cmp-cell"><span class="cval-no">—</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Mode Compagnon SMS</span><span class="cmp-feat-desc">Position + ETA → proche sans app</span></div>
+        <div class="cmp-cell"><span class="cval-no">—</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Alertes haptiques & SOS</span><span class="cmp-feat-desc">Orage, sortie de trace, immobilité</span></div>
+        <div class="cmp-cell"><span class="cval-no">—</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Inclus</span></div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat"><span class="cmp-feat-name">Surveillance silencieuse</span><span class="cmp-feat-desc">Détection passive des anomalies</span></div>
+        <div class="cmp-cell"><span class="cval-no">—</span></div>
+        <div class="cmp-cell"><span class="prem-pill">★ Premium</span><span class="cval-prem">Incluse</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
